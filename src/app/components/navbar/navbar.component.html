@@ -1,35 +1,28 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-              aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" [routerLink]="['/']">Dronexer</a>
+<nav class="blue darken-3">
+  <div class="nav-wrapper">
+    <div class="container">
+      <a href="#" class="brand-logo center">Dronexer</a>
+      <a materialize="sideNav" href="#" data-activates="mobile-demo" class="button-collapse">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul class="left hide-on-med-and-down">
+        <li><a href="">Home</a></li>
+        <li><a href="">Explore</a></li>
+      </ul>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="">Login</a></li>
+        <li><a href="">Register</a></li>
+        <li><a href="">Profile</a></li>
+        <li><a href="">Logout</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="">Home</a></li>
+        <li><a href="">Explore</a></li>
+        <li><a href="">Login</a></li>
+        <li><a href="">Register</a></li>
+        <li><a href="">Profile</a></li>
+        <li><a href="">Logout</a></li>
+      </ul>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-          <a [routerLink]="['/']">Home</a>
-        </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-          <a [routerLink]="['/profile']">Profile</a>
-        </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-          <a [routerLink]="['/login']">Login</a>
-        </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-          <a [routerLink]="['/register']">Register</a>
-        </li>
-
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a>Default</a></li>
-
-      </ul>
-    </div><!--/.nav-collapse -->
   </div>
 </nav>

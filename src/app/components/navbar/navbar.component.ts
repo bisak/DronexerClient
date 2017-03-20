@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { MaterializeAction } from "angular2-materialize";
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
+
+  modalActions = new EventEmitter<string|MaterializeAction>();
 
   ngOnInit() {
+    this.modalActions.emit({ action: "toast", params: ['open'] });
+
   }
 
 }
