@@ -19,9 +19,7 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
-
-
-
+import { ExploreComponent } from './components/explore/explore.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +34,8 @@ import { DisclaimerComponent } from './components/disclaimer/disclaimer.componen
     AboutUsComponent,
     TermsOfUseComponent,
     PrivacyPolicyComponent,
-    DisclaimerComponent
+    DisclaimerComponent,
+    ExploreComponent
   ],
   imports: [
     BrowserModule,
@@ -49,4 +48,5 @@ import { DisclaimerComponent } from './components/disclaimer/disclaimer.componen
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

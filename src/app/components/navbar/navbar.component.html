@@ -1,27 +1,43 @@
-<nav class="blue darken-3">
+<nav class="blue-grey darken-4">
   <div class="nav-wrapper">
     <div class="container">
       <a href="#" class="brand-logo center">Dronexer</a>
-      <a materialize="sideNav" href="#" data-activates="mobile-demo" class="button-collapse">
+      <a materialize="sideNav" [materializeParams]="[{closeOnClick: true, draggable: true, menuWidth: 225}]" href="#"
+         data-activates="mobile-demo" class="button-collapse">
         <i class="material-icons">menu</i>
       </a>
       <ul class="left hide-on-med-and-down">
-        <li><a href="">Home</a></li>
-        <li><a href="">Explore</a></li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/']">Home</a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['explore']">Explore</a>
+        </li>
       </ul>
       <ul class="right hide-on-med-and-down">
-        <li><a href="">Login</a></li>
-        <li><a href="">Register</a></li>
-        <li><a href="">Profile</a></li>
-        <li><a href="">Logout</a></li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+          [routerLink]="['login']">Login</a></li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['register']">Register</a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['profile']">Profile</a>
+        </li>
+        <li><a href="#">Logout</a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
-        <li><a href="">Home</a></li>
-        <li><a href="">Explore</a></li>
-        <li><a href="">Login</a></li>
-        <li><a href="">Register</a></li>
-        <li><a href="">Profile</a></li>
-        <li><a href="">Logout</a></li>
+        <li><h3 class="blue-text">&nbsp;&nbsp;&nbsp;Dronexer</h3></li>
+        <li>
+          <div class="divider"></div>
+        </li>
+
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/']">Home</a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['explore']">Explore</a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+          [routerLink]="['login']">Login</a></li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['register']">Register</a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['profile']">Profile</a>
+        </li>
+        <li><a href="#">Logout</a></li>
       </ul>
     </div>
   </div>

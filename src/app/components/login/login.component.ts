@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+declare var Materialize:any;
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ export class LoginComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    Materialize.showStaggeredList('#transition-heading');
   }
 
 }

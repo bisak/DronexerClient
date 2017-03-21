@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MaterializeModule, MaterializeDirective} from 'angular2-materialize'
+declare var Materialize:any;
 
 @Component({
   selector: 'app-register',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
+
+  private selectOptions = [];
 
   ngOnInit() {
+    Materialize.showStaggeredList('#transition-heading');
   }
 
 }
