@@ -11,12 +11,14 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
 import { ExploreComponent } from './components/explore/explore.component';
 
+import { AuthGuard } from './guards/auth.guard'
+
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'upload', component: UploadPictureComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'about', component: AboutUsComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'disclaimer', component: DisclaimerComponent },

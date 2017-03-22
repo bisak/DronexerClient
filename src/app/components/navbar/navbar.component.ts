@@ -1,6 +1,8 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from "angular2-materialize";
-
+import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { ToastService } from "../../services/toast.service";
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -8,14 +10,20 @@ import { MaterializeAction } from "angular2-materialize";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() {
+  constructor(private authService: AuthService,
+              private router: Router,
+              private toastService: ToastService) {
   }
 
-  modalActions = new EventEmitter<string|MaterializeAction>();
-
   ngOnInit() {
-    this.modalActions.emit({ action: "toast", params: ['open'] });
+  }
 
+  onLogoutClick() {
+    console.log("clicked")
+    this.authService.logout();
+    this.toastService.toast('Logged out.');
+    this.router.navigate(['/'])
+    return false;
   }
 
 }

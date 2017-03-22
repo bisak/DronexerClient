@@ -21,6 +21,12 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
 import { ExploreComponent } from './components/explore/explore.component';
 
+import { AuthService } from './services/auth.service'
+import { ToastService } from './services/toast.service'
+import { ValidateService } from './services/validate.service'
+
+import { AuthGuard } from './guards/auth.guard'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +51,12 @@ import { ExploreComponent } from './components/explore/explore.component';
     FileUploadModule,
     MaterializeModule
   ],
-  providers: [],
+  providers: [
+    ValidateService,
+    ToastService,
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
