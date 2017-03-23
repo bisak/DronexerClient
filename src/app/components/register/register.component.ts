@@ -84,13 +84,11 @@ export class RegisterComponent implements OnInit {
     if (registerInputValidator.isValid == false) {
       return this.toastService.errorToast(registerInputValidator.msg)
     }
-
     let registerFormData: FormData = new FormData()
-
     if (this.dronesSelector) {
-      let selectedDrones = []
-      this.dronesSelector.forEach((x) => selectedDrones.push(this.dronesArray[x]))
-      registerFormData.append('drones', selectedDrones)
+      for (let num of this.dronesSelector) {
+        registerFormData.append('drones', this.dronesArray[num])
+      }
     }
     if (this.birthday) {
       registerFormData.append('birthday', this.birthday)
@@ -98,7 +96,6 @@ export class RegisterComponent implements OnInit {
     if (this.profilePictureFile) {
       registerFormData.append('profilePicture', this.profilePictureFile)
     }
-
     registerFormData.append('firstName', this.firstName)
     registerFormData.append('lastName', this.lastName)
     registerFormData.append('email', this.email)

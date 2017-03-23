@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
 
     this.authService.loginUser(user)
       .subscribe((data) => {
-        console.log(data)
         if (data.success) {
           this.authService.storeUserData(data.token, data.user)
           this.toastService.toast('Logged in.')

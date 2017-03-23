@@ -6,3 +6,7 @@
 .input-field :focus + label {
   color: #03a9f4;
 }
+
+.input-field .prefix.active {
+  color: #03a9f4;
+}
