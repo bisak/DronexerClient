@@ -10,7 +10,7 @@ export class ValidateService {
   }
 
   validateProfilePicture(file) {
-    if (file.size > 1 * 1000000) {
+    if (file.size > 4 * 1000000) {
       return {
         isValid: false,
         msg: "Profile picture too big."

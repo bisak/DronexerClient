@@ -24,6 +24,7 @@ import { ExploreComponent } from './components/explore/explore.component';
 import { AuthService } from './services/auth.service'
 import { ToastService } from './services/toast.service'
 import { ValidateService } from './services/validate.service'
+import { ProfileService } from './services/profile.service'
 
 import { AuthGuard } from './guards/auth.guard'
 
@@ -55,6 +56,7 @@ import { AuthGuard } from './guards/auth.guard'
     ValidateService,
     ToastService,
     AuthService,
+    ProfileService,
     AuthGuard
   ],
   bootstrap: [AppComponent]
