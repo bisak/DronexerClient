@@ -21,6 +21,7 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
 import { ExploreComponent } from './components/explore/explore.component';
 
+import { ApiService } from "./services/api.service";
 import { AuthService } from './services/auth.service'
 import { ToastService } from './services/toast.service'
 import { ValidateService } from './services/validate.service'
@@ -53,6 +54,7 @@ import { AuthGuard } from './guards/auth.guard'
     MaterializeModule
   ],
   providers: [
+    ApiService,
     ValidateService,
     ToastService,
     AuthService,

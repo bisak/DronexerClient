@@ -1,59 +1,60 @@
 import { Injectable } from '@angular/core';
 
-import { tokenNotExpired } from 'angular2-jwt'
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt'
 import { Headers, Http, Response } from "@angular/http"
 import { Observable } from "rxjs/Observable"
 import 'rxjs/add/operator/map'
+import { ApiService } from "./api.service";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class AuthService {
   authToken: any
   user: any
+  jwtHelper: JwtHelper = new JwtHelper();
 
-  private apiUrl = "http://localhost:8080/api"
+  private loginAnnouncedSource = new Subject<boolean>();
+  loginAnnounced = this.loginAnnouncedSource.asObservable();
 
-  private getJson(response: Response) {
-    return response.json();
-  }
+  private apiUrl = this.apiService.apiUrl
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private apiService: ApiService) {
   }
 
   registerUser(user): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user)
-      .map(this.getJson)
+      .map(this.apiService.extractData)
+      .catch(this.apiService.handleError)
   }
 
   loginUser(user): Observable<any> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json')
     return this.http.post(`${this.apiUrl}/login`, user, { headers: headers })
-      .map(this.getJson)
+      .map(this.apiService.extractData)
+      .catch(this.apiService.handleError)
   }
 
-  /* getProfile() {
-   let headers = new Headers();
-   this.loadToken();
-   headers.append('Authorization', this.authToken)
-   headers.append('Content-Type', 'application/json')
-   return this.http.get(`${this.baseUrl}/users/profile`, { headers: headers })
-   .map(this.getJson)
-   }
-   */
 
   storeUserData(token, user) {
     localStorage.setItem('id_token', token)
     localStorage.setItem('user', JSON.stringify(user))
     this.authToken = token;
     this.user = user;
+    this.loginAnnouncedSource.next(true);
   }
 
-  loadToken() {
-    const token = localStorage.getItem('id_token')
-    this.authToken = token;
+  getAuthToken() {
+    return localStorage.getItem('id_token')
   }
 
-  loggedIn() {
+  getDecodedAuthToken() {
+    const token = this.getAuthToken()
+    if (token)
+      return this.jwtHelper.decodeToken(token)
+  }
+
+  isLoggedIn() {
     return tokenNotExpired()
   }
 

@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'upload', component: UploadPictureComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'about', component: AboutUsComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'disclaimer', component: DisclaimerComponent },

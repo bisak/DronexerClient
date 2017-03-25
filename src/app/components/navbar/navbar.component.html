@@ -14,13 +14,13 @@
         </li>
       </ul>
       <ul class="right hide-on-med-and-down">
-        <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
           [routerLink]="['login']">Login</a></li>
-        <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Register</a>
+        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Register</a>
         </li>
-        <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile']">Profile</a>
+        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile', username]">Profile</a>
         </li>
-        <li><a *ngIf="authService.loggedIn()" (click)="onLogoutClick()">Logout</a></li>
+        <li><a *ngIf="authService.isLoggedIn()" (click)="onLogoutClick()">Logout</a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li><h3 class="blue-text">&nbsp;&nbsp;&nbsp;Dronexer</h3></li>
@@ -31,13 +31,13 @@
         </li>
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/explore']">Explore</a>
         </li>
-        <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
           [routerLink]="['login']">Login</a></li>
-        <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Register</a>
+        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Register</a>
         </li>
-        <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile']">Profile</a>
+        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile', username]">Profile</a>
         </li>
-        <li><a *ngIf="authService.loggedIn()" (click)="onLogoutClick()">Logout</a></li>
+        <li><a *ngIf="authService.isLoggedIn()" (click)="onLogoutClick()">Logout</a></li>
       </ul>
     </div>
   </div>

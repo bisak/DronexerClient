@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { ToastService } from '../../services/toast.service'
+import { Subject } from "rxjs";
 
 declare var Materialize: any;
 
@@ -15,7 +16,10 @@ export class LoginComponent implements OnInit {
   username: String
   password: String
 
-  constructor(private authService: AuthService, private router: Router, private toastService: ToastService) {
+
+  constructor(private authService: AuthService,
+              private router: Router,
+              private toastService: ToastService) {
   }
 
   ngOnInit() {
