@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProfileService } from '../../services/profile.service'
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import 'rxjs/add/operator/switchMap';
+import { environment } from '../../../environments/environment'
 
 @Component({
   selector: 'app-profile',
@@ -21,13 +22,18 @@ export class ProfileComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       const username = params['username']
       this.profileService.getProfile(username).subscribe((retrievedData) => {
-        console.log(retrievedData)
         this.visualiseData = retrievedData.data
-        this.visualiseData.profilePicture = `http://localhost:8080/api/users/profilePicture/${retrievedData.data.username}`
-        console.log(this.visualiseData.profilePicture)
+        if (this.visualiseData.hasProfilePicture) {
+          this.visualiseData.profilePicture = `${environment.apiUrl}api/users/profilePicture/${retrievedData.data.username}`
+        } else {
+          this.visualiseData.profilePicture = `${environment.apiUrl}api/users/profilePicture/default_profile_picture`
+        }
+        console.log(this.visualiseData)
       }, (error) => {
         console.log("errored in profilecomponent: ")
-        console.log(error)
+        if(error.status==404){
+          this.router.navigate(['page-not-found'])
+        }
       })
     })
   }

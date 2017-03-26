@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from "angular2-materialize";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -9,14 +10,10 @@ import { MaterializeAction } from "angular2-materialize";
 export class HomeComponent implements OnInit {
   globalActions = new EventEmitter<string|MaterializeAction>();
 
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
-  }
-
-  triggerToast() {
-    this.globalActions.emit('toast')
   }
 
 }

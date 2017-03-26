@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, OnChanges, DoCheck, AfterViewInit } from '@angular/core';
-import { MaterializeAction } from "angular2-materialize";
+import { Component, OnInit } from '@angular/core';
+
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { ToastService } from "../../services/toast.service";
@@ -11,18 +11,19 @@ import { ToastService } from "../../services/toast.service";
 export class NavbarComponent implements OnInit {
 
   private username: String
+  private routerLinkOpts = {exact:true}
 
   constructor(private authService: AuthService,
               private router: Router,
               private toastService: ToastService,) {
     authService.loginAnnounced.subscribe(data => {
-      this.setUsername()
-      /*TODO check if this is the right way to do it.*/
+      this.username = this.getUsername()
     })
   }
 
+
   ngOnInit() {
-    this.setUsername()
+    this.username = this.getUsername()
   }
 
   onLogoutClick() {
@@ -32,10 +33,10 @@ export class NavbarComponent implements OnInit {
     return false;
   }
 
-  private setUsername() {
+  private getUsername() {
     const authToken = this.authService.getDecodedAuthToken()
     if (authToken)
-      this.username = authToken._doc.username
+      return authToken._doc.username
   }
 
 }

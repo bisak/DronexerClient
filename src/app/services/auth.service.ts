@@ -58,6 +58,12 @@ export class AuthService {
     return tokenNotExpired()
   }
 
+  getUsernameFromToken() {
+    let token = this.getAuthToken();
+    let decodedToken = this.jwtHelper.decodeToken(token)
+    return decodedToken._doc.username;
+  }
+
   logout() {
     this.authToken = null;
     this.user = null;

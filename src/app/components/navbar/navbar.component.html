@@ -8,17 +8,23 @@
         <i class="material-icons">menu</i>
       </a>
       <ul class="left hide-on-med-and-down">
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/']">Home</a>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/']">Home</a>
         </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/explore']">Explore</a>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/explore']">Explore</a>
         </li>
       </ul>
       <ul class="right hide-on-med-and-down">
-        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="routerLinkOpts"><a
           [routerLink]="['login']">Login</a></li>
-        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Register</a>
+        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/register']">Register</a>
         </li>
-        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile', username]">Profile</a>
+        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a [routerLink]="['/upload']">Upload</a>
+        </li>
+        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a [routerLink]="['/profile', username]">Profile</a>
         </li>
         <li><a *ngIf="authService.isLoggedIn()" (click)="onLogoutClick()">Logout</a></li>
       </ul>
@@ -27,15 +33,21 @@
         <li>
           <div class="divider"></div>
         </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/']">Home</a>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/']">Home</a>
         </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/explore']">Explore</a>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/explore']">Explore</a>
         </li>
-        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="routerLinkOpts"><a
           [routerLink]="['login']">Login</a></li>
-        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Register</a>
+        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/register']">Register</a>
         </li>
-        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile', username]">Profile</a>
+        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a [routerLink]="['/upload']">Upload</a>
+        </li>
+        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a [routerLink]="['/profile', username]">Profile</a>
         </li>
         <li><a *ngIf="authService.isLoggedIn()" (click)="onLogoutClick()">Logout</a></li>
       </ul>

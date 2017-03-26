@@ -14,20 +14,23 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
-import { UploadPictureComponent } from './components/upload-picture/upload-picture.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
 import { ExploreComponent } from './components/explore/explore.component';
+import { NotFoundComponent } from './components/not-found/not-found.component'
 
-import { ApiService } from "./services/api.service";
+
+import { ApiService } from "./services/api.service"
 import { AuthService } from './services/auth.service'
 import { ToastService } from './services/toast.service'
 import { ValidateService } from './services/validate.service'
 import { ProfileService } from './services/profile.service'
 
-import { AuthGuard } from './guards/auth.guard'
+import { AuthGuard } from './guards/auth.guard';
+import { UploadComponent } from './components/upload/upload.component';
+import { PicturesService } from "./services/pictures.service";
 
 @NgModule({
   declarations: [
@@ -38,12 +41,13 @@ import { AuthGuard } from './guards/auth.guard'
     NavbarComponent,
     ProfileComponent,
     RegisterComponent,
-    UploadPictureComponent,
     AboutUsComponent,
     TermsOfUseComponent,
     PrivacyPolicyComponent,
     DisclaimerComponent,
-    ExploreComponent
+    ExploreComponent,
+    NotFoundComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,7 @@ import { AuthGuard } from './guards/auth.guard'
     ToastService,
     AuthService,
     ProfileService,
+    PicturesService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

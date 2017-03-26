@@ -1,0 +1,25 @@
+.card .card-content{
+  padding-bottom: 0;
+  padding-top: 15px;
+}
+
+.input-field :focus {
+  border-bottom: 1px solid #03a9f4;
+  box-shadow: 0 1px 0 0 #03a9f4;
+}
+
+.input-field :focus + label {
+  color: #03a9f4;
+}
+
+.input-field .prefix.active {
+  color: #03a9f4;
+}
+
+textarea.materialize-textarea {
+  padding: .8rem 0 0.5rem 0;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+  color: #9e9e9e;
+}

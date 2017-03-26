@@ -73,12 +73,10 @@
               <select [(ngModel)]="dronesSelector"
                       id="register-drone-select"
                       materialize="material_select"
-                      [materializeSelectOptions]="selectOptions"
                       name="drones-select"
                       multiple>
                 <option value="" disabled>Choose your drone</option>
-                <option *ngFor="let drone of dronesArray; let i = index;" [value]="i"><span class="blue-grey-text">{{drone}}</span>
-                </option>
+                <option *ngFor="let drone of dronesArray; let i = index;" [value]="i">{{drone}}</option>
               </select>
             </div>
           </div>
@@ -88,7 +86,7 @@
               <div class="btn light-blue darken-1 z-depth-1">
                 <span>Upload</span>
                 <input (change)="onProfilePictureSelected($event)" id="profile-picture-upload" type="file"
-                       name="profile-picture-upload" accept="image/png,image/gif,image/jpeg">
+                       name="profile-picture-upload" accept="image/png,image/jpeg">
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text" placeholder="Profile picture.">

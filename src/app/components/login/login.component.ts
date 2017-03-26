@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     Materialize.showStaggeredList('#transition-heading');
+    if(this.authService.isLoggedIn()){
+      this.router.navigate([''])
+    }
   }
 
   onLoginSubmit() {

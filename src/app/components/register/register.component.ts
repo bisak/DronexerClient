@@ -50,7 +50,10 @@ export class RegisterComponent implements OnInit {
   ]
 
   ngOnInit() {
-    Materialize.showStaggeredList('#transition-heading');
+    Materialize.showStaggeredList('#transition-heading')
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate([''])
+    }
   }
 
   onProfilePictureSelected(ev) {
@@ -71,6 +74,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegisterSubmit() {
+    let registerFormData: FormData = new FormData()
     const user = {
       firstName: this.firstName,
       lastName: this.lastName,
@@ -84,7 +88,6 @@ export class RegisterComponent implements OnInit {
     if (registerInputValidator.isValid == false) {
       return this.toastService.errorToast(registerInputValidator.msg)
     }
-    let registerFormData: FormData = new FormData()
     if (this.dronesSelector) {
       for (let num of this.dronesSelector) {
         registerFormData.append('drones', this.dronesArray[num])
