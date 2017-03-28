@@ -31,6 +31,7 @@ import { ProfileService } from './services/profile.service'
 import { AuthGuard } from './guards/auth.guard';
 import { UploadComponent } from './components/upload/upload.component';
 import { PicturesService } from "./services/pictures.service";
+import { StaticDataService } from "./services/static-data.service";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { PicturesService } from "./services/pictures.service";
     AuthService,
     ProfileService,
     PicturesService,
+    StaticDataService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

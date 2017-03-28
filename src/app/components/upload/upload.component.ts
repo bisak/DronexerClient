@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ToastService } from "../../services/toast.service";
 import { AuthService } from "../../services/auth.service";
 import { ProfileService } from "../../services/profile.service";
 import { PicturesService } from "../../services/pictures.service";
 import { Router } from "@angular/router";
+import { StaticDataService } from "../../services/static-data.service";
 
 @Component({
   selector: 'app-upload',
@@ -11,34 +12,34 @@ import { Router } from "@angular/router";
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
-
-  private selected = false
+  /*TODO add drag and drop to upload files.*/
+  private pictureSelected = false
   private pictureFile: File
   private pictureFileEncoded: string
   private dronesSelector: number
   private tags: string
   private caption: string
 
-  private dronesArray = [
-    "DJI Phantom 3 Std",
-    "DJI Phantom 3 4K",
-    "DJI Phantom 3 Adv",
-    "DJI Phantom 3 Pro",
-    "DJI Phantom 4",
-    "DJI Phantom 4 Pro",
-    "DJI Mavic Pro",
-    "DJI Inspire 1",
-    "DJI Inspire 2",
-    "Other"
-  ]
+  private dronesArray = this.staticData.dronesArray;
 
   constructor(private toastService: ToastService,
               private authService: AuthService,
               private picturesService: PicturesService,
-              private router: Router) {
+              private router: Router,
+              private staticData: StaticDataService,
+              private elRef: ElementRef,
+              private renderer: Renderer2) {
   }
 
   ngOnInit() {
+  }
+
+  hidePictureCard() {
+    this.pictureSelected = false;
+  }
+
+  showPictureCard() {
+    this.pictureSelected = true;
   }
 
   onPictureSelectorChange(ev) {
@@ -47,21 +48,18 @@ export class UploadComponent implements OnInit {
     fileReader.readAsDataURL(this.pictureFile)
     fileReader.onloadend = (e) => {
       this.pictureFileEncoded = fileReader.result;
-      this.selected = true
+      this.showPictureCard()
     }
   }
 
   onUploadBtnClick() {
     let uploadFormData: FormData = new FormData()
-    if (this.dronesSelector) {
-      uploadFormData.append('droneTaken', this.dronesArray[this.dronesSelector])
-    }
+    this.dronesSelector && uploadFormData.append('droneTaken', this.dronesArray[this.dronesSelector])
+    this.caption && uploadFormData.append('caption', this.caption)
     if (this.tags) {
-      let tagsArray = this.tags.split(' ').filter((x) => x != '' && x.startsWith('#') && x.length > 4)
-      tagsArray.length && tagsArray.forEach(tag => uploadFormData.append('tags', tag))
-    }
-    if (this.caption) {
-      uploadFormData.append('caption', this.caption)
+      /*TODO Add this verification on the server side.*/
+      let tagsArray = this.tags.split(' ').filter((x) => x != '' && x.startsWith('#') && x.length > 4).map((x)=>x.toLowerCase())
+      tagsArray.length && tagsArray.forEach((tag) => uploadFormData.append('tags', tag))
     }
     uploadFormData.append('uploaderUsername', this.authService.getUsernameFromToken())
     uploadFormData.append('pictureFile', this.pictureFile)
@@ -69,7 +67,8 @@ export class UploadComponent implements OnInit {
     this.picturesService.uploadPicture(uploadFormData)
       .subscribe((data) => {
         if (data.success) {
-          this.toastService.successToast('Picture Uploaded.')
+          this.toastService.successToast('Picture Uploaded.', this.hidePictureCard.bind(this))
+          /*binding hell.*/
           console.log(data)
         } else {
           this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"))

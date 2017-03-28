@@ -11,10 +11,10 @@ import { Subject } from "rxjs";
 export class AuthService {
   authToken: any
   user: any
-  jwtHelper: JwtHelper = new JwtHelper();
+  private jwtHelper: JwtHelper = new JwtHelper();
 
   private loginAnnouncedSource = new Subject<boolean>();
-  loginAnnounced = this.loginAnnouncedSource.asObservable();
+  loginAnnounced: Observable<any> = this.loginAnnouncedSource.asObservable();
 
   private apiUrl = this.apiService.apiUrl
 
@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   getDecodedAuthToken() {
-    const token = this.getAuthToken()
+    const token = localStorage.getItem('id_token')
     if (token)
       return this.jwtHelper.decodeToken(token)
   }
@@ -60,8 +60,10 @@ export class AuthService {
 
   getUsernameFromToken() {
     let token = this.getAuthToken();
-    let decodedToken = this.jwtHelper.decodeToken(token)
-    return decodedToken._doc.username;
+    if (token) {
+      let decodedToken = this.jwtHelper.decodeToken(token)
+      return decodedToken._doc.username;
+    }
   }
 
   logout() {

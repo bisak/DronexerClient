@@ -8,19 +8,19 @@ export class ToastService {
   constructor() {
   }
 
-  toast(text: string) {
-    Materialize.toast(text, 3000);
+  toast(text: string, cb?) {
+    Materialize.toast(text, 2000, '', cb);
   }
 
-  warningToast(text: string) {
-    Materialize.toast(text, 3000, 'yellow lighten-1');
+  warningToast(text: string, cb?) {
+    Materialize.toast(text, 2000, 'yellow lighten-1', cb);
   }
 
-  successToast(text: string) {
-    Materialize.toast(text, 3000, 'green lighten-1');
+  successToast(text: string, cb?) {
+    Materialize.toast(text, 2000, 'green lighten-1', cb);
   }
 
-  errorToast(text: string) {
-    Materialize.toast(text, 3000, 'red lighten-1');
+  errorToast(text: string, cb?) {
+    Materialize.toast(text, 2000, 'red lighten-1', cb);
   }
 }

@@ -7,6 +7,7 @@ import { ValidateService } from "../../services/validate.service"
 import { Form } from "@angular/forms";
 import { isUndefined } from "util";
 import { templateVisitAll } from "@angular/compiler";
+import { StaticDataService } from "../../services/static-data.service";
 
 declare var Materialize: any;
 
@@ -33,21 +34,11 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService,
               private router: Router,
               private toastService: ToastService,
-              private validateService: ValidateService) {
+              private validateService: ValidateService,
+              private staticData: StaticDataService) {
   }
 
-  private dronesArray = [
-    "DJI Phantom 3 Std",
-    "DJI Phantom 3 4K",
-    "DJI Phantom 3 Adv",
-    "DJI Phantom 3 Pro",
-    "DJI Phantom 4",
-    "DJI Phantom 4 Pro",
-    "DJI Mavic Pro",
-    "DJI Inspire 1",
-    "DJI Inspire 2",
-    "Other"
-  ]
+  private dronesArray = this.staticData.dronesArray;
 
   ngOnInit() {
     Materialize.showStaggeredList('#transition-heading')
