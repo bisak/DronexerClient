@@ -4,36 +4,9 @@
   max-width: 100% !important;
 }
 
-.card {
-  position: relative;
+.profile-head .card {
   overflow: hidden;
-  margin: 0.5rem 0 1rem 0;
-  background-color: #fff;
-  border-radius: 2px;
-}
-
-.profile-page-wall-post .chip.tag {
-  height: 26px;
-  line-height: 26px;
-}
-
-.profile-page-wall-post .comments-container {
-  margin: 10px;
-  margin-top: 0px !important;
-  margin-bottom: -7px !important;
-}
-
-.profile-page-wall-post .comment {
-  margin: 3px 0 3px 0;
-}
-
-.profile-page-wall-post .card .card-action {
-  padding: 15px 24px 10px 40px;
-}
-
-.profile-page-wall-post .comment .chip {
-  background-color: transparent;
-  border: 1px solid;
+  border-radius: 5px;
 }
 
 .card .card-image img {
@@ -98,62 +71,7 @@
   font-size: 0.88rem;
 }
 
-.profile-page-wall-post .post-profile-info {
-  padding-top: 12px;
-}
-
-.profile-page-wall-post .card-action-share {
-  margin: 10px 0;
-}
-
-.profile-page-wall-post .card .card-content {
-  padding: 8px 15px 3px 15px;
-  border-radius: 0 0 2px 2px;
-}
-
-.profile-page-wall-post .card-profile-title {
-  font-size: 16px;
-  padding: 5px 20px 5px 20px;
-  border-radius: 0 0 2px 2px;
-}
-
-.profile-page-wall-post .post-profile-picture {
-  margin: 10px;
-  width: 50px;
-  height: 50px;
-  border: 1px solid #03a9f4;
-}
-
-.profile-page-wall-post .divider.title-divider {
-  width: 120%;
-  left: 0;
-  position: absolute;
-}
-
-.profile-page-wall-post .card-profile-title {
-  padding-bottom: 0;
-}
-
-.profile-page-wall-post .expand-more-arrow {
-  margin-top: 5px;
-}
-
-.profile-page-wall-post .card .card-image img {
-  z-index: 1000;
-  padding: 0 1px;
-}
-
-.profile-page-wall-post .comment .chip {
-  height: 28px;
-  line-height: 28px;
-}
-
 @media only screen and (min-width: 993px) {
-  .profile-page-wall-post .comments-container {
-    max-height: 120px;
-    overflow: scroll;
-  }
-
   .container {
     width: 970px;
   }
@@ -164,11 +82,6 @@
 }
 
 @media only screen and (max-width: 992px) {
-  .profile-page-wall-post .comments-container {
-    max-height: 100px;
-    overflow: scroll;
-  }
-
   .profile-page-wall {
     width: 100%;
   }

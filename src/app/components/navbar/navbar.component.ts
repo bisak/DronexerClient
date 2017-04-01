@@ -35,7 +35,9 @@ export class NavbarComponent implements OnInit {
 
   private getUsername() {
     const user = this.authHelperService.getUser()
-    return user.username
+    if (user) {
+      return user.username
+    }
   }
 
 }

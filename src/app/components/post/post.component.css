@@ -1,0 +1,156 @@
+.container {
+  margin: 0.5rem auto;
+  width: 95%;
+  max-width: 100% !important;
+}
+
+.card {
+  overflow: hidden;
+  margin: 0.5rem 0 1rem 0;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.post .chip.tag {
+  height: 26px;
+  line-height: 26px;
+}
+
+.post .comments-container {
+  margin: 10px;
+  margin-top: 0px !important;
+  margin-bottom: -7px !important;
+}
+
+.post .comment {
+  margin: 3px 0 3px 0;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+
+.post .card .card-action {
+  padding: 15px 24px 5px 15px;
+}
+
+.input-field label {
+  top: 1.3rem;
+}
+
+.post .comment .chip {
+  background-color: transparent;
+  border: 1px solid;
+}
+
+.post .caption .p{
+  margin: 10px 0;
+}
+
+.card .card-image img {
+  border-radius: 2px 2px 0 0;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.cover-photo {
+  max-height: 250px;
+  position: relative;
+}
+
+.input-field :focus {
+  border-bottom: 1px solid #03a9f4;
+  box-shadow: 0 1px 0 0 #03a9f4;
+}
+
+.input-field :focus + label {
+  color: #03a9f4;
+}
+
+.content-row {
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .open-profile-info {
+    margin-top: 20px;
+  }
+}
+
+.ultra-small {
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.small-text {
+  font-size: 0.88rem;
+}
+
+.post .post-profile-info {
+  padding-top: 15px;
+}
+
+.post .card-action-share {
+  margin: 10px 0;
+}
+
+.post .card .card-content {
+  padding: 8px 15px 3px 15px;
+  border-radius: 0 0 2px 2px;
+}
+
+.post .card-profile-title {
+  font-size: 16px;
+  padding: 5px 20px 5px 20px;
+  border-radius: 0 0 2px 2px;
+}
+
+.post .profile-picture {
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #03a9f4;
+}
+
+.post .divider.title-divider {
+  width: 120%;
+  left: 0;
+  position: absolute;
+}
+
+.post .card-profile-title {
+  padding-bottom: 0;
+}
+
+.post .expand-more-arrow {
+  margin-top: 5px;
+}
+
+.post .card .card-image img {
+  z-index: 1000;
+}
+
+.post .comment .chip {
+  height: 28px;
+  line-height: 28px;
+}
+
+@media only screen and (min-width: 993px) {
+  .post .comments-container {
+    max-height: 120px;
+    overflow: scroll;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .post .comments-container {
+    max-height: 100px;
+    overflow: scroll;
+  }
+}

@@ -28,7 +28,7 @@ export class ApiService {
   post(path: string, data: any) {
     let headers = new Headers();
     headers.append('Authorization', this.authHelperService.getAuthToken())
-    if (!(data instanceof FormData)) {
+    if ((data instanceof FormData) == false) {
       headers.append('Content-Type', 'application/json')
     }
     return this.http.post(`${this.apiUrl}${path}`, data, { headers: headers })
@@ -38,7 +38,6 @@ export class ApiService {
 
 
   private handleError(error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
@@ -48,7 +47,7 @@ export class ApiService {
       errMsg = error.message ? error.message : error.toString();
     }
     console.error(errMsg);
-    return Observable.throw(errMsg);
+    return Observable.throw(error);
   }
 
   private extractData(res: Response) {

@@ -8,26 +8,26 @@
       <div class="card-content">
         <div class="row content-row">
           <div class="col s12 center-align m2">
-            <img *ngIf="visualiseData?.profilePicture"
+            <img *ngIf="profileInfo?.profilePicture"
                  id="profile-picture-view"
-                 [src]="visualiseData?.profilePicture"
+                 [src]="profileInfo?.profilePicture"
                  (error)="picturesService.handleNotFoundProfilePicture($event)"
                  alt="Profile picture" class="circle profile-picture z-depth-1">
           </div>
           <div class="col s12 m3 center-align">
-            <h4 class="card-title grey-text text-darken-4">{{visualiseData?.username}}</h4>
-            <p class="grey-text">{{visualiseData?.firstName}} {{visualiseData?.lastName}}</p>
+            <h4 class="card-title grey-text text-darken-4">{{profileInfo?.username}}</h4>
+            <p class="grey-text">{{profileInfo?.firstName}} {{profileInfo?.lastName}}</p>
           </div>
           <div class="col s2 m1 center-align offset-s1 pull-m1">
-            <h4 class="card-title grey-text text-darken-4">{{visualiseData?.picturesCount}}</h4>
+            <h4 class="card-title grey-text text-darken-4">{{profileInfo?.picturesCount}}</h4>
             <p class="grey-text">Posts</p>
           </div>
           <div class="col s2 m1 center-align offset-m1 offset-s2 pull-m1">
-            <h4 class="card-title grey-text text-darken-4">{{visualiseData?.followersCount}}</h4>
+            <h4 class="card-title grey-text text-darken-4">{{profileInfo?.followersCount}}</h4>
             <p class="grey-text">Followers</p>
           </div>
           <div class="col s2 m1 center-align offset-m1 offset-s2 pull-m1">
-            <h4 class="card-title grey-text text-darken-4">{{visualiseData?.followingCount}}</h4>
+            <h4 class="card-title grey-text text-darken-4">{{profileInfo?.followingCount}}</h4>
             <p class="grey-text">Following</p>
           </div>
           <div class="col right open-profile-info">
@@ -41,24 +41,24 @@
         <div class="row">
           <span class="card-title grey-text text-darken-4">Profile info<i class="material-icons right">close</i></span>
           <div class="col s10 m6 l4">
-            <p><i class="material-icons blue-text left">account_box</i>{{visualiseData?.username}}</p>
-            <p><i class="material-icons blue-text left">account_circle</i> {{visualiseData?.firstName}}
-              {{visualiseData?.lastName}}</p>
-            <p><i class="material-icons blue-text left">email</i> {{visualiseData?.email}}</p>
-            <p *ngIf="visualiseData?.birthday"><i class="material-icons blue-text left">cake</i> Birthday:
-              {{visualiseData?.birthday}}</p>
-            <p><i class="material-icons blue-text left">info</i> Member since: {{visualiseData?.dateRegistered}}</p>
+            <p><i class="material-icons blue-text left">account_box</i>{{profileInfo?.username}}</p>
+            <p><i class="material-icons blue-text left">account_circle</i> {{profileInfo?.firstName}}
+              {{profileInfo?.lastName}}</p>
+            <p><i class="material-icons blue-text left">email</i> {{profileInfo?.email}}</p>
+            <p *ngIf="profileInfo?.birthday"><i class="material-icons blue-text left">cake</i> Birthday:
+              {{profileInfo?.birthday}}</p>
+            <p><i class="material-icons blue-text left">info</i> Member since: {{profileInfo?.dateRegistered}}</p>
           </div>
           <div class="col s10 m5 l4">
             <ul disabled materialize="collapsible" class="collapsible" data-collapsible="accordion">
               <li>
                 <div class="collapsible-header">
                   <i class="material-icons blue-text">view_list</i>
-                  <span> Drones ({{visualiseData?.drones.length}})</span>
+                  <span> Drones ({{profileInfo?.drones.length}})</span>
                 </div>
                 <div class="collapsible-body collapsible-padding">
                   <ul>
-                    <li *ngFor="let drone of visualiseData?.drones"><p>{{drone}}</p></li>
+                    <li *ngFor="let drone of profileInfo?.drones"><p>{{drone}}</p></li>
                   </ul>
                 </div>
               </li>
@@ -80,71 +80,9 @@
         </div>
       </div>
   -->
-    <div *ngIf="posts" class="profile-page-wall">
+    <div *ngIf="wallPosts" class="profile-page-wall">
 
-
-      <div *ngFor="let post of posts" class="profile-page-wall-post">
-        <div class="card">
-          <div class="card-profile-title">
-            <div class="row">
-              <div class="col">
-                <img [src]="picturesService.getProfilePictureUrlForPost(post)"
-                     (error)="picturesService.handleNotFoundProfilePicture($event)" alt="Post profile picture"
-                     class="circle responsive-img valign post-profile-picture z-depth-1">
-              </div>
-              <div class="col">
-                <div class="post-profile-info">
-                  <p class="grey-text text-darken-4 margin valign">{{post.uploaderUsername}}</p>
-                  <span class="grey-text text-darken-1 ultra-small valign">{{datesService.getFormattedDateString(post.createdAt)}}</span>
-                </div>
-              </div>
-              <div class="col right expand-more-arrow">
-                <i class="material-icons">expand_more</i>
-              </div>
-            </div>
-            <div class="divider grey lighten-2"></div>
-            <div class="row">
-              <div class="col s12">
-                <p>{{post.caption}}</p>
-              </div>
-            </div>
-          </div>
-          <div class="divider title-divider"></div>
-          <div class="card-content">
-            <div *ngFor="let tag of post.tags" class="chip tag">
-              {{tag}}
-            </div>
-          </div>
-          <div class="card-image">
-            <img materialboxed [src]="picturesService.getPictureUrlForPost(post)" alt="Wall post picture"
-                 class="">
-          </div>
-
-          <div class="row comments-container">
-            <div *ngFor="let comment of post.comments" class="comment">
-              <div class="chip">
-                <span>{{comment.username}}</span>
-              </div>
-              <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
-            </div>
-          </div>
-          <div class="card-action row">
-            <div class="col s1 card-action-share">
-              <i class="material-icons black-text lighten-1">favorite_outline</i>
-            </div>
-            <div class="col s1 card-action-share">
-              <i class="material-icons blue-text lighten-1">share</i>
-            </div>
-            <form (keyup)="commentPost($event, post)">
-              <div class="input-field col s8 margin push-s1">
-                <input id="profile-comments" type="text" class="validate margin">
-                <label for="profile-comments" class="">Add a comment...</label>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
+      <app-post [post]="post" *ngFor="let post of wallPosts"></app-post>
 
     </div>
   </div>

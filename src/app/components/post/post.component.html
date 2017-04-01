@@ -1,0 +1,72 @@
+<div class="post">
+  <div class="card">
+    <div class="card-profile-title">
+      <div class="row no-margin">
+        <div class="col no-margin no-padding">
+          <img [src]="picturesService.getProfilePictureUrlForPost(post)"
+               (error)="picturesService.handleNotFoundProfilePicture($event)" alt="Post profile picture"
+               class="circle responsive-img valign profile-picture z-depth-1">
+        </div>
+        <div class="col">
+          <div class="post-profile-info">
+            <p class="grey-text text-darken-4 no-margin valign">{{post.uploaderUsername}}</p>
+            <p class="grey-text text-darken-1 ultra-small no-margin valign">
+              {{datesService.getFormattedDateString(post.createdAt)}}</p>
+          </div>
+        </div>
+        <div class="col right expand-more-arrow">
+          <i class="material-icons">expand_more</i>
+        </div>
+      </div>
+      <div class="divider grey lighten-2"></div>
+      <div *ngIf="post.caption" class="caption row no-margin">
+        <div class="col s12">
+          <p>{{post.caption}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="divider title-divider"></div>
+    <div *ngIf="post.tags.length" class="card-content">
+      <div *ngFor="let tag of post.tags" class="chip tag">
+        {{tag}}
+      </div>
+    </div>
+    <div class="card-image">
+      <img materialboxed [src]="picturesService.getPictureUrlForPost(post)" alt="Wall post picture"
+           class="">
+    </div>
+
+    <div class="row comments-container">
+      <div *ngFor="let comment of post.comments" class="comment">
+        <div class="chip">
+          <span>{{comment.username}}</span>
+        </div>
+        <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
+      </div>
+    </div>
+    <div class="card-action row no-margin">
+      <div class="col card-action-share">
+        <div class="center">
+          <i class="material-icons black-text lighten-1">favorite_outline</i>
+        </div>
+        <div class="center">
+          <span class="ultra-small">10139</span>
+        </div>
+      </div>
+      <div class="col m1 card-action-share">
+        <div class="center">
+          <i class="material-icons blue-text lighten-1">share</i>
+        </div>
+        <div class="center">
+          <span class="ultra-small">10</span>
+        </div>
+      </div>
+      <form (keyup)="commentPost($event, post)">
+        <div class="input-field col s7 no-margin m8 push-m1">
+          <input id="profile-comments" type="text" class="validate margin">
+          <label for="profile-comments">Add a comment...</label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

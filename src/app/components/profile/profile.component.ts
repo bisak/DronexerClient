@@ -14,8 +14,8 @@ import { AuthHelperService } from "../../utilities/auth-helper.service";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  visualiseData: any
-  posts: any
+  profileInfo: any
+  wallPosts: any
 
   constructor(private profileService: ProfileService,
               private route: ActivatedRoute,
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.getProfile(username).subscribe((retrievedData) => {
         let data = retrievedData.data
         data.profilePicture = this.picturesService.getProfilePictureUrl(data.username)
-        this.visualiseData = data
+        this.profileInfo = data
         console.log(data)
       }, (error) => {
         console.log("Error in profile component.")
@@ -52,8 +52,8 @@ export class ProfileComponent implements OnInit {
       const username = params['username']
       this.picturesService.getWallPosts(username).subscribe((retrievedPictures) => {
         if (retrievedPictures.success) {
-          this.posts = retrievedPictures.data
-          console.log(this.posts)
+          this.wallPosts = retrievedPictures.data
+          console.log(this.wallPosts)
         }
       }, (error) => {
         console.log("Error getting user picture.")
@@ -61,23 +61,5 @@ export class ProfileComponent implements OnInit {
         this.toastService.errorToast("Error getting user pictures.")
       })
     })
-  }
-
-  private commentPost(ev, post) {
-    if (ev.keyCode == 13) {
-      let comment = ev.target.value
-      let id = post._id
-      this.picturesService.commentPicture(id, { comment }).subscribe((data) => {
-        let commentToAdd = {
-          username: this.authHelperService.getUsernameFromToken(),
-          comment: comment
-        }
-        post.comments.push(commentToAdd)
-      }, (error) => {
-        console.log(error)
-      })
-      ev.target.value = null
-      console.log(id)
-    }
   }
 }

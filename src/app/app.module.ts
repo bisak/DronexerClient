@@ -34,6 +34,7 @@ import { PicturesService } from "./services/pictures.service";
 import { StaticDataService } from "./services/static-data.service";
 import { DatesService } from "./utilities/dates.service";
 import { AuthHelperService } from "./utilities/auth-helper.service";
+import { PostComponent } from './components/post/post.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AuthHelperService } from "./utilities/auth-helper.service";
     DisclaimerComponent,
     ExploreComponent,
     NotFoundComponent,
-    UploadComponent
+    UploadComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
