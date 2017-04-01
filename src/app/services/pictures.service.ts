@@ -25,6 +25,14 @@ export class PicturesService {
     return this.apiService.post(`pictures/comment/${id}`, data)
   }
 
+  likePost(id): Observable<any> {
+    return this.apiService.post(`pictures/like/${id}`, {})
+  }
+
+  unLikePost(id): Observable<any> {
+    return this.apiService.post(`pictures/unlike/${id}`, {})
+  }
+
   getProfilePictureUrl(username: string): string {
     return `${this.apiService.apiUrl}users/profilePicture/${username}`
   }

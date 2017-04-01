@@ -36,7 +36,7 @@
            class="">
     </div>
 
-    <div class="row comments-container">
+    <div *ngIf="post.comments.length" class="row comments-container">
       <div *ngFor="let comment of post.comments" class="comment">
         <div class="chip">
           <span>{{comment.username}}</span>
@@ -46,20 +46,25 @@
     </div>
     <div class="card-action row no-margin">
       <div class="col card-action-share">
-        <div class="center">
-          <i class="material-icons black-text lighten-1">favorite_outline</i>
+        <div *ngIf="!isLiked(post)" class="pointer like-container" (click)="likePost(post)">
+          <div class="center">
+            <i class="material-icons black-text lighten-1">favorite_outline</i>
+          </div>
+        </div>
+        <div *ngIf="isLiked(post)" class="pointer unlike-container" (click)="unLikePost(post)">
+          <div class="center">
+            <i class="material-icons red-text">favorite</i>
+          </div>
         </div>
         <div class="center">
-          <span class="ultra-small">10139</span>
+          <span class="ultra-small">{{post.likes.length}}</span>
         </div>
       </div>
       <div class="col m1 card-action-share">
         <div class="center">
           <i class="material-icons blue-text lighten-1">share</i>
         </div>
-        <div class="center">
-          <span class="ultra-small">10</span>
-        </div>
+
       </div>
       <form (keyup)="commentPost($event, post)">
         <div class="input-field col s7 no-margin m8 push-m1">

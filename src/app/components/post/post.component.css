@@ -141,6 +141,14 @@
   line-height: 28px;
 }
 
+.post .comments-container{
+  min-height: 42px;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 993px) {
   .post .comments-container {
     max-height: 120px;

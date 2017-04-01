@@ -35,6 +35,7 @@ export class ProfileComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       const username = params['username']
       this.profileService.getProfile(username).subscribe((retrievedData) => {
+        console.log(retrievedData)
         let data = retrievedData.data
         data.profilePicture = this.picturesService.getProfilePictureUrl(data.username)
         this.profileInfo = data
