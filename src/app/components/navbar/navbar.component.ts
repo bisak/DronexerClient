@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { ToastService } from "../../services/toast.service";
+import { AuthHelperService } from "../../utilities/auth-helper.service";
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -11,32 +12,30 @@ import { ToastService } from "../../services/toast.service";
 export class NavbarComponent implements OnInit {
 
   private username: String
-  private routerLinkOpts = {exact:true}
+  private routerLinkOpts = { exact: true }
 
-  constructor(private authService: AuthService,
+  constructor(private authHelperService: AuthHelperService,
               private router: Router,
               private toastService: ToastService,) {
-    authService.loginAnnounced.subscribe(data => {
+    authHelperService.loginAnnounced.subscribe(data => {
       this.username = this.getUsername()
     })
   }
-
 
   ngOnInit() {
     this.username = this.getUsername()
   }
 
   onLogoutClick() {
-    this.authService.logout();
+    this.authHelperService.logout();
     this.toastService.toast('Logged out.');
     this.router.navigate(['/'])
     return false;
   }
 
   private getUsername() {
-    const authToken = this.authService.getDecodedAuthToken()
-    if (authToken)
-      return authToken._doc.username
+    const user = this.authHelperService.getUser()
+    return user.username
   }
 
 }

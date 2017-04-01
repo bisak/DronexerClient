@@ -5,6 +5,7 @@ import { ProfileService } from "../../services/profile.service";
 import { PicturesService } from "../../services/pictures.service";
 import { Router } from "@angular/router";
 import { StaticDataService } from "../../services/static-data.service";
+import { AuthHelperService } from "../../utilities/auth-helper.service";
 
 @Component({
   selector: 'app-upload',
@@ -23,7 +24,7 @@ export class UploadComponent implements OnInit {
   private dronesArray = this.staticData.dronesArray;
 
   constructor(private toastService: ToastService,
-              private authService: AuthService,
+              private authHelperService: AuthHelperService,
               private picturesService: PicturesService,
               private router: Router,
               private staticData: StaticDataService,
@@ -34,11 +35,11 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
   }
 
-  hidePictureCard() {
+  private hidePictureCard() {
     this.pictureSelected = false;
   }
 
-  showPictureCard() {
+  private showPictureCard() {
     this.pictureSelected = true;
   }
 
@@ -61,7 +62,7 @@ export class UploadComponent implements OnInit {
       let tagsArray = this.tags.split(' ').filter((x) => x != '' && x.startsWith('#') && x.length > 4).map((x)=>x.toLowerCase())
       tagsArray.length && tagsArray.forEach((tag) => uploadFormData.append('tags', tag))
     }
-    uploadFormData.append('uploaderUsername', this.authService.getUsernameFromToken())
+    uploadFormData.append('uploaderUsername', this.authHelperService.getUsernameFromToken())
     uploadFormData.append('pictureFile', this.pictureFile)
 
     this.picturesService.uploadPicture(uploadFormData)

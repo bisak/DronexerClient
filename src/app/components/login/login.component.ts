@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { ToastService } from '../../services/toast.service'
 import { Subject } from "rxjs";
+import { AuthHelperService } from "../../utilities/auth-helper.service";
 
 declare var Materialize: any;
 
@@ -17,16 +18,16 @@ export class LoginComponent implements OnInit {
   password: String
 
 
-  constructor(private authService: AuthService,
+  constructor(private authHelperService: AuthHelperService,
+              private authService: AuthService,
               private router: Router,
               private toastService: ToastService) {
   }
 
   ngOnInit() {
     Materialize.showStaggeredList('#transition-heading');
-    if(this.authService.isLoggedIn()){
-      this.router.navigate([''])
-    }
+    this.authHelperService.blockLoggedInAccess()
+
   }
 
   onLoginSubmit() {
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(user)
       .subscribe((data) => {
         if (data.success) {
-          this.authService.storeUserData(data.token, data.user)
+          this.authHelperService.storeUserData(data.token, data.user)
           this.toastService.toast('Logged in.')
           this.router.navigate(['/'])
         } else {

@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from "angular2-materialize";
-import { AuthService } from "../../services/auth.service";
+import { AuthHelperService } from "../../utilities/auth-helper.service";
 
 @Component({
   selector: 'app-home',
@@ -8,9 +8,9 @@ import { AuthService } from "../../services/auth.service";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  globalActions = new EventEmitter<string|MaterializeAction>();
+  globalActions = new EventEmitter<string | MaterializeAction>();
 
-  constructor(private authService: AuthService) {
+  constructor(private authHelperService: AuthHelperService) {
   }
 
   ngOnInit() {

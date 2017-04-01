@@ -10,16 +10,34 @@ import { ApiService } from "./api.service";
 
 @Injectable()
 export class PicturesService {
-
-  private apiUrl = this.apiService.apiUrl;
-
-  constructor(private http: Http, private apiService: ApiService) {
+  constructor(private apiService: ApiService) {
   }
 
   uploadPicture(formData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/pictures/upload`, formData)
-      .map(this.apiService.extractData)
-      .catch(this.apiService.handleError)
+    return this.apiService.post(`pictures/upload`, formData)
   }
 
+  getWallPosts(username: string): Observable<any> {
+    return this.apiService.get(`pictures/${username}`)
+  }
+
+  commentPicture(id, data): Observable<any> {
+    return this.apiService.post(`pictures/comment/${id}`, data)
+  }
+
+  getProfilePictureUrl(username: string): string {
+    return `${this.apiService.apiUrl}users/profilePicture/${username}`
+  }
+
+  handleNotFoundProfilePicture(ev) {
+    ev.target.src = `${this.apiService.apiUrl}users/profilePicture/default_profile_picture`
+  }
+
+  getProfilePictureUrlForPost(post) {
+    return `${this.apiService.apiUrl}users/profilePicture/${post.uploaderUsername}`
+  }
+
+  getPictureUrlForPost(post) {
+    return `${this.apiService.apiUrl}pictures/big/${post._id}`
+  }
 }

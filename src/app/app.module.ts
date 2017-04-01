@@ -32,6 +32,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { UploadComponent } from './components/upload/upload.component';
 import { PicturesService } from "./services/pictures.service";
 import { StaticDataService } from "./services/static-data.service";
+import { DatesService } from "./utilities/dates.service";
+import { AuthHelperService } from "./utilities/auth-helper.service";
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { StaticDataService } from "./services/static-data.service";
     ProfileService,
     PicturesService,
     StaticDataService,
-    AuthGuard
+    DatesService,
+    AuthGuard,
+    AuthHelperService
   ],
   bootstrap: [AppComponent]
 })

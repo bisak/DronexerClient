@@ -14,19 +14,19 @@
         </li>
       </ul>
       <ul class="right hide-on-med-and-down">
-        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']"
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a
           [routerLink]="['login']">Login</a></li>
-        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']"
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/register']">Register</a>
         </li>
-        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
           <a [routerLink]="['/upload']">Upload</a>
         </li>
-        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
           <a [routerLink]="['/profile', username]">Profile</a>
         </li>
-        <li><a *ngIf="authService.isLoggedIn()" (click)="onLogoutClick()">Logout</a></li>
+        <li><a *ngIf="authHelperService.isLoggedIn()" (click)="onLogoutClick()">Logout</a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li><h3 class="blue-text">&nbsp;&nbsp;&nbsp;Dronexer</h3></li>
@@ -37,19 +37,19 @@
         </li>
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/explore']">Explore</a>
         </li>
-        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']"
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a
           [routerLink]="['login']">Login</a></li>
-        <li *ngIf="!authService.isLoggedIn()" [routerLinkActive]="['active']"
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/register']">Register</a>
         </li>
-        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
           <a [routerLink]="['/upload']">Upload</a>
         </li>
-        <li *ngIf="authService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
           <a [routerLink]="['/profile', username]">Profile</a>
         </li>
-        <li><a *ngIf="authService.isLoggedIn()" (click)="onLogoutClick()">Logout</a></li>
+        <li><a *ngIf="authHelperService.isLoggedIn()" (click)="onLogoutClick()">Logout</a></li>
       </ul>
     </div>
   </div>

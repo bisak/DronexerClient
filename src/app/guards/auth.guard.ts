@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core"
 import { Router, CanActivate, ActivatedRouteSnapshot, ActivatedRoute, Params } from "@angular/router"
-import { AuthService } from "../services/auth.service"
 import { ToastService } from "../services/toast.service";
+import { AuthHelperService } from "../utilities/auth-helper.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService,
+  constructor(private authHelperService: AuthHelperService,
               private router: Router,
               private toastService: ToastService) {
   }
 
   canActivate() {
-    if (this.authService.isLoggedIn()) {
+    if (this.authHelperService.isLoggedIn()) {
       return true;
     } else {
       this.router.navigate(['login'])

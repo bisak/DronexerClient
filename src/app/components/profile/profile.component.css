@@ -12,6 +12,30 @@
   border-radius: 2px;
 }
 
+.profile-page-wall-post .chip.tag {
+  height: 26px;
+  line-height: 26px;
+}
+
+.profile-page-wall-post .comments-container {
+  margin: 10px;
+  margin-top: 0px !important;
+  margin-bottom: -7px !important;
+}
+
+.profile-page-wall-post .comment {
+  margin: 3px 0 3px 0;
+}
+
+.profile-page-wall-post .card .card-action {
+  padding: 15px 24px 10px 40px;
+}
+
+.profile-page-wall-post .comment .chip {
+  background-color: transparent;
+  border: 1px solid;
+}
+
 .card .card-image img {
   border-radius: 2px 2px 0 0;
   position: relative;
@@ -31,6 +55,15 @@
   width: 110px;
   height: 110px;
   border: 1px solid #03a9f4;
+}
+
+.input-field :focus {
+  border-bottom: 1px solid #03a9f4;
+  box-shadow: 0 1px 0 0 #03a9f4;
+}
+
+.input-field :focus + label {
+  color: #03a9f4;
 }
 
 .content-row {
@@ -61,16 +94,20 @@
   padding: 0;
 }
 
+.small-text {
+  font-size: 0.88rem;
+}
+
 .profile-page-wall-post .post-profile-info {
   padding-top: 12px;
 }
 
 .profile-page-wall-post .card-action-share {
-  margin: 16px 10px 16px 0;
+  margin: 10px 0;
 }
 
 .profile-page-wall-post .card .card-content {
-  padding: 12px 12px 7px 12px;
+  padding: 8px 15px 3px 15px;
   border-radius: 0 0 2px 2px;
 }
 
@@ -87,7 +124,7 @@
   border: 1px solid #03a9f4;
 }
 
-.profile-page-wall-post .divider {
+.profile-page-wall-post .divider.title-divider {
   width: 120%;
   left: 0;
   position: absolute;
@@ -102,21 +139,37 @@
 }
 
 .profile-page-wall-post .card .card-image img {
+  z-index: 1000;
   padding: 0 1px;
 }
 
+.profile-page-wall-post .comment .chip {
+  height: 28px;
+  line-height: 28px;
+}
+
 @media only screen and (min-width: 993px) {
-  .container{
+  .profile-page-wall-post .comments-container {
+    max-height: 120px;
+    overflow: scroll;
+  }
+
+  .container {
     width: 970px;
   }
 
-  .profile-page-wall{
+  .profile-page-wall {
     width: 728px !important;
   }
 }
 
-@media only screen and (min-width: 601px) {
-  .profile-page-wall{
+@media only screen and (max-width: 992px) {
+  .profile-page-wall-post .comments-container {
+    max-height: 100px;
+    overflow: scroll;
+  }
+
+  .profile-page-wall {
     width: 100%;
   }
 }

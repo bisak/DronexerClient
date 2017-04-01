@@ -18,11 +18,7 @@ export class ProfileService {
   }
 
   getProfile(username: string) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json')
-    return this.http.get(`${this.apiUrl}/users/profileInfo/${username}`, { headers: headers })
-      .map(this.apiService.extractData)
-      .catch(this.apiService.handleError);
+    return this.apiService.get(`users/profileInfo/${username}`)
   }
 
 

@@ -8,6 +8,7 @@ import { Form } from "@angular/forms";
 import { isUndefined } from "util";
 import { templateVisitAll } from "@angular/compiler";
 import { StaticDataService } from "../../services/static-data.service";
+import { AuthHelperService } from "../../utilities/auth-helper.service";
 
 declare var Materialize: any;
 
@@ -32,6 +33,7 @@ export class RegisterComponent implements OnInit {
   private isRegisterButtonDisabled = false
 
   constructor(private authService: AuthService,
+              private authHelperService: AuthHelperService,
               private router: Router,
               private toastService: ToastService,
               private validateService: ValidateService,
@@ -42,9 +44,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     Materialize.showStaggeredList('#transition-heading')
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate([''])
-    }
+    this.authHelperService.blockLoggedInAccess()
   }
 
   onProfilePictureSelected(ev) {

@@ -7,7 +7,7 @@
       <div class="row center">
         <h5 class="header col s12 grey-text text-lighten-2">to a revolution in drone photography.</h5>
       </div>
-      <div *ngIf="!authService.isLoggedIn()" class="row center">
+      <div *ngIf="!authHelperService.isLoggedIn()" class="row center">
         <a class="join-us btn-large waves-effect waves-light blue z-depth-3" [routerLink]="['/register']">Join us</a>
       </div>
     </div>

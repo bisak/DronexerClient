@@ -8,13 +8,15 @@
       <div class="card-content">
         <div class="row content-row">
           <div class="col s12 center-align m2">
-            <img *ngIf="visualiseData?.profilePicture" id="profile-picture-view"
+            <img *ngIf="visualiseData?.profilePicture"
+                 id="profile-picture-view"
                  [src]="visualiseData?.profilePicture"
+                 (error)="picturesService.handleNotFoundProfilePicture($event)"
                  alt="Profile picture" class="circle profile-picture z-depth-1">
           </div>
           <div class="col s12 m3 center-align">
-            <h4 class="card-title grey-text text-darken-4">{{visualiseData?.firstName}} {{visualiseData?.lastName}}</h4>
-            <p class="grey-text">{{visualiseData?.username}}</p>
+            <h4 class="card-title grey-text text-darken-4">{{visualiseData?.username}}</h4>
+            <p class="grey-text">{{visualiseData?.firstName}} {{visualiseData?.lastName}}</p>
           </div>
           <div class="col s2 m1 center-align offset-s1 pull-m1">
             <h4 class="card-title grey-text text-darken-4">{{visualiseData?.picturesCount}}</h4>
@@ -78,20 +80,22 @@
         </div>
       </div>
   -->
-    <div class="profile-page-wall">
+    <div *ngIf="posts" class="profile-page-wall">
 
-      <div class="profile-page-wall-post">
+
+      <div *ngFor="let post of posts" class="profile-page-wall-post">
         <div class="card">
           <div class="card-profile-title">
             <div class="row">
               <div class="col">
-                <img *ngIf="visualiseData?.profilePicture" [src]="visualiseData?.profilePicture" alt=""
+                <img [src]="picturesService.getProfilePictureUrlForPost(post)"
+                     (error)="picturesService.handleNotFoundProfilePicture($event)" alt="Post profile picture"
                      class="circle responsive-img valign post-profile-picture z-depth-1">
               </div>
               <div class="col">
                 <div class="post-profile-info">
-                  <p class="grey-text text-darken-4 margin valign">John Doe</p>
-                  <span class="grey-text text-darken-1 ultra-small valign">26 Jun 2015</span>
+                  <p class="grey-text text-darken-4 margin valign">{{post.uploaderUsername}}</p>
+                  <span class="grey-text text-darken-1 ultra-small valign">{{datesService.getFormattedDateString(post.createdAt)}}</span>
                 </div>
               </div>
               <div class="col right expand-more-arrow">
@@ -101,22 +105,28 @@
             <div class="divider grey lighten-2"></div>
             <div class="row">
               <div class="col s12">
-                <p>Some bullshit caption about the photo.</p>
+                <p>{{post.caption}}</p>
               </div>
             </div>
           </div>
+          <div class="divider title-divider"></div>
+          <div class="card-content">
+            <div *ngFor="let tag of post.tags" class="chip tag">
+              {{tag}}
+            </div>
+          </div>
           <div class="card-image">
-            <img src="http://localhost:8080/api/pictures/big/58cd7669be024309d8ba0f49" alt="Wall post picture"
+            <img materialboxed [src]="picturesService.getPictureUrlForPost(post)" alt="Wall post picture"
                  class="">
           </div>
-          <div class="card-content">
-            <div class="chip">
-              #tag
-            </div>
-            <div class="chip">
-              Tag
-            </div>
 
+          <div class="row comments-container">
+            <div *ngFor="let comment of post.comments" class="comment">
+              <div class="chip">
+                <span>{{comment.username}}</span>
+              </div>
+              <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
+            </div>
           </div>
           <div class="card-action row">
             <div class="col s1 card-action-share">
@@ -125,183 +135,16 @@
             <div class="col s1 card-action-share">
               <i class="material-icons blue-text lighten-1">share</i>
             </div>
-
-            <div class="input-field col s8 margin push-s1">
-              <input id="profile-comments" type="text" class="validate margin">
-              <label for="profile-comments" class="">Add a comment...</label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--<div class="row profile-page-wall-post">
-        <div class="col s12">
-          <div class="card">
-            <div class="card-profile-title">
-              <div class="row">
-                <div class="col">
-                  <img *ngIf="visualiseData?.profilePicture" [src]="visualiseData?.profilePicture" alt=""
-                       class="circle responsive-img valign post-profile-picture z-depth-1">
-                </div>
-                <div class="col">
-                  <div class="post-profile-info">
-                    <p class="grey-text text-darken-4 margin valign">John Doe</p>
-                    <span class="grey-text text-darken-1 ultra-small valign">26 Jun 2015</span>
-                  </div>
-                </div>
-                <div class="col right expand-more-arrow">
-                  <i class="material-icons">expand_more</i>
-                </div>
-              </div>
-              <div class="divider grey lighten-2"></div>
-              <div class="row">
-                <div class="col s12">
-                  <p>Some bullshit caption about the photo.</p>
-                </div>
-              </div>
-            </div>
-            <div class="card-image">
-              <img src="http://localhost:8080/api/pictures/big/58cd7669be024309d8ba0f49" alt="Wall post picture"
-                   class="">
-            </div>
-            <div class="card-content">
-              <div class="chip">
-                #tag
-              </div>
-              <div class="chip">
-                Tag
-              </div>
-
-            </div>
-            <div class="card-action row">
-              <div class="col s1 card-action-share">
-                <i class="material-icons black-text lighten-1">favorite_outline</i>
-              </div>
-              <div class="col s1 card-action-share">
-                <i class="material-icons blue-text lighten-1">share</i>
-              </div>
-
+            <form (keyup)="commentPost($event, post)">
               <div class="input-field col s8 margin push-s1">
                 <input id="profile-comments" type="text" class="validate margin">
                 <label for="profile-comments" class="">Add a comment...</label>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
 
-      <div class="row profile-page-wall-post">
-        <div class="col s12">
-          <div class="card">
-            <div class="card-profile-title">
-              <div class="row">
-                <div class="col">
-                  <img *ngIf="visualiseData?.profilePicture" [src]="visualiseData?.profilePicture" alt=""
-                       class="circle responsive-img valign post-profile-picture z-depth-1">
-                </div>
-                <div class="col">
-                  <div class="post-profile-info">
-                    <p class="grey-text text-darken-4 margin valign">John Doe</p>
-                    <span class="grey-text text-darken-1 ultra-small valign">26 Jun 2015</span>
-                  </div>
-                </div>
-                <div class="col right expand-more-arrow">
-                  <i class="material-icons">expand_more</i>
-                </div>
-              </div>
-              <div class="divider grey lighten-2"></div>
-              <div class="row">
-                <div class="col s12">
-                  <p>Some bullshit caption about the photo.</p>
-                </div>
-              </div>
-            </div>
-            <div class="card-image">
-              <img src="http://localhost:8080/api/pictures/big/58cd7669be024309d8ba0f49" alt="Wall post picture"
-                   class="">
-            </div>
-            <div class="card-content">
-              <div class="chip">
-                #tag
-              </div>
-              <div class="chip">
-                Tag
-              </div>
-
-            </div>
-            <div class="card-action row">
-              <div class="col s1 card-action-share">
-                <i class="material-icons black-text lighten-1">favorite_outline</i>
-              </div>
-              <div class="col s1 card-action-share">
-                <i class="material-icons blue-text lighten-1">share</i>
-              </div>
-
-              <div class="input-field col s8 margin push-s1">
-                <input id="profile-comments" type="text" class="validate margin">
-                <label for="profile-comments" class="">Add a comment...</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row profile-page-wall-post">
-        <div class="col s12">
-          <div class="card">
-            <div class="card-profile-title">
-              <div class="row">
-                <div class="col">
-                  <img *ngIf="visualiseData?.profilePicture" [src]="visualiseData?.profilePicture" alt=""
-                       class="circle responsive-img valign post-profile-picture z-depth-1">
-                </div>
-                <div class="col">
-                  <div class="post-profile-info">
-                    <p class="grey-text text-darken-4 margin valign">John Doe</p>
-                    <span class="grey-text text-darken-1 ultra-small valign">26 Jun 2015</span>
-                  </div>
-                </div>
-                <div class="col right expand-more-arrow">
-                  <i class="material-icons">expand_more</i>
-                </div>
-              </div>
-              <div class="divider grey lighten-2"></div>
-              <div class="row">
-                <div class="col s12">
-                  <p>Some bullshit caption about the photo.</p>
-                </div>
-              </div>
-            </div>
-            <div class="card-image">
-              <img src="http://localhost:8080/api/pictures/big/58cd7669be024309d8ba0f49" alt="Wall post picture"
-                   class="">
-            </div>
-            <div class="card-content">
-              <div class="chip">
-                #tag
-              </div>
-              <div class="chip">
-                Tag
-              </div>
-
-            </div>
-            <div class="card-action row">
-              <div class="col s1 card-action-share">
-                <i class="material-icons black-text lighten-1">favorite_outline</i>
-              </div>
-              <div class="col s1 card-action-share">
-                <i class="material-icons blue-text lighten-1">share</i>
-              </div>
-
-              <div class="input-field col s8 margin push-s1">
-                <input id="profile-comments" type="text" class="validate margin">
-                <label for="profile-comments" class="">Add a comment...</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
--->
 
     </div>
   </div>

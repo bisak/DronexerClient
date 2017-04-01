@@ -9,67 +9,15 @@ import { Subject } from "rxjs";
 
 @Injectable()
 export class AuthService {
-  authToken: any
-  user: any
-  private jwtHelper: JwtHelper = new JwtHelper();
 
-  private loginAnnouncedSource = new Subject<boolean>();
-  loginAnnounced: Observable<any> = this.loginAnnouncedSource.asObservable();
-
-  private apiUrl = this.apiService.apiUrl
-
-  constructor(private http: Http, private apiService: ApiService) {
+  constructor(private apiService: ApiService) {
   }
 
-  registerUser(user): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user)
-      .map(this.apiService.extractData)
-      .catch(this.apiService.handleError)
+  registerUser(user: FormData): Observable<any> {
+    return this.apiService.post(`register`, user)
   }
 
   loginUser(user): Observable<any> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json')
-    return this.http.post(`${this.apiUrl}/login`, user, { headers: headers })
-      .map(this.apiService.extractData)
-      .catch(this.apiService.handleError)
+    return this.apiService.post(`login`, user)
   }
-
-
-  storeUserData(token, user) {
-    localStorage.setItem('id_token', token)
-    localStorage.setItem('user', JSON.stringify(user))
-    this.authToken = token;
-    this.user = user;
-    this.loginAnnouncedSource.next(true);
-  }
-
-  getAuthToken() {
-    return localStorage.getItem('id_token')
-  }
-
-  getDecodedAuthToken() {
-    const token = localStorage.getItem('id_token')
-    if (token)
-      return this.jwtHelper.decodeToken(token)
-  }
-
-  isLoggedIn() {
-    return tokenNotExpired()
-  }
-
-  getUsernameFromToken() {
-    let token = this.getAuthToken();
-    if (token) {
-      let decodedToken = this.jwtHelper.decodeToken(token)
-      return decodedToken._doc.username;
-    }
-  }
-
-  logout() {
-    this.authToken = null;
-    this.user = null;
-    localStorage.clear()
-  }
-
 }
