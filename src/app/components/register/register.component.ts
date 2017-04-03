@@ -95,6 +95,7 @@ export class RegisterComponent implements OnInit {
     registerFormData.append('email', this.email)
     registerFormData.append('username', this.username)
     registerFormData.append('password', this.password)
+    registerFormData.append('passwordConfirm', this.passwordConfirm)
 
     this.authService.registerUser(registerFormData)
       .subscribe((data) => {

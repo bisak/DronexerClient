@@ -3,11 +3,11 @@ import { isUndefined } from "util";
 
 @Injectable()
 export class ValidateService {
+  constructor() {
+  }
 
   private emailRegex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-  constructor() {
-  }
 
   validateProfilePicture(file) {
     if (file.size > 4 * 1000000) {
