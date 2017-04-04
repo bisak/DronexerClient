@@ -15,14 +15,14 @@ export class PostComponent implements OnInit {
   @Input() post
 
   constructor(private toastService: ToastService,
-              private picturesService: PicturesService,
-              private datesService: DatesService,
-              private authHelperService: AuthHelperService) {
+    private picturesService: PicturesService,
+    private datesService: DatesService,
+    private authHelperService: AuthHelperService) {
   }
 
   ngOnInit() {
+    console.log('oninit run bi4') //forgot what i was trying to log here
   }
-
 
   private commentPost(ev, post) {
     if (ev.keyCode == 13) {
@@ -30,7 +30,7 @@ export class PostComponent implements OnInit {
       const id = post._id
       this.picturesService.commentPicture(id, { comment }).subscribe((data) => {
         let commentToAdd = {
-          username: this.authHelperService.getUsernameFromToken(),
+          userId: this.authHelperService.getIdFromToken(),
           comment: comment
         }
         post.comments.push(commentToAdd)
@@ -46,30 +46,25 @@ export class PostComponent implements OnInit {
   private likePost(post) {
     const id = post._id
     this.picturesService.likePost(id).subscribe((data) => {
-      console.log("liked success")
-      const username = this.authHelperService.getUsernameFromToken()
-      post.likes.push(username)
+      const userId = this.authHelperService.getIdFromToken()
+      post.isLikedByCurrentUser = true
+      post.likes.push(userId)
     }, (error) => {
-      console.log("like error")
+      console.log(error)
     })
   }
 
   private unLikePost(post) {
     const id = post._id
     this.picturesService.unLikePost(id).subscribe((data) => {
-      console.log("Unliked success")
-      const username = this.authHelperService.getUsernameFromToken()
-      const index = post.likes.indexOf(username);
+      const userId = this.authHelperService.getIdFromToken()
+      post.isLikedByCurrentUser = false
+      const index = post.likes.indexOf(userId);
       if (index > -1) {
         post.likes.splice(index, 1);
       }
     }, (error) => {
-      console.log("Unlike error")
+      console.log(error)
     })
-  }
-
-  private isLiked(post) {
-    const username = this.authHelperService.getUsernameFromToken()
-    return post.likes.includes(username)
   }
 }

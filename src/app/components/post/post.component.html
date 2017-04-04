@@ -42,16 +42,19 @@
           <span>{{comment.username}}</span>
         </div>
         <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
+        <div class="divider">
+
+        </div>
       </div>
     </div>
     <div class="card-action row no-margin">
       <div class="col card-action-share">
-        <div *ngIf="!isLiked(post)" class="pointer like-container" (click)="likePost(post)">
+        <div *ngIf="!post.isLikedByCurrentUser" class="pointer like-container" (click)="likePost(post)">
           <div class="center">
             <i class="material-icons black-text lighten-1">favorite_outline</i>
           </div>
         </div>
-        <div *ngIf="isLiked(post)" class="pointer unlike-container" (click)="unLikePost(post)">
+        <div *ngIf="post.isLikedByCurrentUser" class="pointer unlike-container" (click)="unLikePost(post)">
           <div class="center">
             <i class="material-icons red-text">favorite</i>
           </div>

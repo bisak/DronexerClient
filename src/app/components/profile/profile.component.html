@@ -8,11 +8,8 @@
       <div class="card-content">
         <div class="row content-row">
           <div class="col s12 center-align m2">
-            <img *ngIf="profileInfo?.profilePicture"
-                 id="profile-picture-view"
-                 [src]="profileInfo?.profilePicture"
-                 (error)="picturesService.handleNotFoundProfilePicture($event)"
-                 alt="Profile picture" class="circle profile-picture z-depth-1">
+            <img *ngIf="profileInfo?.profilePicture" id="profile-picture-view" [src]="profileInfo?.profilePicture"
+                (error)="picturesService.handleNotFoundProfilePicture($event)" alt="Profile picture" class="circle profile-picture z-depth-1">
           </div>
           <div class="col s12 m3 center-align">
             <h4 class="card-title grey-text text-darken-4">{{profileInfo?.username}}</h4>
@@ -42,11 +39,11 @@
           <span class="card-title grey-text text-darken-4">Profile info<i class="material-icons right">close</i></span>
           <div class="col s10 m6 l4">
             <p><i class="material-icons blue-text left">account_box</i>{{profileInfo?.username}}</p>
-            <p><i class="material-icons blue-text left">account_circle</i> {{profileInfo?.firstName}}
-              {{profileInfo?.lastName}}</p>
+            <p><i class="material-icons blue-text left">account_circle</i> {{profileInfo?.firstName}} {{profileInfo?.lastName}}
+            </p>
             <p><i class="material-icons blue-text left">email</i> {{profileInfo?.email}}</p>
-            <p *ngIf="profileInfo?.birthday"><i class="material-icons blue-text left">cake</i> Birthday:
-              {{profileInfo?.birthday}}</p>
+            <p *ngIf="profileInfo?.birthday"><i class="material-icons blue-text left">cake</i> Birthday: {{profileInfo?.birthday}}
+            </p>
             <p><i class="material-icons blue-text left">info</i> Member since: {{profileInfo?.dateRegistered}}</p>
           </div>
           <div class="col s10 m5 l4">
@@ -58,7 +55,9 @@
                 </div>
                 <div class="collapsible-body collapsible-padding">
                   <ul>
-                    <li *ngFor="let drone of profileInfo?.drones"><p>{{drone}}</p></li>
+                    <li *ngFor="let drone of profileInfo?.drones">
+                      <p>{{drone}}</p>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -69,8 +68,7 @@
     </div>
   </div>
 
-  <div id="profile-page-content" class="">
-
+  <div class="profile-page-content">
     <!--  <div id="profile-page-sidebar" class="col s12 m4">
         <div class="card light-blue z-depth-1">
           <div class="card-content white-text">
@@ -78,12 +76,26 @@
             <p>Bullsht text to make space for ads.</p>
           </div>
         </div>
+      </div> -->
+    <div *ngIf="!hasPosts" class="no-posts-container">
+      <div class="center-align">
+        <div class="row">
+          <div *ngIf="isProfileMine">
+            <p class="big-text">You have no posts.</p>
+            <a [routerLink]="['/upload']" class="col s10 offset-s1 m4 offset-m4 btn btn-large waves-effect light-blue darken-1">
+              <span>Create your first post now!</span>
+            </a>
+          </div>
+          <div *ngIf="!isProfileMine">
+            <p class="big-text">{{urlUsername}} has no posts</p>
+          </div>
+        </div>
       </div>
-  -->
-    <div *ngIf="wallPosts" class="profile-page-wall">
+      <div class="section"></div>
+    </div>
 
+    <div *ngIf="hasPosts" class="profile-page-wall">
       <app-post [post]="post" *ngFor="let post of wallPosts"></app-post>
-
     </div>
   </div>
 </div>

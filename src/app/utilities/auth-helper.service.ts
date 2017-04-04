@@ -32,6 +32,8 @@ export class AuthHelperService {
     const token = localStorage.getItem('id_token')
     if (token)
       return this.jwtHelper.decodeToken(token)
+
+    return null
   }
 
   isLoggedIn() {
@@ -39,10 +41,17 @@ export class AuthHelperService {
   }
 
   getUsernameFromToken() {
-    let token = this.getAuthToken();
-    if (token) {
-      let decodedToken = this.jwtHelper.decodeToken(token)
+    let decodedToken = this.getDecodedAuthToken();
+    if (decodedToken) {
       return decodedToken._doc.username
+    }
+    return null
+  }
+
+  getIdFromToken() {
+    let decodedToken = this.getDecodedAuthToken();
+    if (decodedToken) {
+      return decodedToken._doc._id
     }
     return null
   }
@@ -51,7 +60,7 @@ export class AuthHelperService {
     localStorage.clear()
   }
 
-  blockLoggedInAccess() {
+  blockLoggedInAccess() { //TODO fix (move) this
     if (this.isLoggedIn()) {
       this.router.navigate([''])
     }
