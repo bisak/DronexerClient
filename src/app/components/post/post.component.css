@@ -30,8 +30,7 @@
   margin: 0 !important;
 }
 
-
-.post .card .card-action {
+.post .card-action {
   padding: 15px 24px 5px 15px;
 }
 
@@ -96,7 +95,7 @@
   padding-top: 15px;
 }
 
-.post .card-action-share {
+.post .post-action {
   margin: 10px 0;
 }
 

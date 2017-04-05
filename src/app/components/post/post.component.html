@@ -4,8 +4,8 @@
       <div class="row no-margin">
         <div class="col no-margin no-padding">
           <img [src]="picturesService.getProfilePictureUrlForPost(post)"
-               (error)="picturesService.handleNotFoundProfilePicture($event)" alt="Post profile picture"
-               class="circle responsive-img valign profile-picture z-depth-1">
+               (error)="picturesService.handleNotFoundProfilePicture($event)"
+               alt="Post profile picture" class="circle responsive-img valign profile-picture z-depth-1">
         </div>
         <div class="col">
           <div class="post-profile-info">
@@ -32,8 +32,10 @@
       </div>
     </div>
     <div class="card-image">
-      <img materialboxed [src]="picturesService.getPictureUrlForPost(post)" alt="Wall post picture"
-           class="">
+      <img *ngIf="!post.isLikedByCurrentUser"  (dblclick)="likePost(post)" [src]="picturesService.getPictureUrlForPost(post)"
+           alt="Wall post picture" class="">
+      <img *ngIf="post.isLikedByCurrentUser"  (dblclick)="unLikePost(post)" [src]="picturesService.getPictureUrlForPost(post)"
+           alt="Wall post picture" class="">
     </div>
 
     <div *ngIf="post.comments.length" class="row comments-container">
@@ -42,28 +44,26 @@
           <span>{{comment.username}}</span>
         </div>
         <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
-        <div class="divider">
-
-        </div>
+        <div class="divider"></div>
       </div>
     </div>
     <div class="card-action row no-margin">
-      <div class="col card-action-share">
-        <div *ngIf="!post.isLikedByCurrentUser" class="pointer like-container" (click)="likePost(post)">
+      <div class="col post-action">
+        <div *ngIf="!post.isLikedByCurrentUser" class="pointer like-container unselectable" (click)="likePost(post)">
           <div class="center">
-            <i class="material-icons black-text lighten-1">favorite_outline</i>
+            <i class="material-icons black-text lighten-1 zoom-in">favorite_outline</i>
           </div>
         </div>
-        <div *ngIf="post.isLikedByCurrentUser" class="pointer unlike-container" (click)="unLikePost(post)">
+        <div *ngIf="post.isLikedByCurrentUser" class="pointer unlike-container unselectable" (click)="unLikePost(post)">
           <div class="center">
-            <i class="material-icons red-text">favorite</i>
+            <i class="material-icons red-text zoom-in">favorite</i>
           </div>
         </div>
         <div class="center">
           <span class="ultra-small">{{post.likes.length}}</span>
         </div>
       </div>
-      <div class="col m1 card-action-share">
+      <div class="col m1 post-action">
         <div class="center">
           <i class="material-icons blue-text lighten-1">share</i>
         </div>

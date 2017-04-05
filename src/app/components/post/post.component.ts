@@ -31,6 +31,7 @@ export class PostComponent implements OnInit {
       this.picturesService.commentPicture(id, { comment }).subscribe((data) => {
         let commentToAdd = {
           userId: this.authHelperService.getIdFromToken(),
+          username: this.authHelperService.getUsernameFromToken(),
           comment: comment
         }
         post.comments.push(commentToAdd)
@@ -50,6 +51,9 @@ export class PostComponent implements OnInit {
       post.isLikedByCurrentUser = true
       post.likes.push(userId)
     }, (error) => {
+      if (error.status === 401) {
+        this.toastService.warningToast("Log in to like.")
+      }
       console.log(error)
     })
   }
