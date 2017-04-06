@@ -18,63 +18,74 @@
           <i class="material-icons">expand_more</i>
         </div>
       </div>
-      <div class="divider grey lighten-2"></div>
-      <div *ngIf="post.caption" class="caption row no-margin">
-        <div class="col s12">
-          <p>{{post.caption}}</p>
+      <div *ngIf="post.caption" class="no-margin">
+        <div class="caption-wrapper">
+          <p class="caption-text">{{post.caption}}</p>
         </div>
       </div>
     </div>
-    <div class="divider title-divider"></div>
-    <div *ngIf="post.tags.length" class="card-content">
-      <div *ngFor="let tag of post.tags" class="chip tag">
+
+    <div *ngIf="post.tags.length" class="card-action tags-container">
+      <div *ngFor="let tag of post.tags" class="chip small-chip">
         {{tag}}
       </div>
     </div>
-    <div class="card-image">
-      <img *ngIf="!post.isLikedByCurrentUser"  (dblclick)="likePost(post)" [src]="picturesService.getPictureUrlForPost(post)"
-           alt="Wall post picture" class="">
-      <img *ngIf="post.isLikedByCurrentUser"  (dblclick)="unLikePost(post)" [src]="picturesService.getPictureUrlForPost(post)"
-           alt="Wall post picture" class="">
+
+    <div class="card-image unselectable">
+      <img *ngIf="!post.isLikedByCurrentUser" (dblclick)="likePost(post)"
+           [src]="picturesService.getPictureUrlForPost(post)"
+           alt="Wall post picture" class="post-image">
+      <img *ngIf="post.isLikedByCurrentUser" (dblclick)="unLikePost(post)"
+           [src]="picturesService.getPictureUrlForPost(post)"
+           alt="Wall post picture" class="post-image">
     </div>
 
-    <div *ngIf="post.comments.length" class="row comments-container">
-      <div *ngFor="let comment of post.comments" class="comment">
-        <div class="chip">
-          <span>{{comment.username}}</span>
+    <div class="card-content comments-wrapper">
+      <div #commentsContainer [scrollTop]="commentsContainer.scrollHeight" *ngIf="post.showComments"
+           class="comments-container">
+        <div *ngFor="let comment of post.comments" class="comment no-margin">
+          <div class="chip comment-username">
+            <span>{{comment.username}}</span>
+          </div>
+          <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
+          <div class="divider"></div>
         </div>
-        <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
-        <div class="divider"></div>
       </div>
     </div>
-    <div class="card-action row no-margin">
+
+    <div class="card-content row no-margin post-actions unselectable">
       <div class="col post-action">
-        <div *ngIf="!post.isLikedByCurrentUser" class="pointer like-container unselectable" (click)="likePost(post)">
-          <div class="center">
-            <i class="material-icons black-text lighten-1 zoom-in">favorite_outline</i>
-          </div>
+        <div *ngIf="!post.isLikedByCurrentUser" (click)="likePost(post)" class="center pointer action-element">
+          <i class="material-icons black-text lighten-1 zoom-in">favorite_outline</i>
         </div>
-        <div *ngIf="post.isLikedByCurrentUser" class="pointer unlike-container unselectable" (click)="unLikePost(post)">
-          <div class="center">
-            <i class="material-icons red-text zoom-in">favorite</i>
-          </div>
+        <div *ngIf="post.isLikedByCurrentUser" (click)="unLikePost(post)" class="center pointer action-element">
+          <i class="material-icons red-text zoom-in">favorite</i>
         </div>
         <div class="center">
           <span class="ultra-small">{{post.likes.length}}</span>
         </div>
       </div>
       <div class="col m1 post-action">
-        <div class="center">
+        <div class="center pointer action-element">
           <i class="material-icons blue-text lighten-1">share</i>
         </div>
-
       </div>
-      <form (keyup)="commentPost($event, post)">
-        <div class="input-field col s7 no-margin m8 push-m1">
-          <input id="profile-comments" type="text" class="validate margin">
-          <label for="profile-comments">Add a comment...</label>
+
+      <form *ngIf="post.showComments" (keyup)="commentPost($event, post)">
+        <div class="input-field col s8 m10 no-margin ">
+          <input id="post-comment" type="text" class="validate no-margin">
+          <label for="post-comment">Add a comment...</label>
         </div>
       </form>
+
+
+      <div *ngIf="post.comments.length && !post.showComments" class="row no-comments-container no-margin">
+        <div class="col right expand-more-arrow valign-wrapper pointer"
+             (click)="post.showComments = !post.showComments">
+          <span class="small-text valign">{{post.comments.length}} Comments</span>
+          <i class="material-icons">expand_more</i>
+        </div>
+      </div>
     </div>
   </div>
 </div>

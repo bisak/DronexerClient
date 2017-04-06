@@ -23,3 +23,11 @@
   -o-transform:scale(1.33);
   transform:scale(1.33);
 }
+
+.no-padding-bottom{
+  padding-bottom: 0 !important;
+}
+
+.no-padding-top{
+  padding-top: 0 !important;
+}

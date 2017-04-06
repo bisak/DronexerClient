@@ -11,18 +11,16 @@
   border-radius: 5px;
 }
 
-.post .chip.tag {
+.small-chip {
   height: 26px;
   line-height: 26px;
 }
 
-.post .comments-container {
-  margin: 10px;
-  margin-top: 0px !important;
-  margin-bottom: -7px !important;
+.comments-wrapper {
+  padding: 0 10px 0 10px;
 }
 
-.post .comment {
+.comment {
   margin: 3px 0 3px 0;
 }
 
@@ -30,31 +28,20 @@
   margin: 0 !important;
 }
 
-.post .card-action {
-  padding: 15px 24px 5px 15px;
-}
-
 .input-field label {
   top: 1.3rem;
 }
 
-.post .comment .chip {
-  background-color: transparent;
-  border: 1px solid;
+.caption-text {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
-.post .caption .p{
-  margin: 10px 0;
-}
-
-.card .card-image img {
-  border-radius: 2px 2px 0 0;
-  position: relative;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
+.comment-username {
+  border: 1px solid #03a9f4;
+  height: 26px;
+  line-height: 26px;
+  margin: 3px 0;
 }
 
 .cover-photo {
@@ -91,73 +78,70 @@
   font-size: 0.88rem;
 }
 
-.post .post-profile-info {
+.post-profile-info {
   padding-top: 15px;
 }
 
-.post .post-action {
+.post-action {
   margin: 10px 0;
 }
 
-.post .card .card-content {
-  padding: 8px 15px 3px 15px;
-  border-radius: 0 0 2px 2px;
+.action-element {
+  height: 24px;
+  width: 24px;
 }
 
-.post .card-profile-title {
+.tags-container {
+  padding: 5px 15px 0 15px;
+}
+
+.card-profile-title {
   font-size: 16px;
   padding: 5px 20px 5px 20px;
   border-radius: 0 0 2px 2px;
 }
 
-.post .profile-picture {
-  margin: 10px;
+.profile-picture {
+  margin: 10px 10px 0 10px;
   width: 50px;
   height: 50px;
   border: 1px solid #03a9f4;
 }
 
-.post .divider.title-divider {
-  width: 120%;
-  left: 0;
-  position: absolute;
-}
-
-.post .card-profile-title {
-  padding-bottom: 0;
-}
-
-.post .expand-more-arrow {
+.expand-more-arrow {
   margin-top: 5px;
 }
 
-.post .card .card-image img {
-  z-index: 1000;
+.post-actions {
+  padding: 5px 0 0 20px
 }
 
-.post .comment .chip {
-  height: 28px;
-  line-height: 28px;
+.post-image {
+  z-index: 800;
 }
 
-.post .comments-container{
-  min-height: 42px;
-}
-
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
+.comments-container {
+  margin: 0 10px 0 10px;
+}
+
+.comments-container::-webkit-scrollbar {
+  display: none;
+}
+
 @media only screen and (min-width: 993px) {
-  .post .comments-container {
-    max-height: 120px;
+  .comments-container {
+    max-height: 166px;
     overflow: scroll;
   }
 }
 
 @media only screen and (max-width: 992px) {
-  .post .comments-container {
-    max-height: 100px;
+  .comments-container {
+    max-height: 133px;
     overflow: scroll;
   }
 }

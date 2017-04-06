@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AuthHelperService } from "../../utilities/auth-helper.service";
-import { ProfileService } from "../../services/profile.service";
-import { ToastService } from "../../services/toast.service";
-import { PicturesService } from "../../services/pictures.service";
-import { DatesService } from "../../utilities/dates.service";
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AuthHelperService} from "../../utilities/auth-helper.service";
+import {ProfileService} from "../../services/profile.service";
+import {ToastService} from "../../services/toast.service";
+import {PicturesService} from "../../services/pictures.service";
+import {DatesService} from "../../utilities/dates.service";
 
 @Component({
   selector: 'app-post',
@@ -15,9 +15,9 @@ export class PostComponent implements OnInit {
   @Input() post
 
   constructor(private toastService: ToastService,
-    private picturesService: PicturesService,
-    private datesService: DatesService,
-    private authHelperService: AuthHelperService) {
+              private picturesService: PicturesService,
+              private datesService: DatesService,
+              private authHelperService: AuthHelperService) {
   }
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class PostComponent implements OnInit {
     if (ev.keyCode == 13) {
       const comment = ev.target.value
       const id = post._id
-      this.picturesService.commentPicture(id, { comment }).subscribe((data) => {
+      this.picturesService.commentPicture(id, {comment}).subscribe((data) => {
         let commentToAdd = {
           userId: this.authHelperService.getIdFromToken(),
           username: this.authHelperService.getUsernameFromToken(),

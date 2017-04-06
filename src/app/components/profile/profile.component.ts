@@ -33,47 +33,37 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.listenForUrlChanges()
     this.isProfileMine = this.checkIdentity()
-    this.getProfileInfo()
-    this.getWallPosts()
   }
 
-  private getProfileInfo() {
-    this.route.params.subscribe((params: Params) => {
-      const username = params['username']
-
-      this.profileService.getProfile(username).subscribe((retrievedData) => {
-        console.log(retrievedData)
-        let data = retrievedData.data
-        data.profilePicture = this.picturesService.getProfilePictureUrl(data.username)
-        this.profileInfo = data
-        console.log(data)
-      }, (error) => {
-        console.log(error)
-        if (error.status === 404) {
-          return this.router.navigate(['/page-not-found'])
-        }
-        this.toastService.errorToast("An error occurred.")
-      })
+  private getProfileInfo(username) {
+    this.profileService.getProfile(username).subscribe((retrievedData) => {
+      console.log(retrievedData)
+      let data = retrievedData.data
+      data.profilePicture = this.picturesService.getProfilePictureUrl(data.username)
+      this.profileInfo = data
+      console.log(data)
+    }, (error) => {
+      console.log(error)
+      if (error.status === 404) {
+        return this.router.navigate(['/page-not-found'])
+      }
+      this.toastService.errorToast("An error occurred.")
     })
   }
 
-  private getWallPosts() {
-    this.route.params.subscribe((params: Params) => {
-      const username = params['username']
-
-      this.picturesService.getWallPosts(username).subscribe((retrievedPictures) => {
-        if (retrievedPictures.success) {
-          this.wallPosts = retrievedPictures.data
-          console.log(this.wallPosts)
-        }
-        console.log(retrievedPictures)
-      }, (error) => {
-        console.log(error)
-        if (error.status === 404) {
-          return this.hasPosts = false
-        }
-        this.toastService.errorToast("Error getting user pictures.")
-      })
+  private getWallPosts(username) {
+    this.picturesService.getWallPosts(username).subscribe((retrievedPictures) => {
+      if (retrievedPictures.success) {
+        this.wallPosts = retrievedPictures.data
+        console.log(this.wallPosts)
+      }
+      console.log(retrievedPictures)
+    }, (error) => {
+      console.log(error)
+      if (error.status === 404) {
+        return this.hasPosts = false
+      }
+      this.toastService.errorToast("Error getting user pictures.")
     })
   }
 
@@ -84,7 +74,10 @@ export class ProfileComponent implements OnInit {
 
   private listenForUrlChanges() {
     this.route.params.subscribe((params: Params) => {
-      this.urlUsername = params['username']
+      const username = params['username']
+      this.urlUsername = username
+      this.getProfileInfo(username)
+      this.getWallPosts(username)
     })
   }
 
