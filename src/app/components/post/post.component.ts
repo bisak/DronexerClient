@@ -4,6 +4,8 @@ import {ProfileService} from "../../services/profile.service";
 import {ToastService} from "../../services/toast.service";
 import {PicturesService} from "../../services/pictures.service";
 import {DatesService} from "../../utilities/dates.service";
+import {PostsService} from "../../services/posts.service";
+import {StaticDataService} from "../../services/static-data.service";
 
 @Component({
   selector: 'app-post',
@@ -15,20 +17,23 @@ export class PostComponent implements OnInit {
   @Input() post
 
   constructor(private toastService: ToastService,
-              private picturesService: PicturesService,
-              private datesService: DatesService,
-              private authHelperService: AuthHelperService) {
+              public picturesService: PicturesService,
+              public datesService: DatesService,
+              private authHelperService: AuthHelperService,
+              public postsService: PostsService,
+              private staticDataService: StaticDataService) {
   }
 
   ngOnInit() {
-    console.log('oninit run bi4') //forgot what i was trying to log here
   }
 
-  private commentPost(ev, post) {
+  commentPost(ev, post) {
     if (ev.keyCode == 13) {
       const comment = ev.target.value
       const id = post._id
-      this.picturesService.commentPicture(id, {comment}).subscribe((data) => {
+      this.postsService.commentPost(id, {comment}).subscribe((data) => {
+        if (!post.comments)
+          post.comments = []
         let commentToAdd = {
           userId: this.authHelperService.getIdFromToken(),
           username: this.authHelperService.getUsernameFromToken(),
@@ -44,12 +49,12 @@ export class PostComponent implements OnInit {
     }
   }
 
-  private likePost(post) {
+  likePost(post) {
     const id = post._id
-    this.picturesService.likePost(id).subscribe((data) => {
+    this.postsService.likePost(id).subscribe((data) => {
       const userId = this.authHelperService.getIdFromToken()
       post.isLikedByCurrentUser = true
-      post.likes.push(userId)
+      post.likesCount += 1
     }, (error) => {
       if (error.status === 401) {
         this.toastService.warningToast("Log in to like.")
@@ -58,17 +63,29 @@ export class PostComponent implements OnInit {
     })
   }
 
-  private unLikePost(post) {
+  unLikePost(post) {
     const id = post._id
-    this.picturesService.unLikePost(id).subscribe((data) => {
+    this.postsService.unLikePost(id).subscribe((data) => {
       const userId = this.authHelperService.getIdFromToken()
       post.isLikedByCurrentUser = false
-      const index = post.likes.indexOf(userId);
-      if (index > -1) {
-        post.likes.splice(index, 1);
-      }
+      post.likesCount -= 1
     }, (error) => {
       console.log(error)
     })
+  }
+
+  loadComments(post) {
+    post.showComments = !post.showComments
+    if (post.commentsCount > 0) {
+      const id = post._id
+      this.postsService.getComments(id).subscribe((comments) => {
+        if (comments.success) {
+          post.comments = comments.data
+        }
+      }, (error) => {
+        console.log(error)
+        this.toastService.toast("Couldn't load comments.")
+      })
+    }
   }
 }

@@ -14,10 +14,10 @@ export class AuthService {
   }
 
   registerUser(user: FormData): Observable<any> {
-    return this.apiService.post(`register`, user)
+    return this.apiService.post(`auth/register`, user)
   }
 
   loginUser(user): Observable<any> {
-    return this.apiService.post(`login`, user)
+    return this.apiService.post(`auth/login`, user)
   }
 }

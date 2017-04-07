@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MaterializeModule, MaterializeDirective } from 'angular2-materialize'
-import { ToastService } from "../../services/toast.service";
-import { Router } from "@angular/router";
-import { AuthService } from "../../services/auth.service";
-import { ValidateService } from "../../services/validate.service"
-import { Form } from "@angular/forms";
-import { isUndefined } from "util";
-import { templateVisitAll } from "@angular/compiler";
-import { StaticDataService } from "../../services/static-data.service";
-import { AuthHelperService } from "../../utilities/auth-helper.service";
+import {Component, OnInit} from '@angular/core';
+import {MaterializeModule, MaterializeDirective} from 'angular2-materialize'
+import {ToastService} from "../../services/toast.service";
+import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
+import {ValidateService} from "../../services/validate.service"
+import {Form} from "@angular/forms";
+import {isUndefined} from "util";
+import {templateVisitAll} from "@angular/compiler";
+import {StaticDataService} from "../../services/static-data.service";
+import {AuthHelperService} from "../../utilities/auth-helper.service";
 
 declare var Materialize: any;
 
@@ -18,19 +18,19 @@ declare var Materialize: any;
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  private firstName: String
-  private lastName: String
-  private email: String
-  private username: String
-  private password: String
-  private passwordConfirm: String
-  private birthday: String
-  private dronesSelector: Array<number>
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  passwordConfirm: String
+  birthday: String
+  dronesSelector: Array<number>
 
-  private profilePictureFile: File
-  private profilePictureEncoded: String
+  profilePictureFile: File
+  profilePictureEncoded: String
 
-  private isRegisterButtonDisabled = false
+  isRegisterButtonDisabled = false
 
   constructor(private authService: AuthService,
               private authHelperService: AuthHelperService,
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
               private staticData: StaticDataService) {
   }
 
-  private dronesArray = this.staticData.dronesArray;
+  dronesArray = this.staticData.dronesArray;
 
   ngOnInit() {
     Materialize.showStaggeredList('#transition-heading')

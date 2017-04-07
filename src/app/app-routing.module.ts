@@ -13,6 +13,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { UploadComponent } from './components/upload/upload.component'
 import { AuthGuard } from './guards/auth.guard'
 
+/*TODO fix authguard*/
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },

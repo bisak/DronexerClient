@@ -7,6 +7,7 @@ import {PicturesService} from "../../services/pictures.service";
 import {ApiService} from "../../services/api.service";
 import {DatesService} from "../../utilities/dates.service";
 import {AuthHelperService} from "../../utilities/auth-helper.service";
+import {StaticDataService} from "../../services/static-data.service";
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +27,8 @@ export class ProfileComponent implements OnInit {
               private authHelperService: AuthHelperService,
               private toastService: ToastService,
               private picturesService: PicturesService,
-              private datesService: DatesService) {
+              private datesService: DatesService,
+              private staticDataService: StaticDataService) {
     this.hasPosts = true
   }
 
@@ -35,44 +37,40 @@ export class ProfileComponent implements OnInit {
     this.isProfileMine = this.checkIdentity()
   }
 
-  private getProfileInfo(username) {
+  getProfileInfo(username) {
     this.profileService.getProfile(username).subscribe((retrievedData) => {
-      console.log(retrievedData)
-      let data = retrievedData.data
-      data.profilePicture = this.picturesService.getProfilePictureUrl(data.username)
-      this.profileInfo = data
-      console.log(data)
+      this.profileInfo = retrievedData.data
     }, (error) => {
       console.log(error)
       if (error.status === 404) {
-        return this.router.navigate(['/page-not-found'])
+        this.router.navigate(['/page-not-found'])
+        return false
       }
       this.toastService.errorToast("An error occurred.")
     })
   }
 
-  private getWallPosts(username) {
+  getWallPosts(username) {
     this.picturesService.getWallPosts(username).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
         this.wallPosts = retrievedPictures.data
-        console.log(this.wallPosts)
       }
-      console.log(retrievedPictures)
     }, (error) => {
       console.log(error)
       if (error.status === 404) {
-        return this.hasPosts = false
+        this.hasPosts = false
+        return false
       }
       this.toastService.errorToast("Error getting user pictures.")
     })
   }
 
-  private checkIdentity() {
+  checkIdentity() {
     const extractedUsername = this.authHelperService.getUsernameFromToken()
     return (extractedUsername && this.urlUsername === extractedUsername)
   }
 
-  private listenForUrlChanges() {
+  listenForUrlChanges() {
     this.route.params.subscribe((params: Params) => {
       const username = params['username']
       this.urlUsername = username

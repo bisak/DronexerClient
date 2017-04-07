@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from "@angular/http"
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Headers, Http, Response} from "@angular/http"
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { environment } from '../../environments/environment'
-import { AuthService } from "./auth.service";
-import { AuthHelperService } from "../utilities/auth-helper.service";
-import { Subject } from "rxjs";
+import {environment} from '../../environments/environment'
+import {AuthService} from "./auth.service";
+import {AuthHelperService} from "../utilities/auth-helper.service";
+import {Subject} from "rxjs";
 
 @Injectable()
 export class ApiService {
 
-  private requestPendingSource = new Subject<boolean>()
+  requestPendingSource = new Subject<boolean>()
 
   requestAnnounced: Observable<any> = this.requestPendingSource.asObservable()
 
@@ -22,11 +22,12 @@ export class ApiService {
   public apiUrl = environment.apiUrl
 
   get(path: string) {
+    console.log(`${this.apiUrl}${path}`)
     this.requestPendingSource.next(true)
     let headers = new Headers();
     headers.append('Authorization', this.authHelperService.getAuthToken())
     headers.append('Content-Type', 'application/json')
-    return this.http.get(`${this.apiUrl}${path}`, { headers: headers })
+    return this.http.get(`${this.apiUrl}${path}`, {headers: headers})
       .map((response) => this.extractData(response))
       .catch((response) => this.handleError(response))
   }
@@ -38,13 +39,13 @@ export class ApiService {
     if ((data instanceof FormData) == false) {
       headers.append('Content-Type', 'application/json')
     }
-    return this.http.post(`${this.apiUrl}${path}`, data, { headers: headers })
+    return this.http.post(`${this.apiUrl}${path}`, data, {headers: headers})
       .map((response) => this.extractData(response))
       .catch((response) => this.handleError(response))
   }
 
 
-  private handleError(error: Response | any) {
+  handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
@@ -58,7 +59,7 @@ export class ApiService {
     return Observable.throw(error);
   }
 
-  private extractData(res: Response) {
+  extractData(res: Response) {
     let body = res.json();
     this.requestPendingSource.next(false)
     return body || {};

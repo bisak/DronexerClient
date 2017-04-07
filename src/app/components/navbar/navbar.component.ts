@@ -11,19 +11,19 @@ import { AuthHelperService } from "../../utilities/auth-helper.service";
 })
 export class NavbarComponent implements OnInit {
 
-  private username: String
-  private routerLinkOpts = { exact: true }
+  username: String
+  routerLinkOpts = { exact: true }
 
-  constructor(private authHelperService: AuthHelperService,
+  constructor(public authHelperService: AuthHelperService,
               private router: Router,
               private toastService: ToastService,) {
-    authHelperService.loginAnnounced.subscribe(data => {
-      this.username = this.getUsername()
-    })
   }
 
   ngOnInit() {
     this.username = this.getUsername()
+    this.authHelperService.loginAnnounced.subscribe(data => {
+      this.username = this.getUsername()
+    })
   }
 
   onLogoutClick() {
@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
     return false;
   }
 
-  private getUsername() {
+  getUsername() {
     const user = this.authHelperService.getUser()
     if (user) {
       return user.username

@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { ToastService } from "../../services/toast.service";
-import { AuthService } from "../../services/auth.service";
-import { ProfileService } from "../../services/profile.service";
-import { PicturesService } from "../../services/pictures.service";
-import { Router } from "@angular/router";
-import { StaticDataService } from "../../services/static-data.service";
-import { AuthHelperService } from "../../utilities/auth-helper.service";
+import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {ToastService} from "../../services/toast.service";
+import {AuthService} from "../../services/auth.service";
+import {ProfileService} from "../../services/profile.service";
+import {PicturesService} from "../../services/pictures.service";
+import {Router} from "@angular/router";
+import {StaticDataService} from "../../services/static-data.service";
+import {AuthHelperService} from "../../utilities/auth-helper.service";
 
 @Component({
   selector: 'app-upload',
@@ -14,14 +14,14 @@ import { AuthHelperService } from "../../utilities/auth-helper.service";
 })
 export class UploadComponent implements OnInit {
   /*TODO add drag and drop to upload files.*/
-  private pictureSelected = false
-  private pictureFile: File
-  private pictureFileEncoded: string
-  private dronesSelector: number
-  private tags: string
-  private caption: string
+  pictureSelected = false
+  pictureFile: File
+  pictureFileEncoded: string
+  dronesSelector: number
+  tags: string
+  caption: string
 
-  private dronesArray = this.staticData.dronesArray;
+  dronesArray = this.staticData.dronesArray;
 
   constructor(private toastService: ToastService,
               private authHelperService: AuthHelperService,
@@ -35,11 +35,11 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
   }
 
-  private hidePictureCard() {
+  hidePictureCard() {
     this.pictureSelected = false;
   }
 
-  private showPictureCard() {
+  showPictureCard() {
     this.pictureSelected = true;
   }
 
@@ -59,7 +59,7 @@ export class UploadComponent implements OnInit {
     this.caption && uploadFormData.append('caption', this.caption)
     if (this.tags) {
       /*TODO Add this verification on the server side.*/
-      let tagsArray = this.tags.split(' ').filter((x) => x != '' && x.startsWith('#') && x.length > 4).map((x)=>x.toLowerCase())
+      let tagsArray = this.tags.split(' ').filter((x) => x != '' && x.startsWith('#') && x.length > 4).map((x) => x.toLowerCase())
       tagsArray.length && tagsArray.forEach((tag) => uploadFormData.append('tags', tag))
     }
     uploadFormData.append('uploaderUsername', this.authHelperService.getUsernameFromToken())

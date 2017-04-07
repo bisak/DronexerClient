@@ -13,9 +13,8 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit() {
-    //Materialize.toast(`<span class="red-text">WTF MAN</span>`, 3000)
   }
 
-  private year = new Date().getFullYear()
+  year = new Date().getFullYear()
 
 }

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="profile-head">
+  <div *ngIf="profileInfo" class="profile-head">
     <div class="card">
       <div class="cover-photo card-image waves-effect waves-block waves-light">
         <img src="assets/wide.jpg">
@@ -8,23 +8,24 @@
       <div class="card-content">
         <div class="row content-row">
           <div class="col s12 center-align m2">
-            <img *ngIf="profileInfo?.profilePicture" id="profile-picture-view" [src]="profileInfo?.profilePicture"
-                (error)="picturesService.handleNotFoundProfilePicture($event)" alt="Profile picture" class="circle profile-picture z-depth-1">
+            <!--TODO fix all questionmarks with ngif!-->
+            <img id="profile-picture-view" [src]="picturesService.getProfilePicUrl(profileInfo.username)"
+                 (error)="picturesService.handleNotFoundProfilePic($event)" alt="Profile picture" class="circle profile-picture z-depth-1">
           </div>
           <div class="col s12 m3 center-align">
-            <h4 class="card-title grey-text text-darken-4">{{profileInfo?.username}}</h4>
-            <p class="grey-text">{{profileInfo?.firstName}} {{profileInfo?.lastName}}</p>
+            <h4 class="card-title grey-text text-darken-4">{{profileInfo.username}}</h4>
+            <p class="grey-text">{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
           </div>
           <div class="col s2 m1 center-align offset-s1 pull-m1">
-            <h4 class="card-title grey-text text-darken-4">{{profileInfo?.picturesCount}}</h4>
+            <h4 class="card-title grey-text text-darken-4">{{profileInfo.picturesCount}}</h4>
             <p class="grey-text">Posts</p>
           </div>
           <div class="col s2 m1 center-align offset-m1 offset-s2 pull-m1">
-            <h4 class="card-title grey-text text-darken-4">{{profileInfo?.followersCount}}</h4>
+            <h4 class="card-title grey-text text-darken-4">{{profileInfo.followersCount}}</h4>
             <p class="grey-text">Followers</p>
           </div>
           <div class="col s2 m1 center-align offset-m1 offset-s2 pull-m1">
-            <h4 class="card-title grey-text text-darken-4">{{profileInfo?.followingCount}}</h4>
+            <h4 class="card-title grey-text text-darken-4">{{profileInfo.followingCount}}</h4>
             <p class="grey-text">Following</p>
           </div>
           <div class="col right open-profile-info">
@@ -38,24 +39,24 @@
         <div class="row">
           <span class="card-title grey-text text-darken-4">Profile info<i class="material-icons right">close</i></span>
           <div class="col s10 m6 l4">
-            <p><i class="material-icons blue-text left">account_box</i>{{profileInfo?.username}}</p>
-            <p><i class="material-icons blue-text left">account_circle</i> {{profileInfo?.firstName}} {{profileInfo?.lastName}}
+            <p><i class="material-icons blue-text left">account_box</i>{{profileInfo.username}}</p>
+            <p><i class="material-icons blue-text left">account_circle</i> {{profileInfo.firstName}} {{profileInfo.lastName}}
             </p>
-            <p><i class="material-icons blue-text left">email</i> {{profileInfo?.email}}</p>
-            <p *ngIf="profileInfo?.birthday"><i class="material-icons blue-text left">cake</i> Birthday: {{profileInfo?.birthday}}
+            <p><i class="material-icons blue-text left">email</i> {{profileInfo.email}}</p>
+            <p *ngIf="profileInfo.birthday"><i class="material-icons blue-text left">cake</i> Birthday: {{profileInfo.birthday}}
             </p>
-            <p><i class="material-icons blue-text left">info</i> Member since: {{profileInfo?.dateRegistered}}</p>
+            <p><i class="material-icons blue-text left">info</i> Member since: {{profileInfo.dateRegistered}}</p>
           </div>
-          <div class="col s10 m5 l4">
+          <div *ngIf="profileInfo.drones" class="col s10 m5 l4">
             <ul disabled materialize="collapsible" class="collapsible" data-collapsible="accordion">
               <li>
                 <div class="collapsible-header">
                   <i class="material-icons blue-text">view_list</i>
-                  <span> Drones ({{profileInfo?.drones.length}})</span>
+                  <span> Drones ({{profileInfo.drones.length}})</span>
                 </div>
                 <div class="collapsible-body collapsible-padding">
                   <ul>
-                    <li *ngFor="let drone of profileInfo?.drones">
+                    <li *ngFor="let drone of profileInfo.drones">
                       <p>{{drone}}</p>
                     </li>
                   </ul>

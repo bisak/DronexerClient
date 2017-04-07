@@ -9,9 +9,9 @@ export class AuthHelperService {
   constructor(private router: Router) {
   }
 
-  private jwtHelper: JwtHelper = new JwtHelper()
+  jwtHelper: JwtHelper = new JwtHelper()
 
-  private loginAnnouncedSource = new Subject<boolean>()
+  loginAnnouncedSource = new Subject<boolean>()
   loginAnnounced: Observable<any> = this.loginAnnouncedSource.asObservable()
 
   storeUserData(token, user) {

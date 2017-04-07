@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import {ApiService} from "./api.service";
 
 @Injectable()
 export class StaticDataService {
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   dronesArray = [
     "DJI Phantom 3 Std",
@@ -17,6 +18,5 @@ export class StaticDataService {
     "DJI Inspire 2",
     "Other"
   ]
-
 
 }
