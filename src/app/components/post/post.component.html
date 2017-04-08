@@ -3,13 +3,14 @@
     <div class="card-profile-title">
       <div class="row no-margin">
         <div class="col no-margin no-padding">
-          <img [src]="picturesService.getProfilePicUrl(post.uploaderUsername)"
+          <img [routerLink]="['/profile', post.uploaderUsername]"
+               [src]="picturesService.getProfilePicUrl(post.uploaderUsername)"
                (error)="picturesService.handleNotFoundProfilePic($event)"
-               alt="Post profile picture" class="circle responsive-img valign profile-picture z-depth-1">
+               alt="Post profile picture" class="circle profile-picture z-depth-1 pointer">
         </div>
         <div class="col">
           <div class="post-profile-info">
-            <p class="grey-text text-darken-4 no-margin valign">{{post.uploaderUsername}}</p>
+            <a [routerLink]="['/profile', post.uploaderUsername]" class="grey-text text-darken-4 no-margin valign">{{post.uploaderUsername}}</a>
             <p class="grey-text text-darken-1 ultra-small no-margin valign">
               {{datesService.getFormattedDateString(post.createdAt)}}</p>
           </div>
@@ -45,7 +46,7 @@
            class="comments-container">
         <div *ngFor="let comment of post.comments" class="comment no-margin">
           <div class="chip comment-username">
-            <span>{{comment.username}}</span>
+            <a [routerLink]="['/profile', comment.username]">{{comment.username}}</a>
           </div>
           <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
           <div class="divider"></div>

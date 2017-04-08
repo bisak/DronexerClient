@@ -22,7 +22,6 @@ export class ApiService {
   public apiUrl = environment.apiUrl
 
   get(path: string) {
-    console.log(`${this.apiUrl}${path}`)
     this.requestPendingSource.next(true)
     let headers = new Headers();
     headers.append('Authorization', this.authHelperService.getAuthToken())

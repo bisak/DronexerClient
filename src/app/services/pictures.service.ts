@@ -18,6 +18,10 @@ export class PicturesService {
     return this.apiService.get(`pictures/${username}`)
   }
 
+  getExplorePosts(time: string): Observable<any> {
+    return this.apiService.get(`pictures/explore?before=${time}`)
+  }
+
   getProfilePicUrl(username: string): string {
     return `${this.apiService.apiUrl}users/profilePicture/${username}`
   }

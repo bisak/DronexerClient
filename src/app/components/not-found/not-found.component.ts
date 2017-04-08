@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-not-found',
@@ -15,10 +15,6 @@ export class NotFoundComponent implements OnInit {
   ngOnInit() {
   }
 
-  onBackClick() {
-    this.location.back()
-    this.location.back()
-  }
 
   onHomeClick() {
     this.router.navigate([''])
