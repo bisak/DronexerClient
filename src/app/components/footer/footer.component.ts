@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-declare var Materialize;
-
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',

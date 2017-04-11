@@ -1,5 +1,8 @@
 <div class="container">
-  <div *ngIf="true" class="profile-page-wall">
+  <div *ngIf="true" class="explore-page-wall"
+       infinite-scroll
+       [infiniteScrollDistance]="1"
+       (scrolled)="onExploreScrolled()">
     <app-post [post]="post" *ngFor="let post of explorePosts"></app-post>
   </div>
 </div>

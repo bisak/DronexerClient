@@ -1,3 +1,8 @@
-footer.page-footer {
-  margin-top: -6px;
+.social-media-button {
+  width: 64px;
+  height: 64px;
+}
+
+.social-media-buttons-row{
+  margin-left: -5px;
 }

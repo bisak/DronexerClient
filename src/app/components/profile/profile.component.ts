@@ -1,13 +1,13 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ProfileService} from '../../services/profile.service'
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProfileService } from '../../services/profile.service'
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import 'rxjs/add/operator/switchMap';
-import {ToastService} from "../../services/toast.service";
-import {PicturesService} from "../../services/pictures.service";
-import {ApiService} from "../../services/api.service";
-import {DatesService} from "../../utilities/dates.service";
-import {AuthHelperService} from "../../utilities/auth-helper.service";
-import {StaticDataService} from "../../services/static-data.service";
+import { ToastService } from "../../services/toast.service";
+import { PicturesService } from "../../services/pictures.service";
+import { ApiService } from "../../services/api.service";
+import { DatesService } from "../../utilities/dates.service";
+import { AuthHelperService } from "../../utilities/auth-helper.service";
+import { StaticDataService } from "../../services/static-data.service";
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +20,9 @@ export class ProfileComponent implements OnInit {
   isProfileMine: boolean
   hasPosts: boolean
   urlUsername: string
+  isListening: boolean;
+  lastPostTime: number;
+
 
   constructor(private profileService: ProfileService,
               private route: ActivatedRoute,
@@ -51,21 +54,36 @@ export class ProfileComponent implements OnInit {
   }
 
   getWallPosts(username) {
-    this.picturesService.getWallPosts(username).subscribe((retrievedPictures) => {
+    this.isListening = false
+    let time = new Date().getTime()
+    if (this.lastPostTime) {
+      time = this.lastPostTime
+    }
+
+    this.picturesService.getWallPosts(username, time).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
-        this.wallPosts = retrievedPictures.data
+        let picData = retrievedPictures.data
+        if (this.wallPosts) {
+          this.wallPosts.push(...picData)
+        } else {
+          this.wallPosts = picData
+        }
+        this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime()
+        this.isListening = true
+      } else {
+        this.isListening = false
       }
     }, (error) => {
       console.log(error)
       if (error.status === 404) {
-        this.hasPosts = false
-        return false
+        return this.toastService.toast("No more posts available")
       }
       this.toastService.errorToast("Error getting user pictures.")
+      this.isListening = false
     })
   }
 
-  checkIdentity() {
+  checkIdentity():boolean {
     const extractedUsername = this.authHelperService.getUsernameFromToken()
     return (extractedUsername && this.urlUsername === extractedUsername)
   }
@@ -77,6 +95,12 @@ export class ProfileComponent implements OnInit {
       this.getProfileInfo(username)
       this.getWallPosts(username)
     })
+  }
+
+  onProfileScrolled() {
+    if (this.isListening) {
+      this.getWallPosts(this.urlUsername)
+    }
   }
 
 }

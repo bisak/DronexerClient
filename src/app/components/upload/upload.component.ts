@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
-import {ToastService} from "../../services/toast.service";
-import {AuthService} from "../../services/auth.service";
-import {ProfileService} from "../../services/profile.service";
-import {PicturesService} from "../../services/pictures.service";
-import {Router} from "@angular/router";
-import {StaticDataService} from "../../services/static-data.service";
-import {AuthHelperService} from "../../utilities/auth-helper.service";
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { ToastService } from "../../services/toast.service";
+import { AuthService } from "../../services/auth.service";
+import { ProfileService } from "../../services/profile.service";
+import { PicturesService } from "../../services/pictures.service";
+import { Router } from "@angular/router";
+import { StaticDataService } from "../../services/static-data.service";
+import { AuthHelperService } from "../../utilities/auth-helper.service";
 
 @Component({
   selector: 'app-upload',
@@ -55,12 +55,12 @@ export class UploadComponent implements OnInit {
 
   onUploadBtnClick() {
     let uploadFormData: FormData = new FormData()
-    this.dronesSelector && uploadFormData.append('droneTaken', this.dronesArray[this.dronesSelector])
-    this.caption && uploadFormData.append('caption', this.caption)
+    if (this.dronesSelector) uploadFormData.append('droneTaken', this.dronesArray[this.dronesSelector])
+    if (this.caption) uploadFormData.append('caption', this.caption)
     if (this.tags) {
       /*TODO Add this verification on the server side.*/
       let tagsArray = this.tags.split(' ').filter((x) => x != '' && x.startsWith('#') && x.length > 4).map((x) => x.toLowerCase())
-      tagsArray.length && tagsArray.forEach((tag) => uploadFormData.append('tags', tag))
+      if (tagsArray.length) tagsArray.forEach((tag) => uploadFormData.append('tags', tag))
     }
     uploadFormData.append('uploaderUsername', this.authHelperService.getUsernameFromToken())
     uploadFormData.append('pictureFile', this.pictureFile)

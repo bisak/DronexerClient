@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {PicturesService} from "../../services/pictures.service";
-import {ToastService} from "../../services/toast.service";
+import { Component, OnInit } from '@angular/core';
+import { PicturesService } from "../../services/pictures.service";
+import { ToastService } from "../../services/toast.service";
 
 @Component({
   selector: 'app-explore',
@@ -8,12 +8,14 @@ import {ToastService} from "../../services/toast.service";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
-  explorePosts;
-  lastPostTime;
+  explorePosts: Array<any>;
+  lastPostTime: number;
+  isListening: boolean;
 
 
   constructor(private picturesService: PicturesService,
               private toastService: ToastService) {
+    this.isListening = true;
   }
 
   ngOnInit() {
@@ -21,22 +23,37 @@ export class ExploreComponent implements OnInit {
   }
 
   getExplorePosts() {
+    this.isListening = false
     let time = new Date().getTime()
-    if(this.lastPostTime){
+    if (this.lastPostTime) {
       time = this.lastPostTime
     }
-    console.log(time)
-    this.picturesService.getExplorePosts(time.toString()).subscribe((retrievedPictures) => {
+    this.picturesService.getExplorePosts(time).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
-        this.explorePosts = retrievedPictures.data
-        console.log(retrievedPictures)
+        let picData = retrievedPictures.data
+        if (this.explorePosts) {
+          this.explorePosts.push(...picData)
+        } else {
+          this.explorePosts = picData
+        }
+        this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime()
+        this.isListening = true
+      } else {
+        this.isListening = false
       }
     }, (error) => {
       console.log(error)
       if (error.status === 404) {
-        return false
+        return this.toastService.toast("No more posts available")
       }
       this.toastService.errorToast("Error getting user pictures.")
+      this.isListening = false
     })
+  }
+
+  onExploreScrolled() {
+    if (this.isListening) {
+      this.getExplorePosts()
+    }
   }
 }
