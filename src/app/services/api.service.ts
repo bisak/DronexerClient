@@ -10,9 +10,7 @@ import {Subject} from "rxjs";
 
 @Injectable()
 export class ApiService {
-
   requestPendingSource = new Subject<boolean>()
-
   requestAnnounced: Observable<any> = this.requestPendingSource.asObservable()
 
   constructor(private http: Http,
@@ -48,7 +46,7 @@ export class ApiService {
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
+      const err = body.err || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
       errMsg = error.message ? error.message : error.toString();

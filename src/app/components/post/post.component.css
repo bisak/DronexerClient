@@ -8,7 +8,6 @@
   overflow: hidden;
   margin: 0.5rem 0 1rem 0;
   background-color: #fff;
-  border-radius: 5px;
 }
 
 .small-chip {
@@ -98,7 +97,6 @@
 .card-profile-title {
   font-size: 16px;
   padding: 5px 20px 5px 20px;
-  border-radius: 0 0 2px 2px;
 }
 
 .profile-picture {

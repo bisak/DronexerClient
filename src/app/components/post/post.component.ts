@@ -1,11 +1,11 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {AuthHelperService} from "../../utilities/auth-helper.service";
-import {ProfileService} from "../../services/profile.service";
-import {ToastService} from "../../services/toast.service";
-import {PicturesService} from "../../services/pictures.service";
-import {DatesService} from "../../utilities/dates.service";
-import {PostsService} from "../../services/posts.service";
-import {StaticDataService} from "../../services/static-data.service";
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AuthHelperService } from "../../utilities/auth-helper.service";
+import { ProfileService } from "../../services/profile.service";
+import { ToastService } from "../../services/toast.service";
+import { PicturesService } from "../../services/pictures.service";
+import { DatesService } from "../../utilities/dates.service";
+import { PostsService } from "../../services/posts.service";
+import { StaticDataService } from "../../services/static-data.service";
 
 @Component({
   selector: 'app-post',
@@ -40,6 +40,7 @@ export class PostComponent implements OnInit {
           comment: comment
         }
         post.comments.push(commentToAdd)
+        post.commentsCount += 1
       }, (error) => {
         if (error.status === 401) {
           this.toastService.warningToast("Log in to comment.")
