@@ -69,15 +69,13 @@ export class UploadComponent implements OnInit {
       .subscribe((data) => {
         if (data.success) {
           this.toastService.successToast('Picture Uploaded.', this.hidePictureCard.bind(this))
-          /*binding hell.*/
           console.log(data)
         } else {
           this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"))
         }
       }, (err) => {
         console.log(err)
-        let parsedError = JSON.parse(err._body)
-        this.toastService.errorToast(parsedError.msg)
+        this.toastService.errorToast(err.statusText)
       })
   }
 

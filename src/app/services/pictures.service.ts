@@ -26,7 +26,4 @@ export class PicturesService {
     return `${this.apiService.apiUrl}users/profilePicture/${username}`
   }
 
-  handleNotFoundProfilePic(ev) {
-    ev.target.src = `${this.apiService.apiUrl}users/profilePicture/default_profile_picture`
-  }
 }

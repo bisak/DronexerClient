@@ -10,7 +10,7 @@
 
 .cover-photo {
   max-height: 250px;
-  position: relative;
+  overflow: hidden;
 }
 
 .profile-head .profile-picture {

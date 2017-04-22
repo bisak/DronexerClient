@@ -9,9 +9,14 @@ export class DatesService {
   constructor() {
   }
 
-  getFormattedDateString(date: string) {
-    let t = new Date(date);
-    return `${t.getDate()} ${this.monthNames[t.getMonth()]} ${t.getFullYear()}` //24 March, 2017 <- format
+  getFormattedDateString(inDate: any) {
+    let time
+    if (inDate instanceof Date) {
+      time = inDate
+    } else {
+      time = new Date(inDate)
+    }
+    return `${time.getDate()} ${this.monthNames[time.getMonth()]} ${time.getFullYear()}` //24 March, 2017 <- format
   }
 
 }

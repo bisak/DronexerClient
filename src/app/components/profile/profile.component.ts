@@ -43,6 +43,7 @@ export class ProfileComponent implements OnInit {
   getProfileInfo(username) {
     this.profileService.getProfile(username).subscribe((retrievedData) => {
       this.profileInfo = retrievedData.data
+      console.log(this.profileInfo)
     }, (error) => {
       console.log(error)
       if (error.status === 404) {
@@ -76,7 +77,9 @@ export class ProfileComponent implements OnInit {
     }, (error) => {
       console.log(error)
       if (error.status === 404) {
-        return this.toastService.toast("No more posts available")
+        /*TODO fix no posts with logic based on received posts*/
+        //this.hasPosts = false
+        return this.toastService.toast("No posts available")
       }
       this.toastService.errorToast("Error getting user pictures.")
       this.isListening = false
@@ -90,7 +93,11 @@ export class ProfileComponent implements OnInit {
 
   listenForUrlChanges() {
     this.route.params.subscribe((params: Params) => {
-      const username = params['username']
+      this.profileInfo = null
+      this.wallPosts = null
+      this.isListening = true
+
+      let username = params['username']
       this.urlUsername = username
       this.getProfileInfo(username)
       this.getWallPosts(username)
@@ -102,5 +109,4 @@ export class ProfileComponent implements OnInit {
       this.getWallPosts(this.urlUsername)
     }
   }
-
 }

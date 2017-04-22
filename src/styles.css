@@ -35,6 +35,10 @@
   padding-top: 0 !important;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .showbox {
   position: absolute;
   top: 0;

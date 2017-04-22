@@ -20,7 +20,7 @@
 }
 
 .comment {
-  margin: 3px 0 3px 0;
+  margin: 5px 0 5px 0;
 }
 
 .no-margin {
@@ -38,14 +38,10 @@
 
 .comment-username {
   border: 1px solid #03a9f4;
+  background-color: rgba(228, 228, 228, 0.5);
   height: 26px;
   line-height: 26px;
   margin: 3px 0;
-}
-
-.cover-photo {
-  max-height: 250px;
-  position: relative;
 }
 
 .input-field :focus {
@@ -59,12 +55,6 @@
 
 .content-row {
   margin-bottom: 0;
-}
-
-@media (max-width: 600px) {
-  .open-profile-info {
-    margin-top: 20px;
-  }
 }
 
 .ultra-small {
@@ -99,6 +89,20 @@
   padding: 5px 20px 5px 20px;
 }
 
+.card-image .after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  display: none;
+  color: #FFF;
+}
+
+.card-image .after {
+  display: block;
+}
+
 .profile-picture {
   margin: 10px 10px 0 10px;
   width: 50px;
@@ -113,33 +117,24 @@
 .post-actions {
   padding: 5px 0 0 20px
 }
-
+/*
 .post-image {
   z-index: 800;
-}
-
-.pointer {
-  cursor: pointer;
-}
+}*/
 
 .comments-container {
-  margin: 0 10px 0 10px;
-}
-
-.comments-container::-webkit-scrollbar {
-  display: none;
+  margin: 0 0 0 10px;
+  overflow: scroll;
 }
 
 @media only screen and (min-width: 993px) {
   .comments-container {
     max-height: 166px;
-    overflow: scroll;
   }
 }
 
 @media only screen and (max-width: 992px) {
   .comments-container {
     max-height: 133px;
-    overflow: scroll;
   }
 }

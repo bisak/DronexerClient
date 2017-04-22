@@ -5,7 +5,6 @@
         <div class="col no-margin no-padding">
           <img [routerLink]="['/profile', post.uploaderUsername]"
                [src]="picturesService.getProfilePicUrl(post.uploaderUsername)"
-               (error)="picturesService.handleNotFoundProfilePic($event)"
                alt="Post profile picture" class="circle profile-picture z-depth-1 pointer">
         </div>
         <div class="col">
@@ -39,17 +38,21 @@
       <img *ngIf="post.isLikedByCurrentUser" (dblclick)="unLikePost(post)"
            [src]="postsService.getPictureUrlForPost(post)"
            alt="Wall post picture" class="post-image">
+     <!-- <div class="after">
+        <img src="assets/a.png">
+      </div>-->
     </div>
 
     <div class="card-content comments-wrapper">
       <div #commentsContainer [scrollTop]="commentsContainer.scrollHeight" *ngIf="post.showComments"
            class="comments-container">
-        <div *ngFor="let comment of post.comments" class="comment no-margin">
-          <div class="chip comment-username">
-            <a [routerLink]="['/profile', comment.username]">{{comment.username}}</a>
-          </div>
-          <span class="small-text grey-text text-darken-2">{{comment.comment}}</span>
-          <div class="divider"></div>
+        <div *ngFor="let comment of post.comments" class="comment">
+          <span>
+            <a class="black-text"
+               [routerLink]="['/profile', comment.username]"><strong>{{comment.username}}</strong></a>
+          </span>
+          <span>{{comment.comment}}</span>
+          <div class="divider grey lighten-4"></div>
         </div>
       </div>
     </div>
@@ -73,9 +76,9 @@
       </div>
 
       <form *ngIf="post.showComments" (keyup)="commentPost($event, post)">
-        <div class="input-field col s8 m10 no-margin ">
-          <input id="post-comment" type="text" class="validate no-margin">
-          <label for="post-comment">Add a comment...</label>
+        <div class="input-field col s8 m10 no-margin">
+          <input id="post-comment" type="text" class="no-margin" autocomplete="off"
+                 placeholder="Add a comment...">
         </div>
       </form>
 

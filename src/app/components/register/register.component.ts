@@ -57,8 +57,9 @@ export class RegisterComponent implements OnInit {
       this.profilePictureFile = candidateFile;
       let fileReader: FileReader = new FileReader();
       fileReader.readAsDataURL(this.profilePictureFile)
-      fileReader.onloadend = (e) => {
+      fileReader.onload = (e) => {
         this.profilePictureEncoded = fileReader.result;
+        console.log(this.profilePictureEncoded)
       }
       this.isRegisterButtonDisabled = false
     }
