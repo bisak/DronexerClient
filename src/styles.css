@@ -35,6 +35,10 @@
   padding-top: 0 !important;
 }
 
+.no-margin{
+  margin: 0 !important;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -160,4 +164,10 @@
   90% {
     stroke: #ffa700;
   }
+}
+
+.global-wrapper{
+  /*
+  background-color: #fafafa;
+  */
 }

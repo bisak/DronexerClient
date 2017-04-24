@@ -16,7 +16,6 @@
 .profile-head .profile-picture {
   width: 110px;
   height: 110px;
-  border: 1px solid #03a9f4;
 }
 
 .input-field :focus {
@@ -34,6 +33,10 @@
 
 .profile-head .card-reveal .collapsible-padding {
   padding: 0 25px 0 25px;
+}
+
+.card .card-reveal {
+  padding: 5px 24px 0 24px;
 }
 
 @media (max-width: 600px) {
@@ -78,4 +81,8 @@
   .profile-page-wall {
     width: 100%;
   }
+}
+
+.no-shadow{
+  box-shadow: none;
 }

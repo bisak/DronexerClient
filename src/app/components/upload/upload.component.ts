@@ -62,7 +62,6 @@ export class UploadComponent implements OnInit {
       let tagsArray = this.tags.split(' ').filter((x) => x != '' && x.startsWith('#') && x.length > 4).map((x) => x.toLowerCase())
       if (tagsArray.length) tagsArray.forEach((tag) => uploadFormData.append('tags', tag))
     }
-    uploadFormData.append('uploaderUsername', this.authHelperService.getUsernameFromToken())
     uploadFormData.append('pictureFile', this.pictureFile)
 
     this.picturesService.uploadPicture(uploadFormData)

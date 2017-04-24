@@ -8,3 +8,16 @@
     height: 50px;
   }
 }
+
+.dropdown-content li:hover, .dropdown-content li.active, .dropdown-content li.selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+  line-height: 35px;
+  font-size: 1rem;
+}
+
+.dropdown-content li {
+  min-height: 64px;
+}

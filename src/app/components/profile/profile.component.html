@@ -1,15 +1,7 @@
 <div class="container">
   <div *ngIf="profileInfo" class="profile-head">
     <div class="card">
-      <div class="cover-photo card-image pointer">
-        <img src="assets/wide.jpg">
-        <a (click)="onUploadBtnClick()" materialize="tooltip"
-           class="tooltipped btn-floating btn-large halfway-fab waves-effect waves-light red"
-           data-position="bottom" data-delay="500" data-tooltip="Upload"><i
-          class="material-icons">file_upload</i></a>
-      </div>
-
-      <div class="card-content">
+           <div class="card-content">
         <div class="row content-row">
           <div class="col s12 center-align m3">
             <img id="profile-picture-view" [src]="picturesService.getProfilePicUrl(profileInfo.username)"
@@ -33,26 +25,22 @@
               <p class="grey-text">Following</p>
             </div>
           </div>
-          <!--<div class="col right open-profile-info">
+          <div class="col right open-profile-info">
             <a class="btn-floating activator waves-effect waves-light blue darken-1">
               <i class="material-icons">perm_identity</i>
             </a>
-          </div>-->
+          </div>
         </div>
       </div>
       <div class="card-reveal">
         <div class="row">
-          <span class="card-title grey-text text-darken-4">Profile info<i class="material-icons right">close</i></span>
+          <span class="card-title grey-text text-darken-4">Info<i class="material-icons right">close</i></span>
           <div class="col s10 m6 l4">
-            <p><i class="material-icons blue-text left">account_box</i>{{profileInfo.username}}</p>
-            <p><i class="material-icons blue-text left">account_circle</i> {{profileInfo.firstName}}
-              {{profileInfo.lastName}}
-            </p>
             <p><i class="material-icons blue-text left">email</i> {{profileInfo.email}}</p>
             <p *ngIf="profileInfo.birthday"><i class="material-icons blue-text left">cake</i> Birthday:
               {{profileInfo.birthday}}
             </p>
-            <p><i class="material-icons blue-text left">info</i> Member since:
+            <p><i class="material-icons blue-text left">access_time</i> Member since:
               {{datesService.getFormattedDateString(profileInfo.createdAt)}}</p>
           </div>
           <div *ngIf="profileInfo.drones" class="col s10 m5 l4">
@@ -92,8 +80,8 @@
           <div *ngIf="isProfileMine">
             <p class="big-text">You have no posts.</p>
             <a [routerLink]="['/upload']"
-               class="col s10 offset-s1 m4 offset-m4 btn btn-large waves-effect light-blue darken-1">
-              <span>Create your first post now!</span>
+               class="btn btn-large waves-effect light-blue darken-1">
+              <span>Post now!</span>
             </a>
           </div>
           <div *ngIf="!isProfileMine">

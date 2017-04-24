@@ -28,6 +28,9 @@ export class PostComponent implements OnInit {
   }
 
   commentPost(ev, post) {
+    if(!post.comments){
+      this.loadComments(post)
+    }
     if (ev.keyCode == 13) {
       const comment = ev.target.value
       const id = post._id
@@ -76,12 +79,12 @@ export class PostComponent implements OnInit {
   }
 
   loadComments(post) {
-    post.showComments = !post.showComments
     if (post.commentsCount > 0) {
       const id = post._id
       this.postsService.getComments(id).subscribe((comments) => {
         if (comments.success) {
           post.comments = comments.data
+          post.showComments = true
         }
       }, (error) => {
         console.log(error)

@@ -32,18 +32,17 @@ export class ProfileComponent implements OnInit {
               private picturesService: PicturesService,
               private datesService: DatesService,
               private staticDataService: StaticDataService) {
-    this.hasPosts = true
   }
 
   ngOnInit() {
     this.listenForUrlChanges()
     this.isProfileMine = this.checkIdentity()
+    this.hasPosts = true
   }
 
   getProfileInfo(username) {
     this.profileService.getProfile(username).subscribe((retrievedData) => {
       this.profileInfo = retrievedData.data
-      console.log(this.profileInfo)
     }, (error) => {
       console.log(error)
       if (error.status === 404) {
@@ -73,20 +72,16 @@ export class ProfileComponent implements OnInit {
         this.isListening = true
       } else {
         this.isListening = false
+        if(!this.wallPosts){
+          this.hasPosts = false
+        }
       }
     }, (error) => {
-      console.log(error)
-      if (error.status === 404) {
-        /*TODO fix no posts with logic based on received posts*/
-        //this.hasPosts = false
-        return this.toastService.toast("No posts available")
-      }
-      this.toastService.errorToast("Error getting user pictures.")
-      this.isListening = false
+      this.toastService.errorToast("Error getting pictures.")
     })
   }
 
-  checkIdentity():boolean {
+  checkIdentity(): boolean {
     const extractedUsername = this.authHelperService.getUsernameFromToken()
     return (extractedUsername && this.urlUsername === extractedUsername)
   }

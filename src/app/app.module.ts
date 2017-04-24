@@ -37,6 +37,7 @@ import { AuthHelperService } from "./utilities/auth-helper.service";
 import { PostComponent } from './components/post/post.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { PostsService } from "./services/posts.service";
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { PostsService } from "./services/posts.service";
     NotFoundComponent,
     UploadComponent,
     PostComponent,
-    LoaderComponent
+    LoaderComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

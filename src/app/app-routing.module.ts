@@ -11,22 +11,24 @@ import { DisclaimerComponent } from './components/disclaimer/disclaimer.componen
 import { ExploreComponent } from './components/explore/explore.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { UploadComponent } from './components/upload/upload.component'
+import { SettingsComponent } from './components/settings/settings.component'
 import { AuthGuard } from './guards/auth.guard'
 
 /*TODO fix authguard*/
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'upload', component: UploadComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'profile/:username', component: ProfileComponent },
-  { path: 'about', component: AboutUsComponent },
-  { path: 'privacy', component: PrivacyPolicyComponent },
-  { path: 'disclaimer', component: DisclaimerComponent },
-  { path: 'terms', component: TermsOfUseComponent },
-  { path: 'explore', component: ExploreComponent },
-  { path: 'page-not-found', component: NotFoundComponent },
-  { path: '**', redirectTo: 'page-not-found' }
+  {path: '', component: HomeComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'upload', component: UploadComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'profile/:username', component: ProfileComponent},
+  {path: 'about', component: AboutUsComponent},
+  {path: 'privacy', component: PrivacyPolicyComponent},
+  {path: 'disclaimer', component: DisclaimerComponent},
+  {path: 'terms', component: TermsOfUseComponent},
+  {path: 'explore', component: ExploreComponent},
+  {path: 'settings', component: SettingsComponent},
+  {path: 'page-not-found', component: NotFoundComponent},
+  {path: '**', redirectTo: 'page-not-found'}
 ];
 
 @NgModule({

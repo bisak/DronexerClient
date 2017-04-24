@@ -3,13 +3,13 @@
     <div class="card-profile-title">
       <div class="row no-margin">
         <div class="col no-margin no-padding">
-          <img [routerLink]="['/profile', post.uploaderUsername]"
-               [src]="picturesService.getProfilePicUrl(post.uploaderUsername)"
+          <img [routerLink]="['/profile', post.username]"
+               [src]="picturesService.getProfilePicUrl(post.username)"
                alt="Post profile picture" class="circle profile-picture z-depth-1 pointer">
         </div>
         <div class="col">
           <div class="post-profile-info">
-            <a [routerLink]="['/profile', post.uploaderUsername]" class="grey-text text-darken-4 no-margin valign">{{post.uploaderUsername}}</a>
+            <a [routerLink]="['/profile', post.username]" class="grey-text text-darken-4 no-margin valign">{{post.username}}</a>
             <p class="grey-text text-darken-1 ultra-small no-margin valign">
               {{datesService.getFormattedDateString(post.createdAt)}}</p>
           </div>
@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <form *ngIf="post.showComments" (keyup)="commentPost($event, post)">
+      <form (keyup)="commentPost($event, post)">
         <div class="input-field col s8 m10 no-margin">
           <input id="post-comment" type="text" class="no-margin" autocomplete="off"
                  placeholder="Add a comment...">
@@ -85,8 +85,8 @@
 
       <div class="row no-comments-container no-margin">
         <div class="col right expand-more-arrow valign-wrapper">
-          <span *ngIf="!post.showComments" class="ultra-small valign">{{post.commentsCount}} Comments</span>
-          <i *ngIf="!post.showComments" (click)="loadComments(post)" class="material-icons pointer">expand_more</i>
+          <span *ngIf="!post.showComments" class="ultra-small valign">{{post.commentsCount}} comments</span>
+          <i *ngIf="post.commentsCount && !post.showComments" (click)="loadComments(post)" class="material-icons pointer">expand_more</i>
           <i *ngIf="post.showComments" (click)="post.showComments = !post.showComments" class="material-icons pointer">expand_less</i>
         </div>
       </div>
