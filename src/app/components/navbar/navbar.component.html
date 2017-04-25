@@ -12,10 +12,6 @@
         </li>
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/explore']">Explore</a>
         </li>
-        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="routerLinkOpts">
-          <a [routerLink]="['/upload']">Post</a>
-        </li>
       </ul>
       <ul class="right hide-on-med-and-down">
         <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
@@ -24,10 +20,14 @@
         <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/register']">Register</a>
         </li>
+        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="routerLinkOpts">
+          <a [routerLink]="['/upload']">Post</a>
+        </li>
         <li *ngIf="authHelperService.isLoggedIn()">
-          <a materialize="dropdown" class="dropdown-button" href="#!" data-activates="profile-dropdown">
+          <a materialize="dropdown" class="dropdown-button" data-activates="profile-dropdown">
             {{username}}
-            <i class="material-icons right">arrow_drop_down</i></a></li>
+            <i class="material-icons right dropdown-arrow-navbar">arrow_drop_down</i></a></li>
         <ul *ngIf="authHelperService.isLoggedIn()" id="profile-dropdown" class="dropdown-content blue-grey darken-4">
           <li [routerLinkActive]="['active']"
               [routerLinkActiveOptions]="routerLinkOpts"><a class="white-text" [routerLink]="['/profile', username]">Profile</a>

@@ -33,8 +33,8 @@ export class PostComponent implements OnInit {
     }
     if (ev.keyCode == 13) {
       const comment = ev.target.value
-      const id = post._id
-      this.postsService.commentPost(id, {comment}).subscribe((data) => {
+      const postId = post._id
+      this.postsService.commentPost(postId, {comment}).subscribe((data) => {
         if (!post.comments)
           post.comments = []
         let commentToAdd = {
@@ -54,9 +54,8 @@ export class PostComponent implements OnInit {
   }
 
   likePost(post) {
-    const id = post._id
-    this.postsService.likePost(id).subscribe((data) => {
-      const userId = this.authHelperService.getIdFromToken()
+    const postId = post._id
+    this.postsService.likePost(postId).subscribe((data) => {
       post.isLikedByCurrentUser = true
       post.likesCount += 1
     }, (error) => {
@@ -68,9 +67,8 @@ export class PostComponent implements OnInit {
   }
 
   unLikePost(post) {
-    const id = post._id
-    this.postsService.unLikePost(id).subscribe((data) => {
-      const userId = this.authHelperService.getIdFromToken()
+    const postId = post._id
+    this.postsService.unLikePost(postId).subscribe((data) => {
       post.isLikedByCurrentUser = false
       post.likesCount -= 1
     }, (error) => {
@@ -78,10 +76,23 @@ export class PostComponent implements OnInit {
     })
   }
 
+  deletePost(post){
+    const postId = post._id
+    this.postsService.deletePost(postId).subscribe((data) => {
+     console.log(data)
+    }, (error) => {
+      console.log(error)
+    })
+  }
+
+  editPost(post){
+    console.log(post)
+  }
+
   loadComments(post) {
     if (post.commentsCount > 0) {
-      const id = post._id
-      this.postsService.getComments(id).subscribe((comments) => {
+      const postId = post._id
+      this.postsService.getComments(postId).subscribe((comments) => {
         if (comments.success) {
           post.comments = comments.data
           post.showComments = true

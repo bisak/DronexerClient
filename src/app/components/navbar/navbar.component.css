@@ -21,3 +21,7 @@
 .dropdown-content li {
   min-height: 64px;
 }
+
+.dropdown-arrow-navbar{
+  margin-left: 5px;
+}

@@ -171,3 +171,21 @@
   background-color: #fafafa;
   */
 }
+
+.ultra-small-text {
+  font-size: 0.8rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.small-text {
+  font-size: 0.88rem !important;
+}
+
+.big-text{
+  font-size: 2rem !important;
+}
+
+.medium-text{
+  font-size: 1.1rem !important;
+}

@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, Response} from "@angular/http"
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Headers, Http, Response } from "@angular/http"
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import {environment} from '../../environments/environment'
-import {AuthService} from "./auth.service";
-import {AuthHelperService} from "../utilities/auth-helper.service";
-import {Subject} from "rxjs";
+import { environment } from '../../environments/environment'
+import { AuthService } from "./auth.service";
+import { AuthHelperService } from "../utilities/auth-helper.service";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class ApiService {
@@ -37,6 +37,15 @@ export class ApiService {
       headers.append('Content-Type', 'application/json')
     }
     return this.http.post(`${this.apiUrl}${path}`, data, {headers: headers})
+      .map((response) => this.extractData(response))
+      .catch((response) => this.handleError(response))
+  }
+
+  delete(path: string) {
+    this.requestPendingSource.next(true)
+    let headers = new Headers();
+    headers.append('Authorization', this.authHelperService.getAuthToken())
+    return this.http.delete(`${this.apiUrl}${path}`, {headers: headers})
       .map((response) => this.extractData(response))
       .catch((response) => this.handleError(response))
   }

@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {ApiService} from "./api.service";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { ApiService } from "./api.service";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class PostsService {
@@ -22,6 +22,10 @@ export class PostsService {
 
   unLikePost(id: string): Observable<any> {
     return this.apiService.post(`pictures/unlike/${id}`, {})
+  }
+
+  deletePost(id: string): Observable<any> {
+    return this.apiService.delete(`pictures/delete/${id}`)
   }
 
   getPictureUrlForPost(post: any): string {
