@@ -38,6 +38,7 @@ import { PostComponent } from './components/post/post.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { PostsService } from "./services/posts.service";
 import { SettingsComponent } from './components/settings/settings.component';
+import { ModalDeleteComponent } from './components/modal-delete/modal-delete.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { SettingsComponent } from './components/settings/settings.component';
     UploadComponent,
     PostComponent,
     LoaderComponent,
-    SettingsComponent
+    SettingsComponent,
+    ModalDeleteComponent
   ],
   imports: [
     BrowserModule,

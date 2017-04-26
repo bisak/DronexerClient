@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AuthHelperService } from "../../utilities/auth-helper.service";
 import { ProfileService } from "../../services/profile.service";
 import { ToastService } from "../../services/toast.service";
@@ -6,6 +6,7 @@ import { PicturesService } from "../../services/pictures.service";
 import { DatesService } from "../../utilities/dates.service";
 import { PostsService } from "../../services/posts.service";
 import { StaticDataService } from "../../services/static-data.service";
+import { MaterializeAction } from "angular2-materialize";
 
 @Component({
   selector: 'app-post',
@@ -15,6 +16,8 @@ import { StaticDataService } from "../../services/static-data.service";
 export class PostComponent implements OnInit {
 
   @Input() post
+  /*TODO can substitute passing post to functions with this.post because this class has an instance for each post.*/
+  deleteModal = new EventEmitter<string | MaterializeAction>();
 
   constructor(private toastService: ToastService,
               public picturesService: PicturesService,
@@ -27,23 +30,39 @@ export class PostComponent implements OnInit {
   ngOnInit() {
   }
 
+  openDeleteModal(post) {
+    post.showModal = true
+    setTimeout(()=>{
+      this.deleteModal.emit({action: 'modal', params: ['open']});
+    },200)
+  }
+
+  closeDeleteModal(post){
+    this.deleteModal.emit({action:"modal",params:['close']});
+    setTimeout(()=>{
+      post.showModal = false
+    },200)
+  }
+
   commentPost(ev, post) {
-    if(!post.comments){
+    if (!post.comments && post.commentsCount > 0) {
       this.loadComments(post)
     }
     if (ev.keyCode == 13) {
       const comment = ev.target.value
+      /*TODO Filter comments.*/
       const postId = post._id
       this.postsService.commentPost(postId, {comment}).subscribe((data) => {
         if (!post.comments)
           post.comments = []
         let commentToAdd = {
-          userId: this.authHelperService.getIdFromToken(),
+          userId: this.authHelperService.getUserIdFromToken(),
           username: this.authHelperService.getUsernameFromToken(),
           comment: comment
         }
         post.comments.push(commentToAdd)
         post.commentsCount += 1
+        post.showComments = true
       }, (error) => {
         if (error.status === 401) {
           this.toastService.warningToast("Log in to comment.")
@@ -76,31 +95,33 @@ export class PostComponent implements OnInit {
     })
   }
 
-  deletePost(post){
+  deletePost(post, postElement) {
+    console.log(typeof postElement)
     const postId = post._id
     this.postsService.deletePost(postId).subscribe((data) => {
-     console.log(data)
+      postElement.remove()
+      this.closeDeleteModal(post)
+      console.log(data)
     }, (error) => {
       console.log(error)
     })
   }
 
-  editPost(post){
+  editPost(post) {
     console.log(post)
   }
 
   loadComments(post) {
-    if (post.commentsCount > 0) {
-      const postId = post._id
-      this.postsService.getComments(postId).subscribe((comments) => {
-        if (comments.success) {
-          post.comments = comments.data
-          post.showComments = true
-        }
-      }, (error) => {
-        console.log(error)
-        this.toastService.toast("Couldn't load comments.")
-      })
-    }
+    const postId = post._id
+    this.postsService.getComments(postId).subscribe((comments) => {
+      if (comments.success) {
+        post.comments = comments.data
+        post.showComments = true
+      }
+    }, (error) => {
+      console.log(error)
+      this.toastService.toast("Couldn't load comments.")
+    })
+
   }
 }

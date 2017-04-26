@@ -93,7 +93,12 @@
   padding: 8px 20px 8px 20px;
 }
 
-.card-image .after {
+.post-image{
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+}
+
+/*.card-image .after {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -105,7 +110,7 @@
 
 .card-image .after {
   display: block;
-}
+}*/
 
 .profile-picture {
   margin: 8px 8px 0 10px;

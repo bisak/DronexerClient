@@ -1,4 +1,4 @@
-<div class="post">
+<div class="post" #thisPost>
   <div class="card">
     <div class="card-post-top medium-text">
       <div class="row no-margin">
@@ -14,13 +14,16 @@
               {{datesService.getFormattedDateString(post.createdAt)}}</p>
           </div>
         </div>
-        <div class="col right post-edit-actions no-padding unselectable">
-          <a materialize="dropdown" class='blue darken-1 dropdown-button waves-effect waves-light btn-floating'
-             attr.data-activates='{{post._id}}'><i class="material-icons">edit</i></a>
-          <ul id='{{post._id}}' class='dropdown-content'>
+        <div *ngIf="post.userId === authHelperService.getUserIdFromToken()"
+             class="col right post-edit-actions no-padding unselectable">
+          <a materialize="dropdown" class="pointer"
+             attr.data-activates='dropdown_{{post._id}}'><i class="material-icons black-text small">arrow_drop_down</i></a>
+          <ul id='dropdown_{{post._id}}' class='dropdown-content'>
             <li (click)="editPost(post)"><a><i class="material-icons dropdown-icon blue-text">edit</i>Edit</a></li>
             <li class="divider"></li>
-            <li (click)="deletePost(post)"><a><i class="material-icons dropdown-icon red-text">delete_forever</i>Delete</a></li>
+            <li (click)="openDeleteModal(post)"><a><i
+              class="material-icons dropdown-icon red-text">delete_forever</i>Delete</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -83,12 +86,11 @@
       </div>
 
       <form (keyup)="commentPost($event, post)">
-        <div class="input-field col s8 m10 no-margin">
+        <div class="input-field col s8 no-margin">
           <input id="post-comment" type="text" class="no-margin" autocomplete="off"
                  placeholder="Add a comment...">
         </div>
       </form>
-
 
       <div class="row no-comments-container no-margin">
         <div class="col right post-edit-actions valign-wrapper">
@@ -99,5 +101,10 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!--Make component for the delete modal-->
+  <div *ngIf="post.showModal">
+    <app-modal-delete [deleteModal]="deleteModal" [post]="post" [thisPost]="thisPost"></app-modal-delete>
   </div>
 </div>

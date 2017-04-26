@@ -20,9 +20,9 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.username = this.getUsername()
+    this.username = this.authHelperService.getUsernameFromToken()
     this.authHelperService.loginAnnounced.subscribe(data => {
-      this.username = this.getUsername()
+      this.username = this.authHelperService.getUsernameFromToken()
     })
   }
 
@@ -31,13 +31,6 @@ export class NavbarComponent implements OnInit {
     this.toastService.toast('Logged out.');
     this.router.navigate(['/'])
     return false;
-  }
-
-  getUsername() {
-    const user = this.authHelperService.getUser()
-    if (user) {
-      return user.username
-    }
   }
 
 }

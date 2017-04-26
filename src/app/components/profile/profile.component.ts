@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProfileService } from '../../services/profile.service'
+import { Component, EventEmitter, OnInit } from "@angular/core";
+import { ProfileService } from "../../services/profile.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import 'rxjs/add/operator/switchMap';
+import "rxjs/add/operator/switchMap";
 import { ToastService } from "../../services/toast.service";
 import { PicturesService } from "../../services/pictures.service";
-import { ApiService } from "../../services/api.service";
 import { DatesService } from "../../utilities/dates.service";
 import { AuthHelperService } from "../../utilities/auth-helper.service";
 import { StaticDataService } from "../../services/static-data.service";
+import { MaterializeAction } from "angular2-materialize";
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +22,6 @@ export class ProfileComponent implements OnInit {
   urlUsername: string
   isListening: boolean;
   lastPostTime: number;
-
 
   constructor(private profileService: ProfileService,
               private route: ActivatedRoute,
@@ -72,7 +71,7 @@ export class ProfileComponent implements OnInit {
         this.isListening = true
       } else {
         this.isListening = false
-        if(!this.wallPosts){
+        if (!this.wallPosts) {
           this.hasPosts = false
         }
       }

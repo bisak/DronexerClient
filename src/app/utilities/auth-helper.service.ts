@@ -16,7 +16,6 @@ export class AuthHelperService {
 
   storeUserData(token, user) {
     localStorage.setItem('id_token', token)
-    localStorage.setItem('user', JSON.stringify(user))
     this.loginAnnouncedSource.next(true)
   }
 
@@ -24,15 +23,9 @@ export class AuthHelperService {
     return localStorage.getItem('id_token')
   }
 
-  getUser() {
-    return JSON.parse(localStorage.getItem('user'))
-  }
-
   getDecodedAuthToken() {
-    const token = localStorage.getItem('id_token')
-    if (token)
-      return this.jwtHelper.decodeToken(token)
-
+    const token = this.getAuthToken()
+    if (token) return this.jwtHelper.decodeToken(token)._doc
     return null
   }
 
@@ -42,17 +35,13 @@ export class AuthHelperService {
 
   getUsernameFromToken() {
     let decodedToken = this.getDecodedAuthToken();
-    if (decodedToken) {
-      return decodedToken._doc.username
-    }
+    if (decodedToken) return decodedToken.username
     return null
   }
 
-  getIdFromToken() {
+  getUserIdFromToken() {
     let decodedToken = this.getDecodedAuthToken();
-    if (decodedToken) {
-      return decodedToken._doc._id
-    }
+    if (decodedToken) return decodedToken._id
     return null
   }
 
