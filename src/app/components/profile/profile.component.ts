@@ -91,12 +91,14 @@ export class ProfileComponent implements OnInit {
 
   listenForUrlChanges() {
     this.route.params.subscribe((params: Params) => {
+      let username = params['username']
+      this.urlUsername = username
+
       this.profileInfo = null
       this.wallPosts = null
       this.isListening = true
+      this.isProfileMine = this.checkIdentity()
 
-      let username = params['username']
-      this.urlUsername = username
       this.getProfileInfo(username)
       this.getWallPosts(username)
     })

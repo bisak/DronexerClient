@@ -108,7 +108,7 @@ export class RegisterComponent implements OnInit {
           this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"))
         }
       }, (err) => {
-        console.error(err)
+        console.log(err)
         let parsedError = JSON.parse(err._body)
         this.toastService.errorToast(parsedError.msg)
       })
