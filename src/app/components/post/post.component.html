@@ -92,7 +92,7 @@
 
       <div class="row no-margin">
         <div *ngIf="!post.showComments" class="col right post-edit-actions valign-wrapper pointer"
-             (click)="loadComments()">
+             (click)="post.commentsCount && loadComments()">
           <span *ngIf="post.commentsCount === 1" class="ultra-small-text valign">{{post.commentsCount}} comment</span>
 
           <span *ngIf="post.commentsCount !== 1" class="ultra-small-text valign">{{post.commentsCount}} comments</span>

@@ -112,10 +112,10 @@ export class PostComponent implements OnInit {
   editPost() {
   }
 
-  postAction(){
-    if(this.post.isLikedByCurrentUser){
+  postAction() {
+    if (this.post.isLikedByCurrentUser) {
       this.unLikePost()
-    }else{
+    } else {
       this.likePost()
     }
   }

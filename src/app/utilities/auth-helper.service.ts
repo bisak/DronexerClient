@@ -30,7 +30,7 @@ export class AuthHelperService {
   }
 
   isLoggedIn() {
-    return tokenNotExpired()
+    return tokenNotExpired('id_token')
   }
 
   getUsernameFromToken() {

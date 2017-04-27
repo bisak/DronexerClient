@@ -72,6 +72,7 @@ export class UploadComponent implements OnInit {
           this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"))
         }
       }, (err) => {
+        /*TODO This shit didn't work. Probably something with bug when the server actually returns string.*/
         console.log(err)
         this.toastService.errorToast(err.statusText)
       })
