@@ -11,6 +11,15 @@
   color: #03a9f4;
 }
 
+[type="checkbox"].filled-in:not(:checked) + label:after {
+  border: 2px solid #039be5;
+}
+
+[type="checkbox"]:checked + label:after{
+  background: #039be5;
+  border: 2px solid #039be5;
+}
+
 .avatar-big {
   width: 150px;
   height: 150px;

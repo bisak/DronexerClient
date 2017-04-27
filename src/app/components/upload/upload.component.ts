@@ -58,8 +58,7 @@ export class UploadComponent implements OnInit {
     if (this.dronesSelector) uploadFormData.append('droneTaken', this.dronesArray[this.dronesSelector])
     if (this.caption) uploadFormData.append('caption', this.caption)
     if (this.tags) {
-      /*TODO Add this verification on the server side.*/
-      let tagsArray = this.tags.split(' ').filter((x) => x != '' && x.startsWith('#') && x.length > 4).map((x) => x.toLowerCase())
+      let tagsArray = this.tags.split(' ').filter((x) => x !== '' && x.startsWith('#') && x.length > 4).map((x) => x.toLowerCase())
       if (tagsArray.length) tagsArray.forEach((tag) => uploadFormData.append('tags', tag))
     }
     uploadFormData.append('pictureFile', this.pictureFile)

@@ -9,19 +9,20 @@
         </div>
         <div class="col">
           <div class="post-profile-info">
-            <a [routerLink]="['/profile', post.username]" class="grey-text text-darken-4 no-margin valign">{{post.username}}</a>
+            <a [routerLink]="['/profile', post.username]" class="grey-text text-darken-4 no-margin valign">{{post.username}}
+            </a>
             <p class="grey-text text-darken-1 ultra-small-text no-margin valign">
-              {{datesService.getFormattedDateString(post.createdAt)}}</p>
+              {{post.timeAgo}}</p>
           </div>
         </div>
         <div *ngIf="post.userId === authHelperService.getUserIdFromToken()"
              class="col right post-edit-actions no-padding unselectable">
           <a materialize="dropdown" class="pointer"
-             attr.data-activates='dropdown_{{post._id}}'><i class="material-icons black-text small">arrow_drop_down</i></a>
+             attr.data-activates='dropdown_{{post._id}}'><i class="material-icons black-text small zoom-in">arrow_drop_down</i></a>
           <ul id='dropdown_{{post._id}}' class='dropdown-content'>
-            <li (click)="editPost(post)"><a><i class="material-icons dropdown-icon blue-text">edit</i>Edit</a></li>
+            <li (click)="editPost()"><a><i class="material-icons dropdown-icon blue-text">edit</i>Edit</a></li>
             <li class="divider"></li>
-            <li (click)="openDeleteModal(post)"><a><i
+            <li (click)="openDeleteModal()"><a><i
               class="material-icons dropdown-icon red-text">delete_forever</i>Delete</a>
             </li>
           </ul>
@@ -42,11 +43,8 @@
     </div>
 
     <div class="card-image unselectable">
-      <img *ngIf="!post.isLikedByCurrentUser" (dblclick)="likePost(post)"
-           [src]="postsService.getPictureUrlForPost(post)"
-           alt="Wall post picture" class="post-image">
-      <img *ngIf="post.isLikedByCurrentUser" (dblclick)="unLikePost(post)"
-           [src]="postsService.getPictureUrlForPost(post)"
+      <img (dblclick)="postAction()"
+           [src]="post.pictureUrl"
            alt="Wall post picture" class="post-image">
       <!-- <div class="after">
          <img src="assets/a.png">
@@ -69,42 +67,61 @@
 
     <div class="card-content row no-margin post-actions unselectable">
       <div class="col post-action">
-        <div *ngIf="!post.isLikedByCurrentUser" (click)="likePost(post)" class="center pointer action-element">
+        <div *ngIf="!post.isLikedByCurrentUser" (click)="likePost()" class="center pointer action-element">
           <i class="material-icons black-text lighten-1 zoom-in">favorite_outline</i>
         </div>
-        <div *ngIf="post.isLikedByCurrentUser" (click)="unLikePost(post)" class="center pointer action-element">
+        <div *ngIf="post.isLikedByCurrentUser" (click)="unLikePost()" class="center pointer action-element">
           <i class="material-icons red-text zoom-in">favorite</i>
         </div>
         <div class="center">
           <span class="ultra-small-text">{{post.likesCount}}</span>
         </div>
       </div>
-      <div class="col m1 post-action">
-        <div class="center pointer action-element">
-          <i class="material-icons blue-text lighten-1">share</i>
+      <div class="col post-action">
+        <div class="center pointer action-element" (click)="post.showShareButtons = !post.showShareButtons">
+          <i class="material-icons blue-text lighten-1 zoom-in">share</i>
         </div>
       </div>
 
-      <form (keyup)="commentPost($event, post)">
-        <div class="input-field col s8 no-margin">
-          <input id="post-comment" type="text" class="no-margin" autocomplete="off"
-                 placeholder="Add a comment...">
+      <form (keyup)="commentPost($event)">
+        <div class="input-field col s8 comment-input-container">
+          <input id="post-comment" type="text" class="comment-input" autocomplete="off">
+          <label for="post-comment">Comment...</label>
         </div>
       </form>
 
-      <div class="row no-comments-container no-margin">
-        <div class="col right post-edit-actions valign-wrapper">
-          <span *ngIf="!post.showComments" class="ultra-small-text valign">{{post.commentsCount}} comments</span>
-          <i *ngIf="post.commentsCount && !post.showComments" (click)="loadComments(post)"
-             class="material-icons pointer">expand_more</i>
-          <i *ngIf="post.showComments" (click)="post.showComments = !post.showComments" class="material-icons pointer">expand_less</i>
+      <div class="row no-margin">
+        <div *ngIf="!post.showComments" class="col right post-edit-actions valign-wrapper pointer"
+             (click)="loadComments()">
+          <span *ngIf="post.commentsCount === 1" class="ultra-small-text valign">{{post.commentsCount}} comment</span>
+
+          <span *ngIf="post.commentsCount !== 1" class="ultra-small-text valign">{{post.commentsCount}} comments</span>
+
+          <i *ngIf="post.commentsCount" class="material-icons zoom-in">expand_more</i>
+        </div>
+
+        <div *ngIf="post.showComments" class="col right post-edit-actions valign-wrapper pointer"
+             (click)="post.showComments = false">
+          <i class="material-icons zoom-in">expand_less</i>
         </div>
       </div>
+    </div>
+    <div *ngIf="post.showShareButtons" class="center">
+      <share-buttons class="withCount" [url]="'http://changeThisWithTheCorrectUrl.com/'"
+                     [title]="'Drone photography by -username-'"
+                     [image]="post.pictureUrl"
+                     [description]="'A drone picture by -username- Visit www.dronexer.com for more.'"
+                     [showCount]="true"
+                     [stumbleUpOn]="false"
+                     [pinterest]="false"
+                     [whatsApp]="false"
+                     [linkedIn]="false">
+      </share-buttons>
     </div>
   </div>
 
   <!--Make component for the delete modal-->
   <div *ngIf="post.showModal">
-    <app-modal-delete [deleteModal]="deleteModal" [post]="post" [thisPost]="thisPost"></app-modal-delete>
+    <app-modal-delete [deleteModal]="deleteModal"></app-modal-delete>
   </div>
 </div>

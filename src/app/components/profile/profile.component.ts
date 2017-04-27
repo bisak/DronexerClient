@@ -39,6 +39,10 @@ export class ProfileComponent implements OnInit {
     this.hasPosts = true
   }
 
+  removePostFromWall(evPost) {
+    this.wallPosts = this.wallPosts.filter(post => evPost._id !== post._id)
+  }
+
   getProfileInfo(username) {
     this.profileService.getProfile(username).subscribe((retrievedData) => {
       this.profileInfo = retrievedData.data

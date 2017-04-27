@@ -1,25 +1,26 @@
-.container {
-  margin: 0.5rem auto;
-  width: 95%;
-  max-width: 100% !important;
-}
-
 .card {
   margin: 0.5rem 0 1rem 0;
   background-color: #fff;
 }
 
-.dropdown-content{
+.dropdown-content {
   width: fit-content !important;
 }
 
-.dropdown-icon{
+.dropdown-icon {
   margin: 0 5px 0 0;
 }
 
 .small-chip {
-  height: 26px;
-  line-height: 26px;
+  height: 20px;
+  line-height: 20px;
+  padding: 0;
+  background-color: inherit;
+}
+
+.comment-input {
+  height: 1.8rem;
+  font-size: 1.1rem;
 }
 
 .comments-wrapper {
@@ -35,7 +36,11 @@
 }
 
 .input-field label {
-  top: 1.3rem;
+  top: 0.2rem !important;
+}
+
+.input-field label:not(.label-icon).active{
+  top: 0.8rem !important;
 }
 
 .caption-text {
@@ -93,9 +98,10 @@
   padding: 8px 20px 8px 20px;
 }
 
-.post-image{
+.post-image {
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #eeeeee;
+  min-height: 100px;
 }
 
 /*.card-image .after {
@@ -125,6 +131,7 @@
 .post-actions {
   padding: 5px 0 0 20px
 }
+
 /*
 .post-image {
   z-index: 800;

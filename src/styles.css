@@ -21,10 +21,25 @@
 }
 
 .zoom-in:hover {
-  -webkit-transform: scale(1.33);
-  -moz-transform: scale(1.33);
-  -o-transform: scale(1.33);
-  transform: scale(1.33);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  transform: scale(1.25);
+}
+
+.small-zoom-in {
+  -webkit-transition: -webkit-transform .2s ease-out;
+  -moz-transition: -moz-transform .2s ease-out;
+  -o-transition: -o-transform .2s ease-out;
+  -ms-transition: -ms-transform .2s ease-out;
+  transition: transform .2s ease-out;
+}
+
+.small-zoom-in:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .no-padding-bottom {
@@ -188,4 +203,8 @@
 
 .medium-text{
   font-size: 1.1rem !important;
+}
+
+.sb-style{
+  margin: 0 0 10px 0 !important;
 }

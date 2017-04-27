@@ -9,8 +9,6 @@ import { PostComponent } from "../post/post.component";
 export class ModalDeleteComponent implements OnInit {
 
   @Input() deleteModal
-  @Input() post
-  @Input() thisPost
 
   constructor(public postComponent: PostComponent) { }
 

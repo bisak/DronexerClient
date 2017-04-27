@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
   passwordConfirm: String
   birthday: String
   dronesSelector: Array<number>
+  agree: Boolean
 
   profilePictureFile: File
   profilePictureEncoded: String
@@ -59,7 +60,6 @@ export class RegisterComponent implements OnInit {
       fileReader.readAsDataURL(this.profilePictureFile)
       fileReader.onload = (e) => {
         this.profilePictureEncoded = fileReader.result;
-        console.log(this.profilePictureEncoded)
       }
       this.isRegisterButtonDisabled = false
     }
@@ -74,11 +74,12 @@ export class RegisterComponent implements OnInit {
       email: this.email,
       password: this.password,
       passwordConfirm: this.passwordConfirm,
-      birthday: this.birthday
+      birthday: this.birthday,
+      agree: this.agree
     }
     let registerInputValidator = this.validateService.validateRegisterInput(user);
     if (registerInputValidator.isValid == false) {
-      return this.toastService.errorToast(registerInputValidator.msg)
+      return this.toastService.warningToast(registerInputValidator.msg)
     }
     if (this.dronesSelector) {
       for (let num of this.dronesSelector) {
@@ -107,7 +108,7 @@ export class RegisterComponent implements OnInit {
           this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"))
         }
       }, (err) => {
-        console.log(err)
+        console.error(err)
         let parsedError = JSON.parse(err._body)
         this.toastService.errorToast(parsedError.msg)
       })

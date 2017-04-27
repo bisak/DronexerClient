@@ -13,7 +13,7 @@
             <p class="grey-text">{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
           </div>
             <div class="col s4 m2">
-              <h4 class="card-title grey-text text-darken-4">{{profileInfo.picturesCount}}</h4>
+              <h4 class="card-title grey-text text-darken-4">{{profileInfo.postsCount}}</h4>
               <p class="grey-text">Posts</p>
             </div>
             <div class="col s4 m2">
@@ -96,8 +96,7 @@
          infinite-scroll
          [infiniteScrollDistance]="1"
          (scrolled)="onProfileScrolled()">
-      <app-post [post]="post" *ngFor="let post of wallPosts"></app-post>
+      <app-post [post]="post" *ngFor="let post of wallPosts" (onPostDeleted)="removePostFromWall($event)"></app-post>
     </div>
   </div>
 </div>
-

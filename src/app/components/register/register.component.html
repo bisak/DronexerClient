@@ -13,7 +13,7 @@
               <i class="material-icons prefix">account_circle</i>
               <input [(ngModel)]="firstName" id="register-firstName" type="text" class="validate" name="firstName"
                      required>
-              <label for="register-firstName">First Name<span class="blue-text">*</span></label>
+              <label for="register-firstName">First Name<span class="blue-text"> *</span></label>
             </div>
           </div>
           <div class="row">
@@ -21,7 +21,7 @@
               <i class="material-icons prefix">account_circle</i>
               <input [(ngModel)]="lastName" id="register-lastName" type="text" class="validate" name="lastName"
                      required>
-              <label for="register-lastName">Last Name<span class="blue-text">*</span></label>
+              <label for="register-lastName">Last Name<span class="blue-text"> *</span></label>
             </div>
           </div>
           <div class="row">
@@ -29,14 +29,14 @@
               <i class="material-icons prefix">account_box</i>
               <input [(ngModel)]="username" id="register-username" type="text" class="validate" name="username"
                      required>
-              <label for="register-username">Username<span class="blue-text">*</span></label>
+              <label for="register-username">Username<span class="blue-text"> *</span></label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s10 offset-s1">
               <i class="material-icons prefix">email</i>
               <input [(ngModel)]="email" id="register-email" type="email" class="validate" name="email" required>
-              <label for="register-email">Email<span class="blue-text">*</span></label>
+              <label for="register-email">Email<span class="blue-text"> *</span></label>
             </div>
           </div>
           <div class="row">
@@ -44,7 +44,7 @@
               <i class="material-icons prefix">lock</i>
               <input [(ngModel)]="password" id="register-password" type="password" class="validate" name="password"
                      required>
-              <label for="register-password">Password<span class="blue-text">*</span></label>
+              <label for="register-password">Password<span class="blue-text"> *</span></label>
             </div>
           </div>
           <div class="row">
@@ -52,19 +52,18 @@
               <i class="material-icons prefix">lock_outline</i>
               <input [(ngModel)]="passwordConfirm" id="register-password-confirm" type="password" class="validate"
                      name="password-confirm" required>
-              <label for="register-password-confirm">Confirm Password<span class="blue-text">*</span></label>
+              <label for="register-password-confirm">Confirm Password<span class="blue-text"> *</span></label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s10 offset-s1">
               <i class="material-icons prefix">cake</i>
-              <label for="birthday">Birthday</label>
               <input [(ngModel)]="birthday"
                      id="birthday"
                      materialize="pickadate"
                      [materializeParams]="[{selectMonths: true, selectYears: 200}]"
                      name="birthday"
-                     type="text"/>
+              placeholder="Birthday"/>
             </div>
           </div>
           <div class="row">
@@ -100,8 +99,9 @@
                 alt="Profile picture preview" class="circle avatar-big">
             </div>
           </div>
-          <div class="row">
-            <p class="center grey-text"><strong>No</strong> third parties are given your information.</p>
+          <div class="row center">
+            <input type="checkbox" name="agree" [(ngModel)]="agree" class="filled-in" id="filled-in-box"/>
+            <label for="filled-in-box">I agree to the <a routerLink="/terms">terms of use</a></label>
           </div>
           <div class='row'>
             <div class="col s6 offset-s3 l4 offset-l4">

@@ -22,6 +22,10 @@ export class ExploreComponent implements OnInit {
     this.getExplorePosts()
   }
 
+  removePostFromWall(evPost) {
+    this.explorePosts = this.explorePosts.filter(post => evPost._id !== post._id)
+  }
+
   getExplorePosts() {
     this.isListening = false
     let time = new Date().getTime()

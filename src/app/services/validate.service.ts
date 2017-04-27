@@ -83,6 +83,12 @@ export class ValidateService {
         msg: "Password too long."
       }
     }
+    if (!data.agree) {
+      return {
+        isValid: false,
+        msg: "Please agree to the terms of use."
+      }
+    }
     return {
       isValid: true,
       msg: ""

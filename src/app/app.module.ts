@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { MaterializeModule } from 'angular2-materialize';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {ShareButtonsModule} from 'ng2-sharebuttons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +21,6 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
 import { ExploreComponent } from './components/explore/explore.component';
 import { NotFoundComponent } from './components/not-found/not-found.component'
-
 
 import { ApiService } from "./services/api.service"
 import { AuthService } from './services/auth.service'
@@ -67,7 +67,8 @@ import { ModalDeleteComponent } from './components/modal-delete/modal-delete.com
     HttpModule,
     AppRoutingModule,
     MaterializeModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    ShareButtonsModule.forRoot()
   ],
   providers: [
     AuthGuard,
