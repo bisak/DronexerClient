@@ -1,5 +1,5 @@
-import {Component, OnInit, EventEmitter} from '@angular/core';
-import {AuthHelperService} from "../../utilities/auth-helper.service";
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { AuthHelperService } from "../../utilities/auth-helper.service";
 
 @Component({
   selector: 'app-home',

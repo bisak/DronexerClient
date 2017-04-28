@@ -36,7 +36,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.listenForUrlChanges()
     this.isProfileMine = this.checkIdentity()
-    this.hasPosts = true
   }
 
   removePostFromWall(evPost) {
@@ -91,16 +90,17 @@ export class ProfileComponent implements OnInit {
 
   listenForUrlChanges() {
     this.route.params.subscribe((params: Params) => {
-      let username = params['username']
-      this.urlUsername = username
+      this.urlUsername = params['username']
 
+      this.hasPosts = true
       this.profileInfo = null
-      this.wallPosts = null
+      this.wallPosts = []
       this.isListening = true
+      this.lastPostTime = null
       this.isProfileMine = this.checkIdentity()
 
-      this.getProfileInfo(username)
-      this.getWallPosts(username)
+      this.getProfileInfo(this.urlUsername)
+      this.getWallPosts(this.urlUsername)
     })
   }
 

@@ -1,25 +1,3 @@
-.input-field :focus {
-  border-bottom: 1px solid #03a9f4;
-  box-shadow: 0 1px 0 0 #03a9f4;
-}
-
-.input-field :focus + label {
-  color: #03a9f4;
-}
-
-.input-field .prefix.active {
-  color: #03a9f4;
-}
-
-[type="checkbox"].filled-in:not(:checked) + label:after {
-  border: 2px solid #039be5;
-}
-
-[type="checkbox"]:checked + label:after{
-  background: #039be5;
-  border: 2px solid #039be5;
-}
-
 .avatar-big {
   width: 150px;
   height: 150px;

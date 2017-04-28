@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { PostComponent } from "../post/post.component";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal-delete',
@@ -9,10 +8,21 @@ import { PostComponent } from "../post/post.component";
 export class ModalDeleteComponent implements OnInit {
 
   @Input() deleteModal
+  @Output() deleteConfirmed = new EventEmitter<boolean>()
+  @Output() deleteCancelled = new EventEmitter<boolean>()
 
-  constructor(public postComponent: PostComponent) { }
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  cancelDelete() {
+    this.deleteCancelled.emit(true)
+  }
+
+  confirmDelete() {
+    this.deleteConfirmed.emit(true)
   }
 
 }

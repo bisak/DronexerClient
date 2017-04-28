@@ -1,0 +1,33 @@
+<div class="modal" materialize="modal" [materializeActions]="editModal">
+  <div class="modal-content">
+    <p class="center no-margin big-text">Edit post</p>
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="material-icons prefix">edit</i>
+        <textarea [(ngModel)]="editedData.newCaption" id="textarea" class="materialize-textarea" placeholder="Edit caption"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="material-icons prefix">label</i>
+        <input [(ngModel)]="editedData.newTags" placeholder="Edit tags" id="tags" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12 grey-text">
+        <i class="material-icons prefix black-text">add_circle</i>
+        <select [(ngModel)]="editedData.newDroneSelector" id="register-drone-select"
+                materialize="material_select"
+                name="drones-select">
+          <option value="" disabled>Taken with</option>
+          <option *ngFor="let drone of dronesArray; let i = index;" [value]="i">{{drone}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="modal-footer">
+    <a (click)="cancelEdit()" class="waves-effect modal-close btn-flat">Close</a>
+    <a (click)="confirmEdit()" class="modal-action waves-effect btn-flat blue-text text-accent-2">Confirm</a>
+  </div>
+</div>

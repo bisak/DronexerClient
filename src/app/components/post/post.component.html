@@ -4,7 +4,7 @@
       <div class="row no-margin">
         <div class="col no-margin no-padding">
           <img [routerLink]="['/profile', post.username]"
-               [src]="picturesService.getProfilePicUrl(post.username)"
+               [src]="post.userPictureUrl"
                alt="Post profile picture" class="circle profile-picture z-depth-1 pointer">
         </div>
         <div class="col">
@@ -15,12 +15,12 @@
               {{post.timeAgo}}</p>
           </div>
         </div>
-        <div *ngIf="post.userId === authHelperService.getUserIdFromToken()"
+        <div *ngIf="post.userIsAuthenticatedToEdit"
              class="col right post-edit-actions no-padding unselectable">
           <a materialize="dropdown" class="pointer"
              attr.data-activates='dropdown_{{post._id}}'><i class="material-icons black-text small zoom-in">arrow_drop_down</i></a>
           <ul id='dropdown_{{post._id}}' class='dropdown-content'>
-            <li (click)="editPost()"><a><i class="material-icons dropdown-icon blue-text">edit</i>Edit</a></li>
+            <li (click)="openEditModal()"><a><i class="material-icons dropdown-icon blue-text">edit</i>Edit</a></li>
             <li class="divider"></li>
             <li (click)="openDeleteModal()"><a><i
               class="material-icons dropdown-icon red-text">delete_forever</i>Delete</a>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="card-image unselectable">
-      <img (dblclick)="postAction()"
+      <img (dblclick)="postRateAction()"
            [src]="post.pictureUrl"
            alt="Wall post picture" class="post-image">
       <!-- <div class="after">
@@ -83,9 +83,9 @@
         </div>
       </div>
 
-      <form (keyup)="commentPost($event)">
+      <form (keyup.enter)="commentPost()">
         <div class="input-field col s8 comment-input-container">
-          <input id="post-comment" type="text" class="comment-input" autocomplete="off">
+          <input [(ngModel)]="newComment" name="newComment" id="post-comment" type="text" class="comment-input no-margin" autocomplete="off">
           <label for="post-comment">Comment...</label>
         </div>
       </form>
@@ -121,7 +121,12 @@
   </div>
 
   <!--Make component for the delete modal-->
-  <div *ngIf="post.showModal">
-    <app-modal-delete [deleteModal]="deleteModal"></app-modal-delete>
+  <div *ngIf="post.showDeleteModal">
+    <app-modal-delete [deleteModal]="deleteModal" (deleteCancelled)="closeDeleteModal()" (deleteConfirmed)="deletePost()"></app-modal-delete>
   </div>
+
+  <div *ngIf="post.showEditModal">
+    <app-modal-edit [editModal]="editModal" [post]="post" (editCancelled)="closeEditModal()" (editConfirmed)="editPost($event)"></app-modal-edit>
+  </div>
+
 </div>

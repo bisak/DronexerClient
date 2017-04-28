@@ -1,11 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthHelperService } from "../../utilities/auth-helper.service";
-import { ProfileService } from "../../services/profile.service";
 import { ToastService } from "../../services/toast.service";
 import { PicturesService } from "../../services/pictures.service";
-import { DatesService } from "../../utilities/dates.service";
 import { PostsService } from "../../services/posts.service";
-import { StaticDataService } from "../../services/static-data.service";
 import { MaterializeAction } from "angular2-materialize";
 
 @Component({
@@ -17,23 +14,25 @@ export class PostComponent implements OnInit {
 
   @Input() post
   @Output() onPostDeleted = new EventEmitter<any>();
-  /*TODO can substitute passing post to functions with this.post because this class has an instance for each post.*/
   deleteModal = new EventEmitter<string | MaterializeAction>();
+  editModal = new EventEmitter<string | MaterializeAction>();
+  newComment: string
 
   constructor(private toastService: ToastService,
               public picturesService: PicturesService,
-              public datesService: DatesService,
-              private authHelperService: AuthHelperService,
-              public postsService: PostsService,
-              private staticDataService: StaticDataService) {
+              public authHelperService: AuthHelperService,
+              public postsService: PostsService) {
   }
 
   ngOnInit() {
     this.post.pictureUrl = this.postsService.getPictureUrlForPost(this.post)
+    this.post.userPictureUrl = this.picturesService.getProfilePicUrl(this.post.username)
+    this.post.userIsAuthenticatedToEdit = (this.post.userId === this.authHelperService.getUserIdFromToken())
+    this.newComment = ''
   }
 
   openDeleteModal() {
-    this.post.showModal = true
+    this.post.showDeleteModal = true
     setTimeout(() => {
       this.deleteModal.emit({action: 'modal', params: ['open']});
     }, 200)
@@ -41,37 +40,43 @@ export class PostComponent implements OnInit {
 
   closeDeleteModal() {
     this.deleteModal.emit({action: "modal", params: ['close']});
+  }
+
+  openEditModal() {
+    this.post.showEditModal = true
     setTimeout(() => {
-      this.post.showModal = false
+      this.editModal.emit({action: 'modal', params: ['open']});
     }, 200)
   }
 
-  commentPost(ev) {
+  closeEditModal() {
+    this.editModal.emit({action: "modal", params: ['close']});
+  }
+
+  commentPost() {
     if (!this.post.comments && this.post.commentsCount > 0) {
       this.loadComments()
     }
-    if (ev.keyCode == 13) {
-      const comment = ev.target.value
-      const postId = this.post._id
-      if (comment.length) {
-        this.postsService.commentPost(postId, {comment}).subscribe((data) => {
-          if (!this.post.comments)
-            this.post.comments = []
-          let commentToAdd = {
-            userId: this.authHelperService.getUserIdFromToken(),
-            username: this.authHelperService.getUsernameFromToken(),
-            comment: comment
-          }
-          this.post.comments.push(commentToAdd)
-          this.post.commentsCount += 1
-          this.post.showComments = true
-        }, (error) => {
-          if (error.status === 401) {
-            this.toastService.warningToast("Log in to comment.")
-          }
-        })
-        ev.target.value = null
-      }
+    const comment = this.newComment
+    const postId = this.post._id
+    if (comment.length) {
+      this.postsService.commentPost(postId, {comment}).subscribe((data) => {
+        if (!this.post.comments)
+          this.post.comments = []
+        let commentToAdd = {
+          userId: this.authHelperService.getUserIdFromToken(),
+          username: this.authHelperService.getUsernameFromToken(),
+          comment: comment
+        }
+        this.post.comments.push(commentToAdd)
+        this.post.commentsCount += 1
+        this.post.showComments = true
+      }, (error) => {
+        if (error.status === 401) {
+          this.toastService.warningToast("Log in to comment.")
+        }
+      })
+      this.newComment = ''
     }
   }
 
@@ -109,10 +114,11 @@ export class PostComponent implements OnInit {
     })
   }
 
-  editPost() {
+  editPost(editedData) {
+    console.log(editedData)
   }
 
-  postAction() {
+  postRateAction() {
     if (this.post.isLikedByCurrentUser) {
       this.unLikePost()
     } else {

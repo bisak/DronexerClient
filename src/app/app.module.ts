@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { MaterializeModule } from 'angular2-materialize';
+import { MaterializeDirective, MaterializeModule } from 'angular2-materialize';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import {ShareButtonsModule} from 'ng2-sharebuttons';
+import { ShareButtonsModule } from 'ng2-sharebuttons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +39,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { PostsService } from "./services/posts.service";
 import { SettingsComponent } from './components/settings/settings.component';
 import { ModalDeleteComponent } from './components/modal-delete/modal-delete.component';
+import { ModalEditComponent } from './components/modal-edit/modal-edit.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ModalDeleteComponent } from './components/modal-delete/modal-delete.com
     PostComponent,
     LoaderComponent,
     SettingsComponent,
-    ModalDeleteComponent
+    ModalDeleteComponent,
+    ModalEditComponent
   ],
   imports: [
     BrowserModule,

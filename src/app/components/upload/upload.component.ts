@@ -6,6 +6,7 @@ import { PicturesService } from "../../services/pictures.service";
 import { Router } from "@angular/router";
 import { StaticDataService } from "../../services/static-data.service";
 import { AuthHelperService } from "../../utilities/auth-helper.service";
+import { MaterializeDirective } from 'angular2-materialize'
 
 @Component({
   selector: 'app-upload',
@@ -27,9 +28,7 @@ export class UploadComponent implements OnInit {
               private authHelperService: AuthHelperService,
               private picturesService: PicturesService,
               private router: Router,
-              private staticData: StaticDataService,
-              private elRef: ElementRef,
-              private renderer: Renderer2) {
+              private staticData: StaticDataService) {
   }
 
   ngOnInit() {

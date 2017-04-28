@@ -1,9 +1,13 @@
-<div class="modal bottom-sheet" materialize="modal" [materializeActions]="deleteModal">
+<div class="modal" materialize="modal" [materializeActions]="deleteModal">
   <div class="modal-content">
-    <p class="big-text no-margin">Delete permanently?</p>
+    <p class="center no-margin big-text">Delete permanently?</p>
+
   </div>
+  <div class="divider"></div>
   <div class="modal-footer">
-    <a (click)="postComponent.closeDeleteModal()" class="waves-effect modal-close btn-flat">Close</a>
-    <a (click)="postComponent.deletePost()" class="modal-action waves-effect waves-red btn-flat red-text">Delete</a>
+    <button (click)="cancelDelete()" class="waves-effect btn-flat">Close</button>
+    <button (click)="confirmDelete()" class="waves-effect waves-red btn-flat red-text text-accent-2">
+      Confirm
+    </button>
   </div>
 </div>
