@@ -26,6 +26,7 @@ export class ModalEditComponent implements OnInit {
   }
 
   confirmEdit() {
+    this.editedData.newSelectedDroneName = this.dronesArray[this.editedData.newDroneSelector]
     this.editConfirmed.emit(this.editedData)
   }
 

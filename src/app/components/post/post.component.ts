@@ -4,6 +4,7 @@ import { ToastService } from "../../services/toast.service";
 import { PicturesService } from "../../services/pictures.service";
 import { PostsService } from "../../services/posts.service";
 import { MaterializeAction } from "angular2-materialize";
+import { StaticDataService } from "../../services/static-data.service";
 
 @Component({
   selector: 'app-post',
@@ -19,9 +20,10 @@ export class PostComponent implements OnInit {
   newComment: string
 
   constructor(private toastService: ToastService,
-              public picturesService: PicturesService,
-              public authHelperService: AuthHelperService,
-              public postsService: PostsService) {
+              private picturesService: PicturesService,
+              private authHelperService: AuthHelperService,
+              private postsService: PostsService,
+              private staticDataService: StaticDataService) {
   }
 
   ngOnInit() {
@@ -106,7 +108,8 @@ export class PostComponent implements OnInit {
   deletePost() {
     const postId = this.post._id
     this.postsService.deletePost(postId).subscribe((data) => {
-      this.onPostDeleted.emit(this.post);
+      /*TODO maybe not emit that event and delete the post DOM element locally*/
+      this.onPostDeleted.emit(this.post)
       this.closeDeleteModal()
       console.log(data)
     }, (error) => {
@@ -115,7 +118,16 @@ export class PostComponent implements OnInit {
   }
 
   editPost(editedData) {
-    console.log(editedData)
+    const postId = this.post._id
+    delete editedData.newDroneSelector
+    this.postsService.editPost(postId, editedData).subscribe((data) => {
+      console.log(data)
+    }, (error) => {
+      if (error.status === 401) {
+        this.toastService.warningToast("Log in to edit.")
+      }
+      console.log(error)
+    })
   }
 
   postRateAction() {

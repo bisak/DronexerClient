@@ -24,6 +24,10 @@ export class PostsService {
     return this.apiService.post(`pictures/unlike/${id}`, {})
   }
 
+  editPost(id: string, data:any){
+    return this.apiService.post(`pictures/edit/${id}`, data)
+  }
+
   deletePost(id: string): Observable<any> {
     return this.apiService.delete(`pictures/delete/${id}`)
   }
