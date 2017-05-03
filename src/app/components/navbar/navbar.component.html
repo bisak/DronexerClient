@@ -33,7 +33,7 @@
               [routerLinkActiveOptions]="routerLinkOpts"><a class="white-text" [routerLink]="['/profile', username]">Profile</a>
           </li>
           <li [routerLinkActive]="['active']"
-              [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/settings']" class="white-text">Settings</a>
+              [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['user','settings']" class="white-text">Settings</a>
           </li>
           <li><a class="white-text" (click)="onLogoutClick()">Logout</a></li>
         </ul>

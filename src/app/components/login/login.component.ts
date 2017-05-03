@@ -25,9 +25,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    Materialize.showStaggeredList('#transition-heading');
-    this.authHelperService.blockLoggedInAccess()
-
   }
 
   onLoginSubmit() {
@@ -40,19 +37,17 @@ export class LoginComponent implements OnInit {
       return this.toastService.toast('Please fill in both fields.')
     }
 
-    this.authService.loginUser(user)
-      .subscribe((data) => {
-        if (data.success) {
-          this.authHelperService.storeUserData(data.token, data.user)
+    this.authService.loginUser(user).subscribe((response) => {
+        if (response.success) {
+          this.authHelperService.storeUserData(response.token)
           this.toastService.toast('Logged in.')
           this.router.navigate(['/'])
         } else {
-          this.toastService.errorToast(data.msg)
+          this.toastService.errorToast(response.msg)
         }
       }, (err) => {
         console.log(err)
-        let parsedError = JSON.parse(err._body)
-        this.toastService.errorToast(parsedError.msg)
+        this.toastService.errorToast(err.parsedBody.msg)
       })
   }
 }

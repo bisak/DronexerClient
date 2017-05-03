@@ -23,7 +23,7 @@ export class PicturesService {
   }
 
   getProfilePicUrl(username: string): string {
-    return `${this.apiService.apiUrl}users/profilePicture/${username}`
+    return `${this.apiService.apiUrl}users/profile-picture/${username}`
   }
 
 }

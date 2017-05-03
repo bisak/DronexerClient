@@ -40,6 +40,8 @@ import { PostsService } from "./services/posts.service";
 import { SettingsComponent } from './components/settings/settings.component';
 import { ModalDeleteComponent } from './components/modal-delete/modal-delete.component';
 import { ModalEditComponent } from './components/modal-edit/modal-edit.component';
+import { ModalConfirmPasswordComponent } from './components/modal-confirm-password/modal-confirm-password.component';
+import { ReverseAuthGuard } from "./guards/reverse-auth.guard";
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { ModalEditComponent } from './components/modal-edit/modal-edit.component
     LoaderComponent,
     SettingsComponent,
     ModalDeleteComponent,
-    ModalEditComponent
+    ModalEditComponent,
+    ModalConfirmPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +77,7 @@ import { ModalEditComponent } from './components/modal-edit/modal-edit.component
   ],
   providers: [
     AuthGuard,
+    ReverseAuthGuard,
     ApiService,
     ValidateService,
     ToastService,

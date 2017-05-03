@@ -18,8 +18,11 @@ export class ProfileService {
   }
 
   getProfile(username: string) {
-    return this.apiService.get(`users/profileInfo/${username}`)
+    return this.apiService.get(`users/profile-info/${username}`)
   }
 
+  editProfileInfo(data){
+    return this.apiService.post(`users/edit-profile`, data)
+  }
 
 }

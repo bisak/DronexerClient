@@ -55,7 +55,8 @@ export class ApiService {
   handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
-      const body = error.json() || '';
+      const body = error.json() || {};
+      error['parsedBody'] = body
       const err = body.err || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {

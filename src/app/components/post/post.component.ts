@@ -119,9 +119,15 @@ export class PostComponent implements OnInit {
 
   editPost(editedData) {
     const postId = this.post._id
-    delete editedData.newDroneSelector
-    this.postsService.editPost(postId, editedData).subscribe((data) => {
-      console.log(data)
+    let editedDataToSend = {...editedData}
+    delete editedDataToSend.newDroneSelector
+    editedDataToSend.newTags = editedDataToSend.newTags.split(' ').filter((x) => x !== '' && x.startsWith('#') && x.length > 3).map((x) => x.toLowerCase())
+    this.postsService.editPost(postId, editedDataToSend).subscribe((response) => {
+      if (response.success) {
+        this.post.caption = editedDataToSend.newCaption
+        this.post.tags = editedDataToSend.newTags
+        this.post.droneTaken = editedDataToSend.newSelectedDroneName
+      }
     }, (error) => {
       if (error.status === 401) {
         this.toastService.warningToast("Log in to edit.")

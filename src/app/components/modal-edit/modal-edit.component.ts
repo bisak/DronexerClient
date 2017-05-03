@@ -13,7 +13,7 @@ export class ModalEditComponent implements OnInit {
   @Input() editModal
   @Input() post
   @Output() editConfirmed = new EventEmitter<any>()
-  @Output() editCancelled = new EventEmitter<true>()
+  @Output() editCancelled = new EventEmitter<boolean>()
 
   editedData: any
   dronesArray = this.staticData.dronesArray;

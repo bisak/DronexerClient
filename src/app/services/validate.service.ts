@@ -22,20 +22,20 @@ export class ValidateService {
     }
   }
 
-  validateRegisterInput(data) {
-    if (isUndefined(data.firstName)) {
+  validateRegisterInput(data, isEditData?) {
+    if (!data.firstName) {
       return {
         isValid: false,
         msg: "First Name is required."
       }
     }
-    if (isUndefined(data.lastName)) {
+    if (!data.lastName) {
       return {
         isValid: false,
         msg: "Last Name is required."
       }
     }
-    if (isUndefined(data.username)) {
+    if (!data.username) {
       return {
         isValid: false,
         msg: "Username is required."
@@ -47,46 +47,50 @@ export class ValidateService {
         msg: "Username too short."
       }
     }
-    if (isUndefined(data.email)) {
+    if (!data.email) {
       return {
         isValid: false,
         msg: "Email is required."
       }
     }
-    if (this.emailRegex.test(data.email) == false) {
+    if (!this.emailRegex.test(data.email)) {
       return {
         isValid: false,
         msg: "Email is invalid."
       }
     }
-    if (isUndefined(data.password)) {
-      return {
-        isValid: false,
-        msg: "Password is required."
+    if (!isEditData) {
+      if (!data.password) {
+        return {
+          isValid: false,
+          msg: "Password is required."
+        }
+      }
+      if (!data.agree) {
+        return {
+          isValid: false,
+          msg: "Please agree to the terms of use."
+        }
       }
     }
-    if (data.password != data.passwordConfirm) {
-      return {
-        isValid: false,
-        msg: "Passwords didn't match."
+    if (data.password.length) {
+      if (data.password != data.passwordConfirm) {
+        return {
+          isValid: false,
+          msg: "Passwords didn't match."
+        }
       }
-    }
-    if (data.password.length < 6) {
-      return {
-        isValid: false,
-        msg: "Password too short."
+      if (data.password.length < 6) {
+        return {
+          isValid: false,
+          msg: "Password too short."
+        }
       }
-    }
-    if (data.password.length > 50) {
-      return {
-        isValid: false,
-        msg: "Password too long."
-      }
-    }
-    if (!data.agree) {
-      return {
-        isValid: false,
-        msg: "Please agree to the terms of use."
+      if (data.password.length > 50) {
+        return {
+          isValid: false,
+          msg: "Password too long."
+        }
       }
     }
     return {

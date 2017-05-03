@@ -14,7 +14,7 @@ export class AuthHelperService {
   loginAnnouncedSource = new Subject<boolean>()
   loginAnnounced: Observable<any> = this.loginAnnouncedSource.asObservable()
 
-  storeUserData(token, user) {
+  storeUserData(token) {
     localStorage.setItem('id_token', token)
     this.loginAnnouncedSource.next(true)
   }
@@ -48,11 +48,4 @@ export class AuthHelperService {
   logout() {
     localStorage.clear()
   }
-
-  blockLoggedInAccess() { //TODO fix (move) this
-    if (this.isLoggedIn()) {
-      this.router.navigate([''])
-    }
-  }
-
 }

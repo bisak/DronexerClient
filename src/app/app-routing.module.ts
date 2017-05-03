@@ -13,20 +13,21 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { UploadComponent } from './components/upload/upload.component'
 import { SettingsComponent } from './components/settings/settings.component'
 import { AuthGuard } from './guards/auth.guard'
+import { ReverseAuthGuard } from './guards/reverse-auth.guard'
 
-/*TODO fix authguard*/
+/*TODO reverse authguard for register and login routes.*/
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'upload', component: UploadComponent},
-  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent, canActivate: [ReverseAuthGuard]},
+  {path: 'upload', component: UploadComponent, canActivate: [AuthGuard]},
+  {path: 'login', component: LoginComponent, canActivate: [ReverseAuthGuard]},
+  {path: 'user/settings', component: SettingsComponent, canActivate: [AuthGuard]},
   {path: 'profile/:username', component: ProfileComponent},
   {path: 'about', component: AboutUsComponent},
   {path: 'privacy', component: PrivacyPolicyComponent},
   {path: 'disclaimer', component: DisclaimerComponent},
   {path: 'terms', component: TermsOfUseComponent},
   {path: 'explore', component: ExploreComponent},
-  {path: 'settings', component: SettingsComponent},
   {path: 'page-not-found', component: NotFoundComponent},
   {path: '**', redirectTo: 'page-not-found'}
 ];

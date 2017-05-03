@@ -9,6 +9,7 @@ import {isUndefined} from "util";
 import {templateVisitAll} from "@angular/compiler";
 import {StaticDataService} from "../../services/static-data.service";
 import {AuthHelperService} from "../../utilities/auth-helper.service";
+import { PicturesService } from "../../services/pictures.service";
 
 declare var Materialize: any;
 
@@ -38,14 +39,13 @@ export class RegisterComponent implements OnInit {
               private router: Router,
               private toastService: ToastService,
               private validateService: ValidateService,
-              private staticData: StaticDataService) {
+              private staticData: StaticDataService,
+              public picturesService: PicturesService) {
   }
 
   dronesArray = this.staticData.dronesArray;
 
   ngOnInit() {
-    Materialize.showStaggeredList('#transition-heading')
-    this.authHelperService.blockLoggedInAccess()
   }
 
   onProfilePictureSelected(ev) {
@@ -102,7 +102,7 @@ export class RegisterComponent implements OnInit {
     this.authService.registerUser(registerFormData)
       .subscribe((data) => {
         if (data.success) {
-          this.toastService.successToast('Registered.')
+          this.toastService.toast('Registered.')
           this.router.navigate(['/login'])
         } else {
           this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"))
