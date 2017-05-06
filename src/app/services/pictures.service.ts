@@ -23,7 +23,7 @@ export class PicturesService {
   }
 
   getProfilePicUrl(username: string): string {
-    return `${this.apiService.apiUrl}users/profile-picture/${username}`
+    return `${this.apiService.apiUrl}users/profile-picture/${username}?${Math.floor(Math.random() * (1000000 - 1)) + 1}`
   }
 
 }

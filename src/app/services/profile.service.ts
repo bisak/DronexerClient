@@ -21,8 +21,12 @@ export class ProfileService {
     return this.apiService.get(`users/profile-info/${username}`)
   }
 
-  editProfileInfo(data){
+  editProfileInfo(data) {
     return this.apiService.post(`users/edit-profile`, data)
+  }
+
+  deleteProfile(data) {
+    return this.apiService.post(`users/delete-profile`, data)
   }
 
 }

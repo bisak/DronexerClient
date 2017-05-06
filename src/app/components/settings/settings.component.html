@@ -1,7 +1,7 @@
 <div class="section">
   <div class="container">
     <div class="row">
-      <div class="col s12 z-depth-1">
+      <div class="col s12 z-depth-1 grey lighten-5">
         <h3 class="center blue-grey-text text-darken-2">Edit Profile</h3>
         <div class="divider col s10 offset-s1"></div>
         <div class="section"></div>
@@ -67,7 +67,7 @@
 
           <div class="row no-margin">
             <div class="file-field input-field col s10 offset-s1">
-              <div class="btn light-blue darken-1 z-depth-1">
+              <div class="btn waves-effect light-blue btn-flat white-text accent-4">
                 <span>Upload</span>
                 <input (change)="onProfilePictureSelected($event)" id="profile-picture-upload" type="file"
                        name="profile-picture-upload" accept="image/png,image/jpeg">
@@ -80,15 +80,20 @@
           <div class="row">
             <div class="center">
               <img
-                [src]="profilePictureEncoded || picturesService.getProfilePicUrl(username)"
-                alt="Profile picture preview" class="circle avatar-big z-depth-1-half">
+                [src]="profilePictureEncoded || settingsData.profilePicUrl"
+                alt="Profile picture preview" class="circle avatar-big grey-border">
             </div>
           </div>
           <div class='row'>
-            <div class="col s6 offset-s3 l4 offset-l4">
-              <button [disabled]='isRegisterButtonDisabled' type="submit"
-                      class='col s12 btn btn-large waves-effect light-blue btn-flat white-text accent-4'>Edit
-              </button>
+            <div class="col s12 offset-s1 offset-m2">
+            <button [disabled]='isRegisterButtonDisabled' type="submit"
+                    class='col s4 m3 btn btn-large waves-effect green btn-flat white-text accent-4'>
+              Edit
+            </button>
+            <button [disabled]='isRegisterButtonDisabled' type="button" (click)="openDeleteModal()"
+                    class='col s4 m3 offset-m2 offset-s2 btn btn-large waves-effect red btn-flat white-text accent-4'>
+              Delete
+            </button>
             </div>
           </div>
         </form>
@@ -96,5 +101,8 @@
     </div>
   </div>
 </div>
-<app-modal-confirm-password [confirmModal]="confirmModal" (cancel)="closeConfirmModal()" (confirm)="editProfileInfo($event)"></app-modal-confirm-password>
+<app-modal-confirm-password [confirmModal]="confirmModal" (cancel)="closeConfirmModal()"
+                            (confirm)="editProfileInfo($event)"></app-modal-confirm-password>
+<app-modal-delete [showPasswordField]="true" [titleText]="'Delete profile permanently?'" [deleteModal]="deleteModal"
+                  (deleteCancelled)="closeDeleteModal()" (deleteConfirmed)="deleteProfile($event)"></app-modal-delete>
 

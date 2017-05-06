@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit {
   getProfileInfo(username) {
     this.profileService.getProfile(username).subscribe((retrievedData) => {
       this.profileInfo = retrievedData.data
+      this.profileInfo.profilePicUrl = this.picturesService.getProfilePicUrl(retrievedData.data.username)
     }, (error) => {
       console.log(error)
       if (error.status === 404) {

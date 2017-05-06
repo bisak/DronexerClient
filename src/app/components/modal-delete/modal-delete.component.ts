@@ -10,6 +10,10 @@ export class ModalDeleteComponent implements OnInit {
   @Input() deleteModal
   @Output() deleteConfirmed = new EventEmitter<boolean>()
   @Output() deleteCancelled = new EventEmitter<boolean>()
+  @Input() titleText
+  @Input() showPasswordField
+
+  oldPassword: any
 
   constructor() {
   }
@@ -22,7 +26,7 @@ export class ModalDeleteComponent implements OnInit {
   }
 
   confirmDelete() {
-    this.deleteConfirmed.emit(true)
+    this.deleteConfirmed.emit(this.oldPassword)
   }
 
 }

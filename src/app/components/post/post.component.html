@@ -5,7 +5,7 @@
         <div class="col no-margin no-padding">
           <img [routerLink]="['/profile', post.username]"
                [src]="post.userPictureUrl"
-               alt="Post profile picture" class="circle profile-picture pointer">
+               alt="Post profile picture" class="circle profile-picture grey-border pointer">
         </div>
         <div class="col">
           <div class="post-profile-info">
@@ -121,7 +121,7 @@
   </div>
 
   <div *ngIf="post.showDeleteModal">
-    <app-modal-delete [deleteModal]="deleteModal" (deleteCancelled)="closeDeleteModal()" (deleteConfirmed)="deletePost()"></app-modal-delete>
+    <app-modal-delete [showPasswordField]="false" [titleText]="'Delete permanently?'" [deleteModal]="deleteModal" (deleteCancelled)="closeDeleteModal()" (deleteConfirmed)="deletePost()"></app-modal-delete>
   </div>
 
   <div *ngIf="post.showEditModal">

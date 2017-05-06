@@ -1,7 +1,17 @@
 <div class="modal" materialize="modal" [materializeActions]="deleteModal">
   <div class="modal-content">
-    <p class="center no-margin big-text">Delete permanently?</p>
-
+    <form>
+      <p class="center no-margin big-text">{{titleText}}</p>
+      <div *ngIf="showPasswordField" class="section">
+        <div class="row no-margin">
+          <div class="input-field col s10 offset-s1">
+            <i class="material-icons prefix">lock</i>
+            <input [(ngModel)]="oldPassword" name="password" id="password" type="password" class="validate" required>
+            <label for="password">Password</label>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
   <div class="divider"></div>
   <div class="modal-footer">

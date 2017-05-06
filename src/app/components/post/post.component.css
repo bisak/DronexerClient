@@ -1,8 +1,3 @@
-.card {
-  margin: 0.5rem 0 1rem 0;
-  background-color: #fff;
-}
-
 .dropdown-content {
   width: fit-content !important;
 }
@@ -31,10 +26,6 @@
   margin: 5px 0 5px 0;
 }
 
-.no-margin {
-  margin: 0 !important;
-}
-
 /*Change input field with more appropriate class*/
 .input-field label {
   top: 0.2rem !important;
@@ -53,20 +44,6 @@
   height: 26px;
   line-height: 26px;
   margin: 3px 0;
-}
-
-.content-row {
-  margin-bottom: 0;
-}
-
-.ultra-small-text {
-  font-size: 0.8rem;
-  margin: 0;
-  padding: 0;
-}
-
-.small-text {
-  font-size: 0.88rem;
 }
 
 .post-profile-info {

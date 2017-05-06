@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
   profilePictureFile: File
   profilePictureEncoded: String
   confirmModal = new EventEmitter<string | MaterializeAction>();
+  deleteModal = new EventEmitter<string | MaterializeAction>();
 
 
   constructor(private profileService: ProfileService,
@@ -41,6 +42,14 @@ export class SettingsComponent implements OnInit {
     this.getSettingsData()
   }
 
+  closeDeleteModal() {
+    this.deleteModal.emit({action: "modal", params: ['close']});
+  }
+
+  openDeleteModal() {
+    this.deleteModal.emit({action: "modal", params: ['open']});
+  }
+
   closeConfirmModal() {
     this.confirmModal.emit({action: "modal", params: ['close']});
   }
@@ -49,21 +58,25 @@ export class SettingsComponent implements OnInit {
     this.confirmModal.emit({action: "modal", params: ['open']});
   }
 
+
   onProfilePictureSelected(ev) {
     let candidateFile = ev.target.files[0];
-    let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile)
-    if (profilePictureValidator.isValid == false) {
-      this.isRegisterButtonDisabled = true
-      return this.toastService.errorToast(profilePictureValidator.msg)
-    } else {
-      this.profilePictureFile = candidateFile;
-      let fileReader: FileReader = new FileReader();
-      fileReader.readAsDataURL(this.profilePictureFile)
-      fileReader.onload = (e) => {
-        this.profilePictureEncoded = fileReader.result;
+    if (candidateFile) {
+      let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile)
+      if (profilePictureValidator.isValid == false) {
+        this.isRegisterButtonDisabled = true
+        return this.toastService.warningToast(profilePictureValidator.msg)
+      } else {
+        this.profilePictureFile = candidateFile;
+        let fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.profilePictureFile)
+        fileReader.onload = (e) => {
+          this.profilePictureEncoded = fileReader.result;
+        }
+        this.isRegisterButtonDisabled = false
       }
-      this.isRegisterButtonDisabled = false
     }
+    this.profilePictureEncoded = "";
   }
 
   getSettingsData() {
@@ -74,6 +87,7 @@ export class SettingsComponent implements OnInit {
         oldDronesIndexes.push(this.dronesArray.indexOf(drone))
       }
       this.settingsData.dronesSelector = oldDronesIndexes
+      this.settingsData.profilePicUrl = this.picturesService.getProfilePicUrl(response.data.username)
     }, (error) => {
       console.log(error)
       this.toastService.errorToast("An error occurred.")
@@ -108,8 +122,8 @@ export class SettingsComponent implements OnInit {
 
     editFormData.append('data', JSON.stringify(objToSend))
 
-    if (this.settingsData.profilePictureFile) {
-      editFormData.append('profilePicture', this.settingsData.profilePictureFile)
+    if (this.profilePictureFile) {
+      editFormData.append('profilePicture', this.profilePictureFile)
     }
 
     this.profileService.editProfileInfo(editFormData).subscribe((response) => {
@@ -125,5 +139,21 @@ export class SettingsComponent implements OnInit {
       this.toastService.warningToast("An error occurred.")
       console.log(error)
     })
+  }
+
+  deleteProfile(oldPassword) {
+    this.profileService.deleteProfile({oldPassword}).subscribe((response) => {
+      this.toastService.toast('Profile deleted.')
+      this.authHelperService.logout()
+      this.closeDeleteModal()
+      this.router.navigate(['/'])
+    }, (error) => {
+      if (error.parsedBody) {
+        this.toastService.warningToast(error.parsedBody.msg)
+      }
+      this.toastService.warningToast("An error occurred.")
+      console.log(error)
+    })
+
   }
 }

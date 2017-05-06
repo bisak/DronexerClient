@@ -216,6 +216,13 @@
   border: 2px solid #039be5 !important;
 }
 
+[type="checkbox"]:checked + label:before{
+  border: 2px solid transparent;
+  border-bottom: 2px solid #039be5;
+  border-right: 2px solid #039be5;
+  background: transparent;
+}
+
 [type="checkbox"]:checked + label:after{
   background: #039be5 !important;
   border: 2px solid #039be5 !important;
@@ -223,4 +230,8 @@
 
 .dropdown-content li > a, .dropdown-content li > span {
   color: #616161;
+}
+
+.grey-border{
+  border: 1px solid #e0e0e0;
 }

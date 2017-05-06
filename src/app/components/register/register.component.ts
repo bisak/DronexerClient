@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
   birthday: String
   dronesSelector: Array<number>
   agree: Boolean
-
+  defaultProfilePicUrl: string;
   profilePictureFile: File
   profilePictureEncoded: String
 
@@ -40,29 +40,33 @@ export class RegisterComponent implements OnInit {
               private toastService: ToastService,
               private validateService: ValidateService,
               private staticData: StaticDataService,
-              public picturesService: PicturesService) {
+              private picturesService: PicturesService) {
   }
 
   dronesArray = this.staticData.dronesArray;
 
   ngOnInit() {
+    this.defaultProfilePicUrl = this.picturesService.getProfilePicUrl('default_profile_picture')
   }
 
   onProfilePictureSelected(ev) {
     let candidateFile = ev.target.files[0];
-    let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile)
-    if (profilePictureValidator.isValid == false) {
-      this.isRegisterButtonDisabled = true
-      return this.toastService.errorToast(profilePictureValidator.msg)
-    } else {
-      this.profilePictureFile = candidateFile;
-      let fileReader: FileReader = new FileReader();
-      fileReader.readAsDataURL(this.profilePictureFile)
-      fileReader.onload = (e) => {
-        this.profilePictureEncoded = fileReader.result;
+    if (candidateFile) {
+      let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile)
+      if (profilePictureValidator.isValid == false) {
+        this.isRegisterButtonDisabled = true
+        return this.toastService.errorToast(profilePictureValidator.msg)
+      } else {
+        this.profilePictureFile = candidateFile;
+        let fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.profilePictureFile)
+        fileReader.onload = (e) => {
+          this.profilePictureEncoded = fileReader.result;
+        }
+        this.isRegisterButtonDisabled = false
       }
-      this.isRegisterButtonDisabled = false
     }
+    this.profilePictureEncoded = "";
   }
 
   onRegisterSubmit() {

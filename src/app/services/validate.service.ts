@@ -73,7 +73,7 @@ export class ValidateService {
         }
       }
     }
-    if (data.password.length) {
+    if (data.password) {
       if (data.password != data.passwordConfirm) {
         return {
           isValid: false,
