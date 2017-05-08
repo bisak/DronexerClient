@@ -15,9 +15,9 @@ export class ReverseAuthGuard implements CanActivate {
     if (!this.authHelperService.isLoggedIn()) {
       return true;
     } else {
-      this.router.navigate(['/'])
-      this.toastService.toast('You are logged in.')
-      return false
+      this.router.navigate(['/']);
+      this.toastService.toast('You are logged in.');
+      return false;
     }
   }
 }

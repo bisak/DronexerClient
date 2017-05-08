@@ -19,20 +19,20 @@ declare var Materialize: any;
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  firstName: String
-  lastName: String
-  email: String
-  username: String
-  password: String
-  passwordConfirm: String
-  birthday: String
-  dronesSelector: Array<number>
-  agree: Boolean
+  firstName: String;
+  lastName: String;
+  email: String;
+  username: String;
+  password: String;
+  passwordConfirm: String;
+  birthday: String;
+  dronesSelector: Array<number>;
+  agree: Boolean;
   defaultProfilePicUrl: string;
-  profilePictureFile: File
-  profilePictureEncoded: String
+  profilePictureFile: File;
+  profilePictureEncoded: String;
 
-  isRegisterButtonDisabled = false
+  isRegisterButtonDisabled = false;
 
   constructor(private authService: AuthService,
               private authHelperService: AuthHelperService,
@@ -46,31 +46,31 @@ export class RegisterComponent implements OnInit {
   dronesArray = this.staticData.dronesArray;
 
   ngOnInit() {
-    this.defaultProfilePicUrl = this.picturesService.getProfilePicUrl('default_profile_picture')
+    this.defaultProfilePicUrl = this.picturesService.getProfilePicUrl('default_profile_picture');
   }
 
   onProfilePictureSelected(ev) {
     let candidateFile = ev.target.files[0];
     if (candidateFile) {
-      let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile)
+      let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile);
       if (profilePictureValidator.isValid == false) {
-        this.isRegisterButtonDisabled = true
-        return this.toastService.errorToast(profilePictureValidator.msg)
+        this.isRegisterButtonDisabled = true;
+        return this.toastService.errorToast(profilePictureValidator.msg);
       } else {
         this.profilePictureFile = candidateFile;
         let fileReader: FileReader = new FileReader();
-        fileReader.readAsDataURL(this.profilePictureFile)
+        fileReader.readAsDataURL(this.profilePictureFile);
         fileReader.onload = (e) => {
           this.profilePictureEncoded = fileReader.result;
         }
-        this.isRegisterButtonDisabled = false
+        this.isRegisterButtonDisabled = false;
       }
     }
     this.profilePictureEncoded = "";
   }
 
   onRegisterSubmit() {
-    let registerFormData: FormData = new FormData()
+    let registerFormData: FormData = new FormData();
     const user = {
       firstName: this.firstName,
       lastName: this.lastName,
@@ -80,42 +80,41 @@ export class RegisterComponent implements OnInit {
       passwordConfirm: this.passwordConfirm,
       birthday: this.birthday,
       agree: this.agree
-    }
+    };
     let registerInputValidator = this.validateService.validateRegisterInput(user);
     if (registerInputValidator.isValid == false) {
-      return this.toastService.warningToast(registerInputValidator.msg)
+      return this.toastService.warningToast(registerInputValidator.msg);
     }
     if (this.dronesSelector) {
       for (let num of this.dronesSelector) {
-        registerFormData.append('drones', this.dronesArray[num])
+        registerFormData.append('drones', this.dronesArray[num]);
       }
     }
     if (this.birthday) {
-      registerFormData.append('birthday', this.birthday)
+      registerFormData.append('birthday', this.birthday);
     }
     if (this.profilePictureFile) {
-      registerFormData.append('profilePicture', this.profilePictureFile)
+      registerFormData.append('profilePicture', this.profilePictureFile);
     }
-    registerFormData.append('firstName', this.firstName)
-    registerFormData.append('lastName', this.lastName)
-    registerFormData.append('email', this.email)
-    registerFormData.append('username', this.username)
-    registerFormData.append('password', this.password)
-    registerFormData.append('passwordConfirm', this.passwordConfirm)
+    registerFormData.append('firstName', this.firstName);
+    registerFormData.append('lastName', this.lastName);
+    registerFormData.append('email', this.email);
+    registerFormData.append('username', this.username);
+    registerFormData.append('password', this.password);
+    registerFormData.append('passwordConfirm', this.passwordConfirm);
 
-    this.authService.registerUser(registerFormData)
-      .subscribe((data) => {
+    this.authService.registerUser(registerFormData).subscribe((data) => {
         if (data.success) {
-          this.toastService.toast('Registered.')
-          this.router.navigate(['/login'])
+          this.toastService.toast('Registered.');
+          this.router.navigate(['/login']);
         } else {
-          this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"))
+          this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"));
         }
       }, (err) => {
-        console.log(err)
-        let parsedError = JSON.parse(err._body)
-        this.toastService.errorToast(parsedError.msg)
-      })
+        console.log(err);
+        let parsedError = JSON.parse(err._body);
+        this.toastService.errorToast(parsedError.msg);
+      });
   }
 
 }

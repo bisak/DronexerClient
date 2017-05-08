@@ -13,9 +13,9 @@ export class UploadPictureFormComponent implements OnInit {
   @Input() picture;
 
   dronesArray = this.staticData.dronesArray;
-  dronesSelector
-  caption
-  tags
+  dronesSelector;
+  caption;
+  tags;
 
   constructor(private staticData: StaticDataService,
               private picturesService: PicturesService,
@@ -27,7 +27,7 @@ export class UploadPictureFormComponent implements OnInit {
 
 
   onUploadBtnClick(pictureForm) {
-    let uploadFormData: FormData = new FormData()
+    let uploadFormData: FormData = new FormData();
     let dataToSend: Object = {};
     if (this.dronesSelector) dataToSend["droneTaken"] = this.dronesArray[this.dronesSelector];
     if (this.caption) dataToSend["caption"] = this.caption;
@@ -36,21 +36,21 @@ export class UploadPictureFormComponent implements OnInit {
       if (tagsArray.length) dataToSend["tags"] = tagsArray;
     }
 
-    uploadFormData.append('pictureFile', this.picture.file)
-    uploadFormData.append('data', JSON.stringify(dataToSend))
+    uploadFormData.append('pictureFile', this.picture.file);
+    uploadFormData.append('data', JSON.stringify(dataToSend));
 
     this.picturesService.uploadPicture(uploadFormData).subscribe((data) => {
       if (data.success) {
-        this.toastService.successToast('Picture Uploaded.')
-        pictureForm.remove()
-        console.log(data)
+        this.toastService.successToast('Picture Uploaded.');
+        pictureForm.remove();
+        console.log(data);
       } else {
-        this.toastService.errorToast('An error occured: ' + (data.msg ? data.msg : "Unknown"))
+        this.toastService.errorToast('An error occured: ' + (data.msg ? data.msg : "Unknown"));
       }
     }, (err) => {
       /*TODO This shit didn't work. Probably something with bug when the server actually returns string.*/
-      console.log(err)
-      this.toastService.errorToast(err.statusText)
+      console.log(err);
+      this.toastService.errorToast(err.statusText);
     })
   }
 

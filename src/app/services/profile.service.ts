@@ -10,23 +10,23 @@ import { ApiService } from "./api.service";
 
 @Injectable()
 export class ProfileService {
-  authToken: any
-  user: any
+  authToken: any;
+  user: any;
   private apiUrl = this.apiService.apiUrl;
 
   constructor(private http: Http, private apiService: ApiService) {
   }
 
   getProfile(username: string) {
-    return this.apiService.get(`users/profile-info/${username}`)
+    return this.apiService.get(`users/profile-info/${username}`);
   }
 
   editProfileInfo(data) {
-    return this.apiService.post(`users/edit-profile`, data)
+    return this.apiService.post(`users/edit-profile`, data);
   }
 
   deleteProfile(data) {
-    return this.apiService.post(`users/delete-profile`, data)
+    return this.apiService.post(`users/delete-profile`, data);
   }
 
 }

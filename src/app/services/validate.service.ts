@@ -20,7 +20,7 @@ export class ValidateService {
       isValid: true,
       msg: ""
     }
-  }
+  };
 
   validateRegisterInput(data, isEditData?) {
     if (!data.firstName) {
@@ -97,6 +97,5 @@ export class ValidateService {
       isValid: true,
       msg: ""
     }
-  }
-
+  };
 }

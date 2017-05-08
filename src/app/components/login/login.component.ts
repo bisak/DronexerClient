@@ -5,8 +5,6 @@ import { ToastService } from '../../services/toast.service'
 import { Subject } from "rxjs";
 import { AuthHelperService } from "../../utilities/auth-helper.service";
 
-declare var Materialize: any;
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,8 +12,8 @@ declare var Materialize: any;
 })
 export class LoginComponent implements OnInit {
 
-  username: String
-  password: String
+  username: String;
+  password: String;
 
 
   constructor(private authHelperService: AuthHelperService,
@@ -31,23 +29,23 @@ export class LoginComponent implements OnInit {
     const user = {
       username: this.username,
       password: this.password
-    }
+    };
 
     if (!user.username || !user.password) {
-      return this.toastService.toast('Please fill in both fields.')
+      return this.toastService.toast('Please fill in both fields.');
     }
 
     this.authService.loginUser(user).subscribe((response) => {
         if (response.success) {
-          this.authHelperService.storeUserData(response.token)
-          this.toastService.toast('Logged in.')
-          this.router.navigate(['/'])
+          this.authHelperService.storeUserData(response.token);
+          this.toastService.toast('Logged in.');
+          this.router.navigate(['/']);
         } else {
-          this.toastService.errorToast(response.msg)
+          this.toastService.errorToast(response.msg);
         }
       }, (err) => {
-        console.log(err)
-        this.toastService.errorToast(err.parsedBody.msg)
-      })
+        console.log(err);
+        this.toastService.errorToast(err.parsedBody.msg);
+      });
   }
 }

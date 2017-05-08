@@ -10,31 +10,31 @@ import { StaticDataService } from "../../services/static-data.service";
 
 export class ModalEditComponent implements OnInit {
 
-  @Input() editModal
-  @Input() post
-  @Output() editConfirmed = new EventEmitter<any>()
-  @Output() editCancelled = new EventEmitter<boolean>()
+  @Input() editModal;
+  @Input() post;
+  @Output() editConfirmed = new EventEmitter<any>();
+  @Output() editCancelled = new EventEmitter<boolean>();
 
-  editedData: any
+  editedData: any;
   dronesArray = this.staticData.dronesArray;
 
   constructor(private staticData: StaticDataService) {
   }
 
   cancelEdit() {
-    this.editCancelled.emit(true)
+    this.editCancelled.emit(true);
   }
 
   confirmEdit() {
-    this.editedData.newSelectedDroneName = this.dronesArray[this.editedData.newDroneSelector]
-    this.editConfirmed.emit(this.editedData)
+    this.editedData.newSelectedDroneName = this.dronesArray[this.editedData.newDroneSelector];
+    this.editConfirmed.emit(this.editedData);
   }
 
   ngOnInit() {
-    this.editedData = {}
-    this.editedData.newTags = this.post.tags.join(' ') || ''
-    this.editedData.newCaption = this.post.caption
-    this.editedData.newDroneSelector = this.dronesArray.indexOf(this.post.droneTaken)
+    this.editedData = {};
+    this.editedData.newTags = this.post.tags.join(' ') || '';
+    this.editedData.newCaption = this.post.caption;
+    this.editedData.newDroneSelector = this.dronesArray.indexOf(this.post.droneTaken);
   }
 
 }

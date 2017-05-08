@@ -7,25 +7,25 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class ModalConfirmPasswordComponent implements OnInit {
 
-  @Input() confirmModal
-  @Output() confirm = new EventEmitter<any>()
-  @Output() cancel = new EventEmitter<boolean>()
+  @Input() confirmModal;
+  @Output() confirm = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<boolean>();
 
-  oldPassword: any
+  oldPassword: any;
 
   constructor() {
   }
 
   cancelEdit() {
-    this.cancel.emit(true)
+    this.cancel.emit(true);
   }
 
   confirmEdit() {
-    this.confirm.emit(this.oldPassword)
+    this.confirm.emit(this.oldPassword);
   }
 
   ngOnInit() {
-    this.oldPassword = ""
+    this.oldPassword = "";
   }
 
 }

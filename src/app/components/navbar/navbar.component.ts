@@ -11,25 +11,25 @@ import { AuthHelperService } from "../../utilities/auth-helper.service";
 })
 export class NavbarComponent implements OnInit {
 
-  username: String
-  routerLinkOpts = { exact: true }
+  username: String;
+  routerLinkOpts = { exact: true };
 
   constructor(public authHelperService: AuthHelperService,
               private router: Router,
-              private toastService: ToastService,) {
+              private toastService: ToastService) {
   }
 
   ngOnInit() {
-    this.username = this.authHelperService.getUsernameFromToken()
+    this.username = this.authHelperService.getUsernameFromToken();
     this.authHelperService.loginAnnounced.subscribe(data => {
-      this.username = this.authHelperService.getUsernameFromToken()
-    })
+      this.username = this.authHelperService.getUsernameFromToken();
+    });
   }
 
   onLogoutClick() {
     this.authHelperService.logout();
     this.toastService.toast('Logged out.');
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
     return false;
   }
 

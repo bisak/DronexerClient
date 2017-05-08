@@ -7,13 +7,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class ModalDeleteComponent implements OnInit {
 
-  @Input() deleteModal
-  @Output() deleteConfirmed = new EventEmitter<boolean>()
-  @Output() deleteCancelled = new EventEmitter<boolean>()
-  @Input() titleText
-  @Input() showPasswordField
+  @Input() deleteModal;
+  @Output() deleteConfirmed = new EventEmitter<boolean>();
+  @Output() deleteCancelled = new EventEmitter<boolean>();
+  @Input() titleText;
+  @Input() showPasswordField;
 
-  oldPassword: any
+  oldPassword: any;
 
   constructor() {
   }
@@ -22,11 +22,11 @@ export class ModalDeleteComponent implements OnInit {
   }
 
   cancelDelete() {
-    this.deleteCancelled.emit(true)
+    this.deleteCancelled.emit(true);
   }
 
   confirmDelete() {
-    this.deleteConfirmed.emit(this.oldPassword)
+    this.deleteConfirmed.emit(this.oldPassword);
   }
 
 }

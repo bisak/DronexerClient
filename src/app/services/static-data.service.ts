@@ -17,6 +17,6 @@ export class StaticDataService {
     "DJI Inspire 1",
     "DJI Inspire 2",
     "Other"
-  ]
+  ];
 
 }

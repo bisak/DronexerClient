@@ -12,8 +12,8 @@ export class LoaderComponent implements OnInit {
 
   constructor(private apiService: ApiService) {
     apiService.requestAnnounced.subscribe(data => {
-      this.isVisible = data
-    })
+      this.isVisible = data;
+    });
   }
 
   ngOnInit() {

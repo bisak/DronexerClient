@@ -19,8 +19,8 @@ export class SettingsComponent implements OnInit {
   settingsData: any;
   username: string;
   isRegisterButtonDisabled: boolean;
-  profilePictureFile: File
-  profilePictureEncoded: String
+  profilePictureFile: File;
+  profilePictureEncoded: String;
   confirmModal = new EventEmitter<string | MaterializeAction>();
   deleteModal = new EventEmitter<string | MaterializeAction>();
 
@@ -38,8 +38,8 @@ export class SettingsComponent implements OnInit {
   dronesArray = this.staticData.dronesArray;
 
   ngOnInit() {
-    this.username = this.authHelperService.getUsernameFromToken()
-    this.getSettingsData()
+    this.username = this.authHelperService.getUsernameFromToken();
+    this.getSettingsData();
   }
 
   closeDeleteModal() {
@@ -62,14 +62,14 @@ export class SettingsComponent implements OnInit {
   onProfilePictureSelected(ev) {
     let candidateFile = ev.target.files[0];
     if (candidateFile) {
-      let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile)
+      let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile);
       if (profilePictureValidator.isValid == false) {
-        this.isRegisterButtonDisabled = true
-        return this.toastService.warningToast(profilePictureValidator.msg)
+        this.isRegisterButtonDisabled = true;
+        return this.toastService.warningToast(profilePictureValidator.msg);
       } else {
         this.profilePictureFile = candidateFile;
         let fileReader: FileReader = new FileReader();
-        fileReader.readAsDataURL(this.profilePictureFile)
+        fileReader.readAsDataURL(this.profilePictureFile);
         fileReader.onload = (e) => {
           this.profilePictureEncoded = fileReader.result;
         }
@@ -81,31 +81,31 @@ export class SettingsComponent implements OnInit {
 
   getSettingsData() {
     this.profileService.getProfile(this.username).subscribe((response) => {
-      this.settingsData = response.data
-      let oldDronesIndexes = []
+      this.settingsData = response.data;
+      let oldDronesIndexes = [];
       for (let drone of this.settingsData.drones) {
-        oldDronesIndexes.push(this.dronesArray.indexOf(drone))
+        oldDronesIndexes.push(this.dronesArray.indexOf(drone));
       }
-      this.settingsData.dronesSelector = oldDronesIndexes
-      this.settingsData.profilePicUrl = this.picturesService.getProfilePicUrl(response.data.username)
+      this.settingsData.dronesSelector = oldDronesIndexes;
+      this.settingsData.profilePicUrl = this.picturesService.getProfilePicUrl(response.data.username);
     }, (error) => {
-      console.log(error)
-      this.toastService.errorToast("An error occurred.")
+      console.log(error);
+      this.toastService.errorToast("An error occurred.");
     })
   }
 
   editProfileInfo(oldPassword) {
-    let editFormData: FormData = new FormData()
+    let editFormData: FormData = new FormData();
 
     let registerInputValidator = this.validateService.validateRegisterInput(this.settingsData, true);
 
     if (!registerInputValidator.isValid) {
-      return this.toastService.warningToast(registerInputValidator.msg)
+      return this.toastService.warningToast(registerInputValidator.msg);
     }
 
-    let dronesToSendArray = []
+    let dronesToSendArray = [];
     for (let index of this.settingsData.dronesSelector) {
-      dronesToSendArray.push(this.dronesArray[index])
+      dronesToSendArray.push(this.dronesArray[index]);
     }
 
     let objToSend = {
@@ -118,45 +118,45 @@ export class SettingsComponent implements OnInit {
       birthday: this.settingsData.birthday,
       drones: dronesToSendArray,
       oldPassword: oldPassword
-    }
+    };
 
-    editFormData.append('data', JSON.stringify(objToSend))
+    editFormData.append('data', JSON.stringify(objToSend));
 
     if (this.profilePictureFile) {
-      editFormData.append('profilePicture', this.profilePictureFile)
+      editFormData.append('profilePicture', this.profilePictureFile);
     }
 
     this.profileService.editProfileInfo(editFormData).subscribe((response) => {
       if (response.success) {
-        this.authHelperService.storeUserData(response.token)
-        this.toastService.successToast("Edit successful.")
-        this.closeConfirmModal()
+        this.authHelperService.storeUserData(response.token);
+        this.toastService.successToast("Edit successful.");
+        this.closeConfirmModal();
       }
     }, (error) => {
       if (error.parsedBody) {
-        return this.toastService.warningToast(error.parsedBody.msg)
+        return this.toastService.warningToast(error.parsedBody.msg);
       }
-      this.toastService.warningToast("An error occurred.")
-      console.log(error)
-    })
+      this.toastService.warningToast("An error occurred.");
+      console.log(error);
+    });
   }
 
   deleteProfile(oldPassword) {
     if (oldPassword) {
       this.profileService.deleteProfile({oldPassword}).subscribe((response) => {
         if (response.success) {
-          this.toastService.toast('Profile deleted.')
-          this.authHelperService.logout()
-          this.closeDeleteModal()
-          this.router.navigate(['/'])
+          this.toastService.toast('Profile deleted.');
+          this.authHelperService.logout();
+          this.closeDeleteModal();
+          this.router.navigate(['/']);
         }
       }, (error) => {
         if (error.parsedBody) {
-          return this.toastService.warningToast(error.parsedBody.msg)
+          return this.toastService.warningToast(error.parsedBody.msg);
         }
-        this.toastService.warningToast("An error occurred.")
-        console.log(error)
-      })
+        this.toastService.warningToast("An error occurred.");
+        console.log(error);
+      });
     }
   }
 }

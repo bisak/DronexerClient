@@ -10,10 +10,10 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
 import { ExploreComponent } from './components/explore/explore.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { UploadComponent } from './components/upload/upload.component'
-import { SettingsComponent } from './components/settings/settings.component'
-import { AuthGuard } from './guards/auth.guard'
-import { ReverseAuthGuard } from './guards/reverse-auth.guard'
+import { UploadComponent } from './components/upload/upload.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { AuthGuard } from './guards/auth.guard';
+import { ReverseAuthGuard } from './guards/reverse-auth.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},

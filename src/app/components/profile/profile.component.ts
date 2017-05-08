@@ -15,11 +15,11 @@ import { MaterializeAction } from "angular2-materialize";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  profileInfo: any
-  wallPosts: Array<any>
-  isProfileMine: boolean
-  hasPosts: boolean
-  urlUsername: string
+  profileInfo: any;
+  wallPosts: Array<any>;
+  isProfileMine: boolean;
+  hasPosts: boolean;
+  urlUsername: string;
   isListening: boolean;
   lastPostTime: number;
 
@@ -34,77 +34,77 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listenForUrlChanges()
-    this.isProfileMine = this.checkIdentity()
+    this.listenForUrlChanges();
+    this.isProfileMine = this.checkIdentity();
   }
 
   removePostFromWall(evPost) {
-    this.wallPosts = this.wallPosts.filter(post => evPost._id !== post._id)
+    this.wallPosts = this.wallPosts.filter(post => evPost._id !== post._id);
   }
 
   getProfileInfo(username) {
     this.profileService.getProfile(username).subscribe((retrievedData) => {
-      this.profileInfo = retrievedData.data
-      this.profileInfo.profilePicUrl = this.picturesService.getProfilePicUrl(retrievedData.data.username)
+      this.profileInfo = retrievedData.data;
+      this.profileInfo.profilePicUrl = this.picturesService.getProfilePicUrl(retrievedData.data.username);
     }, (error) => {
-      console.log(error)
+      console.log(error);
       if (error.status === 404) {
-        this.router.navigate(['/page-not-found'], {replaceUrl: true})
-        return false
+        this.router.navigate(['/page-not-found'], {replaceUrl: true});
+        return false;
       }
-      this.toastService.errorToast("An error occurred.")
-    })
+      this.toastService.errorToast("An error occurred.");
+    });
   }
 
   getWallPosts(username) {
-    this.isListening = false
-    let time = new Date().getTime()
+    this.isListening = false;
+    let time = new Date().getTime();
     if (this.lastPostTime) {
-      time = this.lastPostTime
+      time = this.lastPostTime;
     }
 
     this.picturesService.getWallPosts(username, time).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
-        let picData = retrievedPictures.data
-        this.wallPosts.push(...picData)
-        this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime()
-        this.isListening = true
+        let picData = retrievedPictures.data;
+        this.wallPosts.push(...picData);
+        this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime();
+        this.isListening = true;
       } else {
-        this.isListening = false
+        this.isListening = false;
         if (!this.wallPosts.length) {
-          this.hasPosts = false
+          this.hasPosts = false;
         }
       }
     }, (error) => {
-      console.log(error)
-      this.toastService.errorToast("Error getting pictures.")
-    })
+      console.log(error);
+      this.toastService.errorToast("Error getting pictures.");
+    });
   }
 
   checkIdentity(): boolean {
-    const extractedUsername = this.authHelperService.getUsernameFromToken()
-    return (extractedUsername && this.urlUsername === extractedUsername)
+    const extractedUsername = this.authHelperService.getUsernameFromToken();
+    return (extractedUsername && this.urlUsername === extractedUsername);
   }
 
   listenForUrlChanges() {
     this.route.params.subscribe((params: Params) => {
-      this.urlUsername = params['username']
+      this.urlUsername = params['username'];
 
-      this.hasPosts = true
-      this.isListening = true
-      this.profileInfo = null
-      this.wallPosts = []
-      this.lastPostTime = null
-      this.isProfileMine = this.checkIdentity()
+      this.hasPosts = true;
+      this.isListening = true;
+      this.profileInfo = null;
+      this.wallPosts = [];
+      this.lastPostTime = null;
+      this.isProfileMine = this.checkIdentity();
 
-      this.getProfileInfo(this.urlUsername)
-      this.getWallPosts(this.urlUsername)
+      this.getProfileInfo(this.urlUsername);
+      this.getWallPosts(this.urlUsername);
     })
   }
 
   onProfileScrolled() {
     if (this.isListening) {
-      this.getWallPosts(this.urlUsername)
+      this.getWallPosts(this.urlUsername);
     }
   }
 }

@@ -19,45 +19,45 @@ export class ExploreComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getExplorePosts()
+    this.getExplorePosts();
   }
 
   removePostFromWall(evPost) {
-    this.explorePosts = this.explorePosts.filter(post => evPost._id !== post._id)
+    this.explorePosts = this.explorePosts.filter(post => evPost._id !== post._id);
   }
 
   getExplorePosts() {
-    this.isListening = false
-    let time = new Date().getTime()
+    this.isListening = false;
+    let time = new Date().getTime();
     if (this.lastPostTime) {
-      time = this.lastPostTime
+      time = this.lastPostTime;
     }
     this.picturesService.getExplorePosts(time).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
-        let picData = retrievedPictures.data
+        let picData = retrievedPictures.data;
         if (this.explorePosts) {
-          this.explorePosts.push(...picData)
+          this.explorePosts.push(...picData);
         } else {
-          this.explorePosts = picData
+          this.explorePosts = picData;
         }
-        this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime()
-        this.isListening = true
+        this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime();
+        this.isListening = true;
       } else {
-        this.isListening = false
+        this.isListening = false;
       }
     }, (error) => {
-      console.log(error)
+      console.log(error);
       if (error.status === 404) {
-        return this.toastService.toast("No more posts available")
+        return this.toastService.toast("No more posts available");
       }
-      this.toastService.errorToast("Error getting user pictures.")
-      this.isListening = false
+      this.toastService.errorToast("Error getting user pictures.");
+      this.isListening = false;
     })
   }
 
   onExploreScrolled() {
     if (this.isListening) {
-      this.getExplorePosts()
+      this.getExplorePosts();
     }
   }
 }

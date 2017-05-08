@@ -22,11 +22,11 @@ import { DisclaimerComponent } from './components/disclaimer/disclaimer.componen
 import { ExploreComponent } from './components/explore/explore.component';
 import { NotFoundComponent } from './components/not-found/not-found.component'
 
-import { ApiService } from "./services/api.service"
-import { AuthService } from './services/auth.service'
-import { ToastService } from './services/toast.service'
-import { ValidateService } from './services/validate.service'
-import { ProfileService } from './services/profile.service'
+import { ApiService } from './services/api.service';
+import { AuthService } from './services/auth.service';
+import { ToastService } from './services/toast.service';
+import { ValidateService } from './services/validate.service';
+import { ProfileService } from './services/profile.service';
 
 import { AuthGuard } from './guards/auth.guard';
 import { UploadComponent } from './components/upload/upload.component';

@@ -9,30 +9,30 @@ export class PostsService {
   }
 
   commentPost(id: string, data: any): Observable<any> {
-    return this.apiService.post(`pictures/comment/${id}`, data)
+    return this.apiService.post(`pictures/comment/${id}`, data);
   }
 
   getComments(id: string): Observable<any> {
-    return this.apiService.get(`pictures/comments/${id}`)
+    return this.apiService.get(`pictures/comments/${id}`);
   }
 
   likePost(id: string): Observable<any> {
-    return this.apiService.post(`pictures/like/${id}`, {})
+    return this.apiService.post(`pictures/like/${id}`, {});
   }
 
   unLikePost(id: string): Observable<any> {
-    return this.apiService.post(`pictures/unlike/${id}`, {})
+    return this.apiService.post(`pictures/unlike/${id}`, {});
   }
 
   editPost(id: string, data:any){
-    return this.apiService.post(`pictures/edit/${id}`, data)
+    return this.apiService.post(`pictures/edit/${id}`, data);
   }
 
   deletePost(id: string): Observable<any> {
-    return this.apiService.delete(`pictures/delete/${id}`)
+    return this.apiService.delete(`pictures/delete/${id}`);
   }
 
   getPictureUrlForPost(post: any): string {
-    return `${this.apiService.apiUrl}pictures/big/${post._id}`
+    return `${this.apiService.apiUrl}pictures/big/${post._id}`;
   }
 }

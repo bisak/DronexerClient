@@ -14,9 +14,9 @@ export class AuthGuard implements CanActivate {
     if (this.authHelperService.isLoggedIn()) {
       return true;
     } else {
-      this.router.navigate(['login'])
-      this.toastService.warningToast("Log in to view this page.")
-      return false
+      this.router.navigate(['login']);
+      this.toastService.warningToast("Log in to view this page.");
+      return false;
     }
   }
 }

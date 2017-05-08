@@ -13,11 +13,11 @@ import { StaticDataService } from "../../services/static-data.service";
 })
 export class PostComponent implements OnInit {
 
-  @Input() post
+  @Input() post;
   @Output() onPostDeleted = new EventEmitter<any>();
   deleteModal = new EventEmitter<string | MaterializeAction>();
   editModal = new EventEmitter<string | MaterializeAction>();
-  newComment: string
+  newComment: string;
 
   constructor(private toastService: ToastService,
               private picturesService: PicturesService,
@@ -27,17 +27,17 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.post.pictureUrl = this.postsService.getPictureUrlForPost(this.post)
-    this.post.userPictureUrl = this.picturesService.getProfilePicUrl(this.post.username)
-    this.post.userIsAuthenticatedToEdit = (this.post.userId === this.authHelperService.getUserIdFromToken())
-    this.newComment = ''
+    this.post.pictureUrl = this.postsService.getPictureUrlForPost(this.post);
+    this.post.userPictureUrl = this.picturesService.getProfilePicUrl(this.post.username);
+    this.post.userIsAuthenticatedToEdit = (this.post.userId === this.authHelperService.getUserIdFromToken());
+    this.newComment = '';
   }
 
   openDeleteModal() {
-    this.post.showDeleteModal = true
+    this.post.showDeleteModal = true;
     setTimeout(() => {
       this.deleteModal.emit({action: 'modal', params: ['open']});
-    }, 200)
+    }, 200);
   }
 
   closeDeleteModal() {
@@ -45,10 +45,10 @@ export class PostComponent implements OnInit {
   }
 
   openEditModal() {
-    this.post.showEditModal = true
+    this.post.showEditModal = true;
     setTimeout(() => {
       this.editModal.emit({action: 'modal', params: ['open']});
-    }, 200)
+    }, 200);
   }
 
   closeEditModal() {
@@ -57,104 +57,104 @@ export class PostComponent implements OnInit {
 
   commentPost() {
     if (!this.post.comments && this.post.commentsCount > 0) {
-      this.loadComments()
+      this.loadComments();
     }
-    const comment = this.newComment
-    const postId = this.post._id
+    const comment = this.newComment;
+    const postId = this.post._id;
     if (comment.length) {
       this.postsService.commentPost(postId, {comment}).subscribe((data) => {
         if (!this.post.comments)
-          this.post.comments = []
+          this.post.comments = [];
         let commentToAdd = {
           userId: this.authHelperService.getUserIdFromToken(),
           username: this.authHelperService.getUsernameFromToken(),
           comment: comment
-        }
-        this.post.comments.push(commentToAdd)
-        this.post.commentsCount += 1
-        this.post.showComments = true
+        };
+        this.post.comments.push(commentToAdd);
+        this.post.commentsCount += 1;
+        this.post.showComments = true;
       }, (error) => {
         if (error.status === 401) {
-          this.toastService.warningToast("Log in to comment.")
+          this.toastService.warningToast("Log in to comment.");
         }
-      })
-      this.newComment = ''
+      });
+      this.newComment = '';
     }
   }
 
   likePost() {
-    const postId = this.post._id
+    const postId = this.post._id;
     this.postsService.likePost(postId).subscribe((data) => {
-      this.post.isLikedByCurrentUser = true
-      this.post.likesCount += 1
+      this.post.isLikedByCurrentUser = true;
+      this.post.likesCount += 1;
     }, (error) => {
       if (error.status === 401) {
-        this.toastService.warningToast("Log in to like.")
+        this.toastService.warningToast("Log in to like.");
       }
-      console.log(error)
-    })
+      console.log(error);
+    });
   }
 
   unLikePost() {
-    const postId = this.post._id
+    const postId = this.post._id;
     this.postsService.unLikePost(postId).subscribe((data) => {
-      this.post.isLikedByCurrentUser = false
-      this.post.likesCount -= 1
+      this.post.isLikedByCurrentUser = false;
+      this.post.likesCount -= 1;
     }, (error) => {
-      console.log(error)
-    })
+      console.log(error);
+    });
   }
 
   deletePost() {
-    const postId = this.post._id
+    const postId = this.post._id;
     this.postsService.deletePost(postId).subscribe((data) => {
       /*TODO maybe not emit that event and delete the post DOM element locally*/
-      this.onPostDeleted.emit(this.post)
-      this.closeDeleteModal()
-      console.log(data)
+      this.onPostDeleted.emit(this.post);
+      this.closeDeleteModal();
+      console.log(data);
     }, (error) => {
-      console.log(error)
-    })
+      console.log(error);
+    });
   }
 
   editPost(editedData) {
-    const postId = this.post._id
-    let editedDataToSend = {...editedData}
-    delete editedDataToSend.newDroneSelector
-    editedDataToSend.newTags = editedDataToSend.newTags.split(' ').filter((x) => x !== '' && x.startsWith('#') && x.length > 3).map((x) => x.toLowerCase())
+    const postId = this.post._id;
+    let editedDataToSend = {...editedData};
+    delete editedDataToSend.newDroneSelector;
+    editedDataToSend.newTags = editedDataToSend.newTags.split(' ').filter((x) => x !== '' && x.startsWith('#') && x.length > 3).map((x) => x.toLowerCase());
     this.postsService.editPost(postId, editedDataToSend).subscribe((response) => {
       if (response.success) {
-        this.post.caption = editedDataToSend.newCaption
-        this.post.tags = editedDataToSend.newTags
-        this.post.droneTaken = editedDataToSend.newSelectedDroneName
-        this.closeEditModal()
+        this.post.caption = editedDataToSend.newCaption;
+        this.post.tags = editedDataToSend.newTags;
+        this.post.droneTaken = editedDataToSend.newSelectedDroneName;
+        this.closeEditModal();
       }
     }, (error) => {
       if (error.status === 401) {
-        this.toastService.warningToast("Log in to edit.")
+        this.toastService.warningToast("Log in to edit.");
       }
-      console.log(error)
-    })
+      console.log(error);
+    });
   }
 
   postRateAction() {
     if (this.post.isLikedByCurrentUser) {
-      this.unLikePost()
+      this.unLikePost();
     } else {
-      this.likePost()
+      this.likePost();
     }
   }
 
   loadComments() {
-    const postId = this.post._id
+    const postId = this.post._id;
     this.postsService.getComments(postId).subscribe((comments) => {
       if (comments.success) {
-        this.post.comments = comments.data
-        this.post.showComments = true
+        this.post.comments = comments.data;
+        this.post.showComments = true;
       }
     }, (error) => {
-      console.log(error)
-      this.toastService.toast("Couldn't load comments.")
-    })
+      console.log(error);
+      this.toastService.toast("Couldn't load comments.");
+    });
   }
 }
