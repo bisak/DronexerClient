@@ -127,6 +127,7 @@ export class PostComponent implements OnInit {
         this.post.caption = editedDataToSend.newCaption
         this.post.tags = editedDataToSend.newTags
         this.post.droneTaken = editedDataToSend.newSelectedDroneName
+        this.closeEditModal()
       }
     }, (error) => {
       if (error.status === 401) {

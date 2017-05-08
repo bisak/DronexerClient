@@ -1,0 +1,41 @@
+<div #pictureForm class="row">
+  <div class="col s12 m10 offset-m1">
+    <div class="card">
+      <div class="card-image">
+        <img alt="Selected picture to upload" [src]="picture.encoded">
+        <a (click)="onUploadBtnClick(pictureForm)" materialize="tooltip"
+           class="tooltipped btn-floating btn-large halfway-fab waves-effect waves-light red"
+           data-position="bottom" data-delay="500" data-tooltip="Upload"><i
+          class="material-icons">file_upload</i></a>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">edit</i>
+            <textarea [(ngModel)]="caption" id="textarea" class="materialize-textarea"></textarea>
+            <label for="textarea">Write a caption.</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">label</i>
+            <input [(ngModel)]="tags" placeholder="#drone #aerialphotography" id="tags" type="text">
+            <label for="tags">Tags</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 grey-text">
+            <i class="material-icons prefix black-text">add_circle</i>
+            <select [(ngModel)]="dronesSelector"
+                    id="register-drone-select"
+                    materialize="material_select"
+                    name="drones-select">
+              <option value="" disabled>Taken with</option>
+              <option *ngFor="let drone of dronesArray; let i = index;" [value]="i">{{drone}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

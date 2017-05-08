@@ -235,3 +235,19 @@
 .grey-border{
   border: 1px solid #e0e0e0;
 }
+
+.picker__date-display, .picker__weekday-display{
+  background-color: #0091ea !important
+}
+
+div.picker__day.picker__day--infocus.picker__day--selected.picker__day--highlighted {
+  background-color: #0091ea !important
+}
+
+button.picker__today, button.picker__close {
+  color: #0091ea !important
+}
+
+.picker__day.picker__day--today {
+  color: #0091ea !important
+}

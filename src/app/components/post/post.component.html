@@ -85,7 +85,8 @@
 
       <form (keyup.enter)="commentPost()">
         <div class="input-field col s8 comment-input-container">
-          <input [(ngModel)]="newComment" name="newComment" id="post-comment" type="text" class="comment-input no-margin" autocomplete="off">
+          <input [(ngModel)]="newComment" name="newComment" id="post-comment" type="text"
+                 class="comment-input no-margin" autocomplete="off">
           <label for="post-comment">Comment...</label>
         </div>
       </form>
@@ -121,11 +122,13 @@
   </div>
 
   <div *ngIf="post.showDeleteModal">
-    <app-modal-delete [showPasswordField]="false" [titleText]="'Delete permanently?'" [deleteModal]="deleteModal" (deleteCancelled)="closeDeleteModal()" (deleteConfirmed)="deletePost()"></app-modal-delete>
+    <app-modal-delete [showPasswordField]="false" [titleText]="'Delete permanently?'" [deleteModal]="deleteModal"
+                      (deleteCancelled)="closeDeleteModal()" (deleteConfirmed)="deletePost()"></app-modal-delete>
   </div>
 
   <div *ngIf="post.showEditModal">
-    <app-modal-edit [editModal]="editModal" [post]="post" (editCancelled)="closeEditModal()" (editConfirmed)="editPost($event)"></app-modal-edit>
+    <app-modal-edit [editModal]="editModal" [post]="post"
+                    (editCancelled)="closeEditModal()" (editConfirmed)="editPost($event)"></app-modal-edit>
   </div>
 
 </div>

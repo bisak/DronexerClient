@@ -15,12 +15,11 @@ import { SettingsComponent } from './components/settings/settings.component'
 import { AuthGuard } from './guards/auth.guard'
 import { ReverseAuthGuard } from './guards/reverse-auth.guard'
 
-/*TODO reverse authguard for register and login routes.*/
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'login', component: LoginComponent, canActivate: [ReverseAuthGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [ReverseAuthGuard]},
   {path: 'upload', component: UploadComponent, canActivate: [AuthGuard]},
-  {path: 'login', component: LoginComponent, canActivate: [ReverseAuthGuard]},
   {path: 'user/settings', component: SettingsComponent, canActivate: [AuthGuard]},
   {path: 'profile/:username', component: ProfileComponent},
   {path: 'about', component: AboutUsComponent},
@@ -36,5 +35,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule {
 }

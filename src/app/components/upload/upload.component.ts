@@ -14,67 +14,36 @@ import { MaterializeDirective } from 'angular2-materialize'
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
-  /*TODO add drag and drop to upload files.*/
-  pictureSelected = false
-  pictureFile: File
-  pictureFileEncoded: string
-  dronesSelector: number
-  tags: string
-  caption: string
-
-  dronesArray = this.staticData.dronesArray;
+  selectedPictures: Array<any>;
 
   constructor(private toastService: ToastService,
               private authHelperService: AuthHelperService,
-              private picturesService: PicturesService,
-              private router: Router,
-              private staticData: StaticDataService) {
+              private router: Router) {
+    this.selectedPictures = [];
   }
 
   ngOnInit() {
   }
 
-  hidePictureCard() {
-    this.pictureSelected = false;
-  }
-
-  showPictureCard() {
-    this.pictureSelected = true;
-  }
 
   onPictureSelectorChange(ev) {
-    this.pictureFile = ev.target.files[0];
-    let fileReader: FileReader = new FileReader();
-    fileReader.readAsDataURL(this.pictureFile)
-    fileReader.onloadend = (e) => {
-      this.pictureFileEncoded = fileReader.result;
-      this.showPictureCard()
+    this.selectedPictures = [];
+    let files: Array<File> = ev.target.files;
+    for (let i = 0; i < files.length; i++) {
+      let file: File = files[i];
+      let fileReader: FileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = (e) => {
+        this.selectedPictures.push({
+          file: file,
+          encoded: fileReader.result
+        });
+      }
+      fileReader.onerror = (error) => {
+        console.log(error);
+        this.toastService.toast("Error reading pictures");
+      }
     }
-  }
-
-  onUploadBtnClick() {
-    let uploadFormData: FormData = new FormData()
-    if (this.dronesSelector) uploadFormData.append('droneTaken', this.dronesArray[this.dronesSelector])
-    if (this.caption) uploadFormData.append('caption', this.caption)
-    if (this.tags) {
-      let tagsArray = this.tags.split(' ').filter((x) => x !== '' && x.startsWith('#') && x.length > 3).map((x) => x.toLowerCase())
-      if (tagsArray.length) uploadFormData.append('tags', JSON.stringify(tagsArray))
-    }
-    uploadFormData.append('pictureFile', this.pictureFile)
-
-    this.picturesService.uploadPicture(uploadFormData)
-      .subscribe((data) => {
-        if (data.success) {
-          this.toastService.successToast('Picture Uploaded.', this.hidePictureCard.bind(this))
-          console.log(data)
-        } else {
-          this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"))
-        }
-      }, (err) => {
-        /*TODO This shit didn't work. Probably something with bug when the server actually returns string.*/
-        console.log(err)
-        this.toastService.errorToast(err.statusText)
-      })
   }
 
 }

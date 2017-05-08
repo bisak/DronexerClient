@@ -16,7 +16,7 @@ import { MaterializeAction } from "angular2-materialize";
 })
 export class ProfileComponent implements OnInit {
   profileInfo: any
-  wallPosts: any
+  wallPosts: Array<any>
   isProfileMine: boolean
   hasPosts: boolean
   urlUsername: string
@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
     }, (error) => {
       console.log(error)
       if (error.status === 404) {
-        this.router.navigate(['/page-not-found'])
+        this.router.navigate(['/page-not-found'], {replaceUrl: true})
         return false
       }
       this.toastService.errorToast("An error occurred.")
@@ -66,20 +66,17 @@ export class ProfileComponent implements OnInit {
     this.picturesService.getWallPosts(username, time).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
         let picData = retrievedPictures.data
-        if (this.wallPosts) {
-          this.wallPosts.push(...picData)
-        } else {
-          this.wallPosts = picData
-        }
+        this.wallPosts.push(...picData)
         this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime()
         this.isListening = true
       } else {
         this.isListening = false
-        if (!this.wallPosts) {
+        if (!this.wallPosts.length) {
           this.hasPosts = false
         }
       }
     }, (error) => {
+      console.log(error)
       this.toastService.errorToast("Error getting pictures.")
     })
   }
@@ -94,9 +91,9 @@ export class ProfileComponent implements OnInit {
       this.urlUsername = params['username']
 
       this.hasPosts = true
+      this.isListening = true
       this.profileInfo = null
       this.wallPosts = []
-      this.isListening = true
       this.lastPostTime = null
       this.isProfileMine = this.checkIdentity()
 

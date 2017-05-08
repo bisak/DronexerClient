@@ -2,11 +2,9 @@
 
   <div class="container">
     <div class="row">
-      <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3 grey lighten-5 z-depth-1">
+      <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
         <form (submit)="onLoginSubmit()">
           <h3 class="center blue-grey-text text-darken-2">Login</h3>
-          <div class="divider col s10 offset-s1"></div>
-          <div class="section"></div>
           <div class="row">
             <div class="input-field col s10 offset-s1">
               <i class="material-icons prefix">account_box</i>
@@ -22,7 +20,7 @@
             </div>
           </div>
           <div class='row'>
-            <div class="col s6 offset-s3">
+            <div class="col s6 offset-s3 l4 offset-l4">
               <button type='submit' name='btn_login'
                       class='col s12 btn btn-large waves-effect light-blue btn-flat white-text accent-4'>
                 Login
@@ -30,12 +28,11 @@
             </div>
           </div>
         </form>
-
       </div>
     </div>
 
     <div class="center">
-      <a [routerLink]="['/register']">Join us!</a>
+      <a [routerLink]="['/register']">Register</a>
     </div>
   </div>
 </div>

@@ -142,18 +142,21 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteProfile(oldPassword) {
-    this.profileService.deleteProfile({oldPassword}).subscribe((response) => {
-      this.toastService.toast('Profile deleted.')
-      this.authHelperService.logout()
-      this.closeDeleteModal()
-      this.router.navigate(['/'])
-    }, (error) => {
-      if (error.parsedBody) {
-        this.toastService.warningToast(error.parsedBody.msg)
-      }
-      this.toastService.warningToast("An error occurred.")
-      console.log(error)
-    })
-
+    if (oldPassword) {
+      this.profileService.deleteProfile({oldPassword}).subscribe((response) => {
+        if (response.success) {
+          this.toastService.toast('Profile deleted.')
+          this.authHelperService.logout()
+          this.closeDeleteModal()
+          this.router.navigate(['/'])
+        }
+      }, (error) => {
+        if (error.parsedBody) {
+          return this.toastService.warningToast(error.parsedBody.msg)
+        }
+        this.toastService.warningToast("An error occurred.")
+        console.log(error)
+      })
+    }
   }
 }
