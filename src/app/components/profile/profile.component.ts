@@ -38,10 +38,6 @@ export class ProfileComponent implements OnInit {
     this.isProfileMine = this.checkIdentity();
   }
 
-  removePostFromWall(evPost) {
-    this.wallPosts = this.wallPosts.filter(post => evPost._id !== post._id);
-  }
-
   getProfileInfo(username) {
     this.profileService.getProfile(username).subscribe((retrievedData) => {
       this.profileInfo = retrievedData.data;
@@ -91,9 +87,9 @@ export class ProfileComponent implements OnInit {
       this.urlUsername = params['username'];
 
       this.hasPosts = true;
-      this.isListening = true;
       this.profileInfo = null;
       this.wallPosts = [];
+      this.isListening = true;
       this.lastPostTime = null;
       this.isProfileMine = this.checkIdentity();
 

@@ -22,6 +22,10 @@ export class PicturesService {
     return this.apiService.get(`pictures/explore?before=${time}`);
   }
 
+  getTagPosts(tag: string, time: number): Observable<any> {
+    return this.apiService.get(`pictures/tag/${tag}?before=${time}`);
+  }
+
   getProfilePicUrl(username: string): string {
     return `${this.apiService.apiUrl}users/profile-picture/${username}?${Math.floor(Math.random() * (1000000 - 1)) + 1}`;
   }

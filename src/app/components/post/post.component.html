@@ -1,10 +1,10 @@
-<div class="post" #thisPost>
+<div class="post" #postElement>
   <div class="card">
     <div class="card-post-top medium-text">
       <div class="row no-margin">
         <div class="col no-margin no-padding">
           <img [routerLink]="['/profile', post.username]"
-               [src]="post.userPictureUrl"
+               [src]="post.profilePicUrl"
                alt="Post profile picture" class="circle profile-picture grey-border pointer">
         </div>
         <div class="col">
@@ -15,7 +15,7 @@
               {{post.timeAgo}}</p>
           </div>
         </div>
-        <div *ngIf="post.userIsAuthenticatedToEdit"
+        <div *ngIf="post.canEdit"
              class="col right post-edit-actions no-padding unselectable">
           <a materialize="dropdown" class="pointer"
              attr.data-activates='dropdown_{{post._id}}'><i class="material-icons black-text small zoom-in">arrow_drop_down</i></a>
@@ -29,23 +29,22 @@
         </div>
       </div>
     </div>
-    <div class="post-caption medium-text">
-      <div *ngIf="post.caption" class="no-margin">
-        <div class="caption-wrapper">
-          <p class="caption-text">{{post.caption}}</p>
-        </div>
-      </div>
+
+    <div *ngIf="(post.caption || post.droneTaken)" class="caption-container medium-text">
+      <p class="no-margin no-padding">
+        <span *ngIf="post.caption">{{post.caption}}</span>
+        <span *ngIf="post.droneTaken" class="taken-with grey-text text-darken-1">{{post.droneTaken}}</span>
+      </p>
     </div>
+
     <div *ngIf="post.tags.length" class="card-action tags-container">
-      <div *ngFor="let tag of post.tags" class="chip small-chip">
-        {{tag}}
-      </div>
+      <a *ngFor="let tag of post.tags" [routerLink]="['/tag', tag]">#{{tag}}</a>
     </div>
 
     <div class="card-image unselectable">
       <img (dblclick)="postRateAction()"
            [src]="post.pictureUrl"
-           alt="Wall post picture" class="post-image">
+           alt="Post picture by user {{post.username}}" class="post-image">
       <!-- <div class="after">
          <img src="assets/a.png">
        </div>-->

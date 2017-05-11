@@ -31,12 +31,8 @@
   top: 0.2rem !important;
 }
 
-.input-field label:not(.label-icon).active{
+.input-field label:not(.label-icon).active {
   top: 0.8rem !important;
-}
-
-.caption-text {
-  margin: 0px 20px 5px 20px;
 }
 
 .comment-username {
@@ -59,18 +55,26 @@
   width: 24px;
 }
 
-.tags-container {
-  padding: 5px 15px 0 15px;
+.tags-container, .caption-container, .card-post-top {
+  padding: 5px 20px 5px 20px;
 }
 
-.card-post-top {
-  padding: 8px 20px 8px 20px;
+.tags-container a {
+  display: inline-block;
+}
+
+.taken-with {
+  display: block;
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
+  margin-right: 8px;
 }
 
 .post-image {
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #eeeeee;
-  min-height: 100px;
+  min-height: 150px;
 }
 
 /*.card-image .after {
@@ -88,7 +92,7 @@
 }*/
 
 .profile-picture {
-  margin: 8px 8px 0 10px;
+  margin: 8px 8px 0 8px;
   width: 50px;
   height: 50px;
 }

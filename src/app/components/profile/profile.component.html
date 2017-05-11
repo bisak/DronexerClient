@@ -1,17 +1,17 @@
 <div class="container">
   <div *ngIf="profileInfo" class="profile-head">
     <div class="card">
-           <div class="card-content">
+      <div class="card-content no-padding">
         <div class="row content-row">
           <div class="col s12 center-align m3">
             <img id="profile-picture-view" [src]="profileInfo.profilePicUrl"
                  class="circle profile-picture grey-border">
           </div>
           <div class="profile-info-wrap center">
-          <div class="col s12 m2">
-            <h4 class="card-title grey-text text-darken-4">{{profileInfo.username}}</h4>
-            <p class="grey-text">{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
-          </div>
+            <div class="col s12 m3">
+              <h4 class="card-title grey-text text-darken-4">{{profileInfo.username}}</h4>
+              <p class="grey-text">{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
+            </div>
             <div class="col s4 m2">
               <h4 class="card-title grey-text text-darken-4">{{profileInfo.postsCount}}</h4>
               <p class="grey-text">Posts</p>
@@ -26,8 +26,8 @@
             </div>
           </div>
           <div class="col right open-profile-info">
-            <a class="btn-floating activator waves-effect waves-light light-blue btn-flat white-text accent-4">
-              <i class="material-icons">perm_identity</i>
+            <a class="btn-floating activator btn-flat">
+              <i class="big-text material-icons blue-text">info</i>
             </a>
           </div>
         </div>
@@ -96,7 +96,7 @@
          infinite-scroll
          [infiniteScrollDistance]="1"
          (scrolled)="onProfileScrolled()">
-      <app-post [post]="post" *ngFor="let post of wallPosts" (onPostDeleted)="removePostFromWall($event)"></app-post>
+      <app-post [post]="post" *ngFor="let post of wallPosts"></app-post>
     </div>
   </div>
 </div>

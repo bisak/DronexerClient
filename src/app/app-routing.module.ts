@@ -14,6 +14,7 @@ import { UploadComponent } from './components/upload/upload.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ReverseAuthGuard } from './guards/reverse-auth.guard';
+import { TagsComponent } from "app/components/tags/tags.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'upload', component: UploadComponent, canActivate: [AuthGuard]},
   {path: 'user/settings', component: SettingsComponent, canActivate: [AuthGuard]},
   {path: 'profile/:username', component: ProfileComponent},
+  {path: 'tag/:tag', component: TagsComponent},
   {path: 'about', component: AboutUsComponent},
   {path: 'privacy', component: PrivacyPolicyComponent},
   {path: 'disclaimer', component: DisclaimerComponent},

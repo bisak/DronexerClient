@@ -8,22 +8,17 @@ import { ToastService } from "../../services/toast.service";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
-  explorePosts: Array<any>;
+  explorePosts: Array<Object> = [];
   lastPostTime: number;
-  isListening: boolean;
+  isListening: boolean = true;
 
 
   constructor(private picturesService: PicturesService,
               private toastService: ToastService) {
-    this.isListening = true;
   }
 
   ngOnInit() {
     this.getExplorePosts();
-  }
-
-  removePostFromWall(evPost) {
-    this.explorePosts = this.explorePosts.filter(post => evPost._id !== post._id);
   }
 
   getExplorePosts() {
@@ -35,11 +30,7 @@ export class ExploreComponent implements OnInit {
     this.picturesService.getExplorePosts(time).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
         let picData = retrievedPictures.data;
-        if (this.explorePosts) {
-          this.explorePosts.push(...picData);
-        } else {
-          this.explorePosts = picData;
-        }
+        this.explorePosts.push(...picData);
         this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime();
         this.isListening = true;
       } else {

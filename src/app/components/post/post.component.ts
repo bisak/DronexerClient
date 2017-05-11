@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthHelperService } from "../../utilities/auth-helper.service";
 import { ToastService } from "../../services/toast.service";
 import { PicturesService } from "../../services/pictures.service";
 import { PostsService } from "../../services/posts.service";
 import { MaterializeAction } from "angular2-materialize";
 import { StaticDataService } from "../../services/static-data.service";
+import { ValidateService } from "../../services/validate.service";
 
 @Component({
   selector: 'app-post',
@@ -14,7 +15,7 @@ import { StaticDataService } from "../../services/static-data.service";
 export class PostComponent implements OnInit {
 
   @Input() post;
-  @Output() onPostDeleted = new EventEmitter<any>();
+  @ViewChild('postElement') postElement: ElementRef;
   deleteModal = new EventEmitter<string | MaterializeAction>();
   editModal = new EventEmitter<string | MaterializeAction>();
   newComment: string;
@@ -23,13 +24,14 @@ export class PostComponent implements OnInit {
               private picturesService: PicturesService,
               private authHelperService: AuthHelperService,
               private postsService: PostsService,
-              private staticDataService: StaticDataService) {
+              private staticDataService: StaticDataService,
+              private validateService: ValidateService) {
   }
 
   ngOnInit() {
     this.post.pictureUrl = this.postsService.getPictureUrlForPost(this.post);
-    this.post.userPictureUrl = this.picturesService.getProfilePicUrl(this.post.username);
-    this.post.userIsAuthenticatedToEdit = (this.post.userId === this.authHelperService.getUserIdFromToken());
+    this.post.profilePicUrl = this.picturesService.getProfilePicUrl(this.post.username);
+    this.post.canEdit = (this.post.userId === this.authHelperService.getUserIdFromToken());
     this.newComment = '';
   }
 
@@ -108,25 +110,24 @@ export class PostComponent implements OnInit {
   deletePost() {
     const postId = this.post._id;
     this.postsService.deletePost(postId).subscribe((data) => {
-      /*TODO maybe not emit that event and delete the post DOM element locally*/
-      this.onPostDeleted.emit(this.post);
+      this.postElement.nativeElement.remove();
       this.closeDeleteModal();
-      console.log(data);
     }, (error) => {
       console.log(error);
     });
   }
 
-  editPost(editedData) {
+  editPost(eventPayload) {
     const postId = this.post._id;
-    let editedDataToSend = {...editedData};
-    delete editedDataToSend.newDroneSelector;
-    editedDataToSend.newTags = editedDataToSend.newTags.split(' ').filter((x) => x !== '' && x.startsWith('#') && x.length > 3).map((x) => x.toLowerCase());
-    this.postsService.editPost(postId, editedDataToSend).subscribe((response) => {
+    let dataToSend = {...eventPayload};
+    delete dataToSend.newDroneSelector;
+    dataToSend.newTags = this.validateService.getTags(dataToSend.newTags)
+    if (!dataToSend.newTags) dataToSend.newTags = []
+    this.postsService.editPost(postId, dataToSend).subscribe((response) => {
       if (response.success) {
-        this.post.caption = editedDataToSend.newCaption;
-        this.post.tags = editedDataToSend.newTags;
-        this.post.droneTaken = editedDataToSend.newSelectedDroneName;
+        this.post.caption = dataToSend.newCaption;
+        this.post.tags = dataToSend.newTags.map((x) => x.substr(1));
+        this.post.droneTaken = dataToSend.newSelectedDroneName;
         this.closeEditModal();
       }
     }, (error) => {
@@ -158,3 +159,4 @@ export class PostComponent implements OnInit {
     });
   }
 }
+

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { StaticDataService } from "../../services/static-data.service";
 import { PicturesService } from "../../services/pictures.service";
 import { ToastService } from "../../services/toast.service";
+import { ValidateService } from "../../services/validate.service";
 
 @Component({
   selector: 'app-upload-picture-form',
@@ -19,7 +20,8 @@ export class UploadPictureFormComponent implements OnInit {
 
   constructor(private staticData: StaticDataService,
               private picturesService: PicturesService,
-              private toastService: ToastService) {
+              private toastService: ToastService,
+              private validateService: ValidateService) {
   }
 
   ngOnInit() {
@@ -29,11 +31,12 @@ export class UploadPictureFormComponent implements OnInit {
   onUploadBtnClick(pictureForm) {
     let uploadFormData: FormData = new FormData();
     let dataToSend: Object = {};
+    /*TODO validate caption and tags length.*/
     if (this.dronesSelector) dataToSend["droneTaken"] = this.dronesArray[this.dronesSelector];
     if (this.caption) dataToSend["caption"] = this.caption;
     if (this.tags) {
-      let tagsArray = this.tags.split(' ').filter((x) => x !== '' && x.startsWith('#') && x.length > 3).map((x) => x.toLowerCase());
-      if (tagsArray.length) dataToSend["tags"] = tagsArray;
+      let tagsArray = this.validateService.getTags(this.tags)
+      if (tagsArray) dataToSend["tags"] = tagsArray;
     }
 
     uploadFormData.append('pictureFile', this.picture.file);

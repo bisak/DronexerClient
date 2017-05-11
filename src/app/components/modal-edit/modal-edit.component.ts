@@ -32,7 +32,7 @@ export class ModalEditComponent implements OnInit {
 
   ngOnInit() {
     this.editedData = {};
-    this.editedData.newTags = this.post.tags.join(' ') || '';
+    this.editedData.newTags = this.post.tags.map((tag) => '#' + tag).join(' ') || '';
     this.editedData.newCaption = this.post.caption;
     this.editedData.newDroneSelector = this.dronesArray.indexOf(this.post.droneTaken);
   }
