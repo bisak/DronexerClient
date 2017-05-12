@@ -251,3 +251,7 @@ button.picker__today, button.picker__close {
 .picker__day.picker__day--today {
   color: #0091ea !important
 }
+
+.no-shadow {
+  box-shadow: unset !important;
+}

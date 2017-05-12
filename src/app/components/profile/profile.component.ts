@@ -61,9 +61,9 @@ export class ProfileComponent implements OnInit {
 
     this.picturesService.getWallPosts(username, time).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
-        let picData = retrievedPictures.data;
-        this.wallPosts.push(...picData);
-        this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime();
+        let postData = retrievedPictures.data;
+        this.wallPosts.push(...postData);
+        this.lastPostTime = new Date(postData[postData.length - 1].createdAt).getTime();
         this.isListening = true;
       } else {
         this.isListening = false;

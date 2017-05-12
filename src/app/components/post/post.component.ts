@@ -32,6 +32,8 @@ export class PostComponent implements OnInit {
     this.post.pictureUrl = this.postsService.getPictureUrlForPost(this.post);
     this.post.profilePicUrl = this.picturesService.getProfilePicUrl(this.post.username);
     this.post.canEdit = (this.post.userId === this.authHelperService.getUserIdFromToken());
+    this.post.hasMetadata = Object.keys(this.post.metadata).length !== 0;
+    console.log(this.post)
     this.newComment = '';
   }
 

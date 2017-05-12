@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngIf="profileInfo" class="profile-head">
-    <div class="card">
+    <div class="card no-shadow grey-border">
       <div class="card-content no-padding">
         <div class="row content-row">
           <div class="col s12 center-align m3">
@@ -11,6 +11,8 @@
             <div class="col s12 m3">
               <h4 class="card-title grey-text text-darken-4">{{profileInfo.username}}</h4>
               <p class="grey-text">{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
+              <a *ngIf="true" class="follow-btn waves-effect waves-light btn light-blue white-text accent-4">Follow</a>
+              <a *ngIf="false" class="follow-btn waves-effect waves-light btn light-blue white-text accent-2">UnFollow</a>
             </div>
             <div class="col s4 m2">
               <h4 class="card-title grey-text text-darken-4">{{profileInfo.postsCount}}</h4>
@@ -26,15 +28,18 @@
             </div>
           </div>
           <div class="col right open-profile-info">
-            <a class="btn-floating activator btn-flat">
-              <i class="big-text material-icons blue-text">info</i>
+            <a class="activator pointer">
+              <i class="big-text material-icons grey-text text-darken-4">more_vert</i>
             </a>
           </div>
         </div>
       </div>
       <div class="card-reveal">
         <div class="row">
-          <span class="card-title grey-text text-darken-4">Info<i class="material-icons right">close</i></span>
+          <div class="card-reveal-title">
+            <span class="card-title grey-text text-darken-4">Profile Info
+              <i class="material-icons right">close</i></span>
+          </div>
           <div class="col s10 m6 l4">
             <p><i class="material-icons blue-text left">email</i> {{profileInfo.email}}</p>
             <p *ngIf="profileInfo.birthday"><i class="material-icons blue-text left">cake</i> Birthday:
