@@ -28,7 +28,7 @@ const routes: Routes = [
   {path: 'privacy', component: PrivacyPolicyComponent},
   {path: 'disclaimer', component: DisclaimerComponent},
   {path: 'terms', component: TermsOfUseComponent},
-  {path: 'explore', component: ExploreComponent},
+  {path: 'discover', component: ExploreComponent},
   {path: 'page-not-found', component: NotFoundComponent},
   {path: '**', redirectTo: 'page-not-found'}
 ];

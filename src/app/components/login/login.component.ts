@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         if (response.success) {
           this.authHelperService.storeUserData(response.token);
           this.toastService.toast('Logged in.');
-          this.router.navigate(['/']);
+          this.router.navigate(['/discover']);
         } else {
           this.toastService.errorToast(response.msg);
         }

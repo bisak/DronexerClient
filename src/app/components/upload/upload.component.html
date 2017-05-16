@@ -8,19 +8,14 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <div class="section">
-          <form>
-            <div class="file-field input-field">
-              <div class="btn btn-large light-blue darken-1">
-                <span>Choose</span>
-                <i class="material-icons right">send</i>
-                <input (change)="onPictureSelectorChange($event)" type="file" accept="image/jpeg,image/png" multiple>
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-              </div>
-            </div>
-          </form>
+        <div class="file-field input-field">
+          <div class="btn btn-large light-blue accent-4 btn-flat white-text">
+            <span>Select</span>
+            <input (change)="onPictureSelectorChange($event)" type="file" accept="image/jpeg,image/png" multiple>
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="One or multiple pictures...">
+          </div>
         </div>
       </div>
     </div>

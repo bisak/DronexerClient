@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {MaterializeModule, MaterializeDirective} from 'angular2-materialize'
-import {ToastService} from "../../services/toast.service";
-import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
-import {ValidateService} from "../../services/validate.service"
-import {Form} from "@angular/forms";
-import {isUndefined} from "util";
-import {templateVisitAll} from "@angular/compiler";
-import {StaticDataService} from "../../services/static-data.service";
-import {AuthHelperService} from "../../utilities/auth-helper.service";
+import { Component, OnInit } from '@angular/core';
+import { MaterializeModule, MaterializeDirective } from 'angular2-materialize'
+import { ToastService } from "../../services/toast.service";
+import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { ValidateService } from "../../services/validate.service"
+import { Form } from "@angular/forms";
+import { isUndefined } from "util";
+import { templateVisitAll } from "@angular/compiler";
+import { StaticDataService } from "../../services/static-data.service";
+import { AuthHelperService } from "../../utilities/auth-helper.service";
 import { PicturesService } from "../../services/pictures.service";
 
 declare var Materialize: any;
@@ -31,8 +31,10 @@ export class RegisterComponent implements OnInit {
   defaultProfilePicUrl: string;
   profilePictureFile: File;
   profilePictureEncoded: String;
-
   isRegisterButtonDisabled = false;
+
+  dronesArray: Array<any> = this.staticData.dronesArray;
+
 
   constructor(private authService: AuthService,
               private authHelperService: AuthHelperService,
@@ -43,7 +45,6 @@ export class RegisterComponent implements OnInit {
               private picturesService: PicturesService) {
   }
 
-  dronesArray = this.staticData.dronesArray;
 
   ngOnInit() {
     this.defaultProfilePicUrl = this.picturesService.getProfilePicUrl('default_profile_picture');
@@ -86,8 +87,8 @@ export class RegisterComponent implements OnInit {
       return this.toastService.warningToast(registerInputValidator.msg);
     }
     if (this.dronesSelector) {
-      for (let num of this.dronesSelector) {
-        registerFormData.append('drones', this.dronesArray[num]);
+      for (let dronesArrayIndex of this.dronesSelector) {
+        registerFormData.append('drones', this.dronesArray[dronesArrayIndex]);
       }
     }
     if (this.birthday) {
@@ -104,17 +105,17 @@ export class RegisterComponent implements OnInit {
     registerFormData.append('passwordConfirm', this.passwordConfirm);
 
     this.authService.registerUser(registerFormData).subscribe((data) => {
-        if (data.success) {
-          this.toastService.toast('Registered.');
-          this.router.navigate(['/login']);
-        } else {
-          this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"));
-        }
-      }, (err) => {
-        console.log(err);
-        let parsedError = JSON.parse(err._body);
-        this.toastService.errorToast(parsedError.msg);
-      });
+      if (data.success) {
+        this.toastService.toast('Registered.');
+        this.router.navigate(['/login']);
+      } else {
+        this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"));
+      }
+    }, (err) => {
+      console.log(err);
+      let parsedError = JSON.parse(err._body);
+      this.toastService.errorToast(parsedError.msg);
+    });
   }
 
 }

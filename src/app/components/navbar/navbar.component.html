@@ -8,9 +8,10 @@
         <i class="material-icons">menu</i>
       </a>
       <ul class="left hide-on-med-and-down">
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/']">Home</a>
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/']">Home</a>
         </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/explore']">Explore</a>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/discover']">Discover</a>
         </li>
         <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/feed']">Feed</a>
@@ -53,9 +54,10 @@
         </li>
         <li *ngIf="!authHelperService.isLoggedIn()"><h3 class="blue-text center"><strong>Dronexer</strong></h3></li>
         <li *ngIf="!authHelperService.isLoggedIn()" class="divider"></li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/']">Home</a>
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/']">Home</a>
         </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/explore']">Explore</a>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/discover']">Discover</a>
         </li>
         <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/feed']">Feed</a>

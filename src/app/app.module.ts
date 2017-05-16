@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { MaterializeDirective, MaterializeModule } from 'angular2-materialize';
+import { MaterializeModule } from 'angular2-materialize';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ShareButtonsModule } from 'ng2-sharebuttons';
 

@@ -122,7 +122,7 @@ export class PostComponent implements OnInit {
     const postId = this.post._id;
     let dataToSend = {...eventPayload};
     delete dataToSend.newDroneSelector;
-    dataToSend.newTags = this.validateService.getTags(dataToSend.newTags)
+    dataToSend.newTags = this.validateService.getTagsArray(dataToSend.newTags)
     if (!dataToSend.newTags) dataToSend.newTags = []
     this.postsService.editPost(postId, dataToSend).subscribe((response) => {
       if (response.success) {

@@ -3,10 +3,9 @@
     <div class="card">
       <div class="card-image">
         <img alt="Selected picture to upload" [src]="picture.encoded">
-        <a (click)="onUploadBtnClick(pictureForm)" materialize="tooltip"
-           class="tooltipped btn-floating btn-large halfway-fab waves-effect waves-light red"
-           data-position="bottom" data-delay="2500" data-tooltip="Upload"><i
-          class="material-icons">file_upload</i></a>
+        <button [disabled]="isUploadButtonDisabled" (click)="onUploadBtnClick(pictureForm)"
+                class="btn-floating btn-large halfway-fab waves-effect light-blue white-text accent-4"><i
+          class="material-icons">file_upload</i></button>
       </div>
       <div class="card-content">
         <div class="row">

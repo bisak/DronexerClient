@@ -13,10 +13,11 @@ export class UploadPictureFormComponent implements OnInit {
 
   @Input() picture;
 
-  dronesArray = this.staticData.dronesArray;
-  dronesSelector;
-  caption;
-  tags;
+  dronesArray: Array<any> = this.staticData.dronesArray;
+  dronesSelector: number;
+  caption: string;
+  tags: string;
+  isUploadButtonDisabled: boolean;
 
   constructor(private staticData: StaticDataService,
               private picturesService: PicturesService,
@@ -29,13 +30,15 @@ export class UploadPictureFormComponent implements OnInit {
 
 
   onUploadBtnClick(pictureForm) {
+    this.isUploadButtonDisabled = true;
     let uploadFormData: FormData = new FormData();
     let dataToSend: Object = {};
     /*TODO validate caption and tags length.*/
+    console.log(this.dronesSelector)
     if (this.dronesSelector) dataToSend["droneTaken"] = this.dronesArray[this.dronesSelector];
     if (this.caption) dataToSend["caption"] = this.caption;
     if (this.tags) {
-      let tagsArray = this.validateService.getTags(this.tags)
+      let tagsArray = this.validateService.getTagsArray(this.tags);
       if (tagsArray) dataToSend["tags"] = tagsArray;
     }
 
@@ -46,7 +49,6 @@ export class UploadPictureFormComponent implements OnInit {
       if (data.success) {
         this.toastService.successToast('Picture Uploaded.');
         pictureForm.remove();
-        console.log(data);
       } else {
         this.toastService.errorToast('An error occured: ' + (data.msg ? data.msg : "Unknown"));
       }

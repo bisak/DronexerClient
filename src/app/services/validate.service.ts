@@ -98,7 +98,7 @@ export class ValidateService {
     }
   }
 
-  getTags(tags: string): Array<string> {
+  getTagsArray(tags: string): Array<string> {
     let tagsArray = tags
       .split(' ')
       .filter((tag) => tag !== '' && tag.startsWith('#') && tag.length > 3 && tag.length <= 20)
