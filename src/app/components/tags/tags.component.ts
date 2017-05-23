@@ -1,39 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from "@angular/router";
-import { ToastService } from "../../services/toast.service";
-import { PicturesService } from "../../services/pictures.service";
+import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { PicturesService } from '../../services/pictures.service';
+import { Subscription } from 'rxjs/Subscription';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.css']
 })
-export class TagsComponent implements OnInit {
+export class TagsComponent implements OnInit, OnDestroy {
 
   urlTag: string;
   tagPosts: Array<Object> = [];
   lastPostTime: number;
-  isListening: boolean = true;
-
+  isListening = true;
+  subscriptions: Subscription[] = [];
 
   constructor(private picturesService: PicturesService,
-              private toastService: ToastService,
-              private route: ActivatedRoute) {
+    private toastService: ToastService,
+    private route: ActivatedRoute) {
   }
 
-  ngOnInit() {
+  ngOnInit () {
     this.listenForUrlChanges();
   }
 
-  getTagPosts() {
+  ngOnDestroy () {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    })
+  }
+
+  getTagPosts () {
     this.isListening = false;
     let time = new Date().getTime();
     if (this.lastPostTime) {
       time = this.lastPostTime;
     }
-    this.picturesService.getTagPosts(this.urlTag, time).subscribe((response) => {
+    this.subscriptions.push(this.picturesService.getTagPosts(this.urlTag, time).subscribe((response) => {
       if (response.success) {
-        let picData = response.data;
+        const picData = response.data;
         this.tagPosts.push(...picData);
         this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime();
         this.isListening = true;
@@ -43,21 +51,21 @@ export class TagsComponent implements OnInit {
     }, (error) => {
       console.log(error);
       if (error.status === 404) {
-        return this.toastService.toast("No more posts available");
+        return this.toastService.toast('No more posts available');
       }
-      this.toastService.errorToast("Error getting user pictures.");
+      this.toastService.errorToast('Error getting user pictures.');
       this.isListening = false;
-    })
+    }));
   }
 
-  onExploreScrolled() {
+  onExploreScrolled () {
     if (this.isListening) {
       this.getTagPosts();
     }
   }
 
-  listenForUrlChanges() {
-    this.route.params.subscribe((params: Params) => {
+  listenForUrlChanges () {
+    this.subscriptions.push(this.route.params.subscribe((params: Params) => {
       this.urlTag = params['tag'];
 
       this.tagPosts = []
@@ -65,6 +73,6 @@ export class TagsComponent implements OnInit {
       this.lastPostTime = null;
 
       this.getTagPosts();
-    })
+    }));
   }
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from "@angular/router";
-import { AuthService } from "../../services/auth.service";
-import { ToastService } from "../../services/toast.service";
-import { AuthHelperService } from "../../utilities/auth-helper.service";
-import { PicturesService } from "../../services/pictures.service";
+import { AuthHelperService } from '../../utilities/auth-helper.service';
+import { AuthService } from '../../services/auth.service';
+import { PicturesService } from '../../services/pictures.service';
+import { Router } from '@angular/router';
+import { ToastService } from '../../services/toast.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -24,18 +25,18 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    let decodedToken = this.authHelperService.getDecodedAuthToken()
-    if (decodedToken)
+    const decodedToken = this.authHelperService.getDecodedAuthToken()
+    if (decodedToken) {
       this.fullName = `${decodedToken.firstName} ${decodedToken.lastName}`;
+    }
 
     this.username = this.authHelperService.getUsernameFromToken();
     this.profilePicUrl = this.picturesService.getProfilePicUrl(this.username);
 
     this.authHelperService.loginAnnounced.subscribe(data => {
-      console.log("here")
-      let decodedToken = this.authHelperService.getDecodedAuthToken()
+      const decToken = this.authHelperService.getDecodedAuthToken()
       this.username = this.authHelperService.getUsernameFromToken();
-      this.fullName = `${decodedToken.firstName} ${decodedToken.lastName}`;
+      this.fullName = `${decToken.firstName} ${decToken.lastName}`;
       this.profilePicUrl = this.picturesService.getProfilePicUrl(this.username);
     });
   }

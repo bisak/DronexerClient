@@ -1,31 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { AuthHelperService } from '../../utilities/auth-helper.service';
 import { AuthService } from '../../services/auth.service'
+import { Router } from '@angular/router'
+import { Subscription } from 'rxjs/Subscription';
 import { ToastService } from '../../services/toast.service'
-import { Subject } from "rxjs";
-import { AuthHelperService } from "../../utilities/auth-helper.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   username: String;
   password: String;
-
+  subscriptions: Subscription[] = [];
 
   constructor(private authHelperService: AuthHelperService,
-              private authService: AuthService,
-              private router: Router,
-              private toastService: ToastService) {
+    private authService: AuthService,
+    private router: Router,
+    private toastService: ToastService) {
   }
 
-  ngOnInit() {
+  ngOnInit () {
   }
 
-  onLoginSubmit() {
+  ngOnDestroy () {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    })
+  }
+
+  onLoginSubmit () {
     const user = {
       username: this.username,
       password: this.password
@@ -35,17 +42,17 @@ export class LoginComponent implements OnInit {
       return this.toastService.toast('Please fill in both fields.');
     }
 
-    this.authService.loginUser(user).subscribe((response) => {
-        if (response.success) {
-          this.authHelperService.storeUserData(response.token);
-          this.toastService.toast('Logged in.');
-          this.router.navigate(['/discover']);
-        } else {
-          this.toastService.errorToast(response.msg);
-        }
-      }, (err) => {
-        console.log(err);
-        this.toastService.errorToast(err.parsedBody.msg);
-      });
+    this.subscriptions.push(this.authService.loginUser(user).subscribe((response) => {
+      if (response.success) {
+        this.authHelperService.storeUserData(response.token);
+        this.toastService.toast('Logged in.');
+        this.router.navigate(['/discover']);
+      } else {
+        this.toastService.errorToast(response.msg);
+      }
+    }, (err) => {
+      console.log(err);
+      this.toastService.errorToast(err.parsedBody.msg);
+    }));
   }
 }

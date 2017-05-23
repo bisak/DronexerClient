@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { MaterializeModule, MaterializeDirective } from 'angular2-materialize'
-import { ToastService } from "../../services/toast.service";
-import { Router } from "@angular/router";
-import { AuthService } from "../../services/auth.service";
-import { ValidateService } from "../../services/validate.service"
-import { Form } from "@angular/forms";
-import { isUndefined } from "util";
-import { templateVisitAll } from "@angular/compiler";
-import { StaticDataService } from "../../services/static-data.service";
-import { AuthHelperService } from "../../utilities/auth-helper.service";
-import { PicturesService } from "../../services/pictures.service";
+import { MaterializeDirective, MaterializeModule } from 'angular2-materialize'
+
+import { AuthHelperService } from '../../utilities/auth-helper.service';
+import { AuthService } from '../../services/auth.service';
+import { Form } from '@angular/forms';
+import { OnDestroy } from '@angular/core';
+import { PicturesService } from '../../services/pictures.service';
+import { Router } from '@angular/router';
+import { StaticDataService } from '../../services/static-data.service';
+import { Subscription } from 'rxjs/Subscription';
+import { ToastService } from '../../services/toast.service';
+import { ValidateService } from '../../services/validate.service'
+import { isUndefined } from 'util';
+import { templateVisitAll } from '@angular/compiler';
 
 declare var Materialize: any;
 
@@ -18,48 +21,55 @@ declare var Materialize: any;
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
-  firstName: String;
-  lastName: String;
-  email: String;
-  username: String;
-  password: String;
-  passwordConfirm: String;
-  birthday: String;
+export class RegisterComponent implements OnInit, OnDestroy {
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  password: string;
+  passwordConfirm: string;
+  birthday: string;
   dronesSelector: Array<number>;
   agree: Boolean;
   defaultProfilePicUrl: string;
   profilePictureFile: File;
-  profilePictureEncoded: String;
+  profilePictureEncoded: string;
   isRegisterButtonDisabled = false;
 
   dronesArray: Array<any> = this.staticData.dronesArray;
+  subscriptions: Subscription[] = [];
 
 
   constructor(private authService: AuthService,
-              private authHelperService: AuthHelperService,
-              private router: Router,
-              private toastService: ToastService,
-              private validateService: ValidateService,
-              private staticData: StaticDataService,
-              private picturesService: PicturesService) {
+    private authHelperService: AuthHelperService,
+    private router: Router,
+    private toastService: ToastService,
+    private validateService: ValidateService,
+    private staticData: StaticDataService,
+    private picturesService: PicturesService) {
   }
 
 
-  ngOnInit() {
+  ngOnInit () {
     this.defaultProfilePicUrl = this.picturesService.getProfilePicUrl('default_profile_picture');
   }
 
-  onProfilePictureSelected(ev) {
-    let candidateFile = ev.target.files[0];
+  ngOnDestroy () {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe()
+    })
+  }
+
+  onProfilePictureSelected (ev) {
+    const candidateFile = ev.target.files[0];
     if (candidateFile) {
-      let profilePictureValidator = this.validateService.validateProfilePicture(candidateFile);
-      if (profilePictureValidator.isValid == false) {
+      const profilePictureValidator = this.validateService.validateProfilePicture(candidateFile);
+      if (!profilePictureValidator.isValid) {
         this.isRegisterButtonDisabled = true;
         return this.toastService.errorToast(profilePictureValidator.msg);
       } else {
         this.profilePictureFile = candidateFile;
-        let fileReader: FileReader = new FileReader();
+        const fileReader: FileReader = new FileReader();
         fileReader.readAsDataURL(this.profilePictureFile);
         fileReader.onload = (e) => {
           this.profilePictureEncoded = fileReader.result;
@@ -67,11 +77,11 @@ export class RegisterComponent implements OnInit {
         this.isRegisterButtonDisabled = false;
       }
     }
-    this.profilePictureEncoded = "";
+    this.profilePictureEncoded = '';
   }
 
-  onRegisterSubmit() {
-    let registerFormData: FormData = new FormData();
+  onRegisterSubmit () {
+    const registerFormData: FormData = new FormData();
     const user = {
       firstName: this.firstName,
       lastName: this.lastName,
@@ -82,12 +92,12 @@ export class RegisterComponent implements OnInit {
       birthday: this.birthday,
       agree: this.agree
     };
-    let registerInputValidator = this.validateService.validateRegisterInput(user);
-    if (registerInputValidator.isValid == false) {
+    const registerInputValidator = this.validateService.validateRegisterInput(user);
+    if (!registerInputValidator.isValid) {
       return this.toastService.warningToast(registerInputValidator.msg);
     }
     if (this.dronesSelector) {
-      for (let dronesArrayIndex of this.dronesSelector) {
+      for (const dronesArrayIndex of this.dronesSelector) {
         registerFormData.append('drones', this.dronesArray[dronesArrayIndex]);
       }
     }
@@ -104,18 +114,18 @@ export class RegisterComponent implements OnInit {
     registerFormData.append('password', this.password);
     registerFormData.append('passwordConfirm', this.passwordConfirm);
 
-    this.authService.registerUser(registerFormData).subscribe((data) => {
+    this.subscriptions.push(this.authService.registerUser(registerFormData).subscribe((data) => {
       if (data.success) {
         this.toastService.toast('Registered.');
         this.router.navigate(['/login']);
       } else {
-        this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : "Unknown"));
+        this.toastService.errorToast('An error occured.: ' + (data.msg ? data.msg : 'Unknown'));
       }
     }, (err) => {
       console.log(err);
-      let parsedError = JSON.parse(err._body);
+      const parsedError = JSON.parse(err._body);
       this.toastService.errorToast(parsedError.msg);
-    });
+    }));
   }
 
 }

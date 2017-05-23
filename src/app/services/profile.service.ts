@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt'
-import { Headers, Http, Response } from "@angular/http"
-import { AuthService } from './auth.service'
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { ApiService } from "./api.service";
+
+import { Headers, Http, Response } from '@angular/http'
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt'
+
+import { ApiService } from './api.service';
+import { AuthService } from './auth.service'
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ProfileService {
@@ -17,15 +18,15 @@ export class ProfileService {
   constructor(private http: Http, private apiService: ApiService) {
   }
 
-  getProfile(username: string) {
+  getProfile (username: string): Observable<any> {
     return this.apiService.get(`users/profile-info/${username}`);
   }
 
-  editProfileInfo(data) {
+  editProfileInfo (data): Observable<any> {
     return this.apiService.post(`users/edit-profile`, data);
   }
 
-  deleteProfile(data) {
+  deleteProfile (data): Observable<any> {
     return this.apiService.post(`users/delete-profile`, data);
   }
 
