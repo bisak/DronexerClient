@@ -44,6 +44,7 @@ import { ModalConfirmPasswordComponent } from './components/modal-confirm-passwo
 import { ReverseAuthGuard } from "./guards/reverse-auth.guard";
 import { UploadPictureFormComponent } from './components/upload-picture-form/upload-picture-form.component';
 import { TagsComponent } from './components/tags/tags.component';
+import { SinglePostViewComponent } from './components/single-post-view/single-post-view.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { TagsComponent } from './components/tags/tags.component';
     ModalEditComponent,
     ModalConfirmPasswordComponent,
     UploadPictureFormComponent,
-    TagsComponent
+    TagsComponent,
+    SinglePostViewComponent
   ],
   imports: [
     BrowserModule,

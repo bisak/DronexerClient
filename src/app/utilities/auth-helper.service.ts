@@ -1,51 +1,58 @@
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
+
 import { Injectable } from '@angular/core';
-import { JwtHelper, tokenNotExpired } from "angular2-jwt";
-import { Observable, Subject } from "rxjs";
-import { Router } from "@angular/router";
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject'
 
 @Injectable()
 export class AuthHelperService {
+  jwtHelper: JwtHelper = new JwtHelper()
+  loginAnnouncedSource = new Subject<boolean>()
+  loginAnnounced: Observable<any> = this.loginAnnouncedSource.asObservable()
 
   constructor(private router: Router) {
   }
 
-  jwtHelper: JwtHelper = new JwtHelper()
 
-  loginAnnouncedSource = new Subject<boolean>()
-  loginAnnounced: Observable<any> = this.loginAnnouncedSource.asObservable()
-
-  storeUserData(token) {
+  storeUserData (token) {
     localStorage.setItem('id_token', token)
     this.loginAnnouncedSource.next(true)
   }
 
-  getAuthToken() {
+  getAuthToken () {
     return localStorage.getItem('id_token')
   }
 
-  getDecodedAuthToken() {
+  getDecodedAuthToken () {
     const token = this.getAuthToken()
-    if (token) return this.jwtHelper.decodeToken(token)._doc
+    if (token) {
+      return this.jwtHelper.decodeToken(token)._doc
+    }
     return null
   }
 
-  isLoggedIn() {
+  isLoggedIn () {
     return tokenNotExpired('id_token')
   }
 
-  getUsernameFromToken() {
-    let decodedToken = this.getDecodedAuthToken();
-    if (decodedToken) return decodedToken.username
+  getUsernameFromToken () {
+    const decodedToken = this.getDecodedAuthToken();
+    if (decodedToken) {
+      return decodedToken.username
+    }
     return null
   }
 
-  getUserIdFromToken() {
-    let decodedToken = this.getDecodedAuthToken();
-    if (decodedToken) return decodedToken._id
+  getUserIdFromToken () {
+    const decodedToken = this.getDecodedAuthToken();
+    if (decodedToken) {
+      return decodedToken._id
+    }
     return null
   }
 
-  logout() {
+  logout () {
     localStorage.clear()
   }
 }

@@ -43,7 +43,6 @@ export class UploadPictureFormComponent implements OnInit, OnDestroy {
     const uploadFormData: FormData = new FormData();
     const dataToSend: Object = {};
     /*TODO validate caption and tags length.*/
-    console.log(this.dronesSelector)
     if (this.dronesSelector) {
       dataToSend['droneTaken'] = this.dronesArray[this.dronesSelector];
     }

@@ -96,7 +96,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         oldDronesIndexes.push(this.dronesArray.indexOf(drone));
       }
       this.settingsData.dronesSelector = oldDronesIndexes;
-      this.settingsData.profilePicUrl = this.picturesService.getProfilePicUrl(response.data.username);
+      console.log(response.data)
+      this.settingsData.profilePicUrl = this.picturesService.getProfilePicUrl(response.data._id);
     }, (error) => {
       console.log(error);
       this.toastService.errorToast('An error occurred.');

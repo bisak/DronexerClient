@@ -16,7 +16,8 @@ export class NavbarComponent implements OnInit {
   username: string;
   profilePicUrl: string;
   fullName: string;
-  routerLinkOpts = {exact: true};
+  routerLinkOpts: object = { exact: true };
+  userId: string;
 
   constructor(public authHelperService: AuthHelperService,
               private router: Router,
@@ -31,13 +32,15 @@ export class NavbarComponent implements OnInit {
     }
 
     this.username = this.authHelperService.getUsernameFromToken();
-    this.profilePicUrl = this.picturesService.getProfilePicUrl(this.username);
+    this.userId = this.authHelperService.getUserIdFromToken();
+    this.profilePicUrl = this.picturesService.getProfilePicUrl(this.userId);
 
     this.authHelperService.loginAnnounced.subscribe(data => {
-      const decToken = this.authHelperService.getDecodedAuthToken()
+      const decToken = this.authHelperService.getDecodedAuthToken();
       this.username = this.authHelperService.getUsernameFromToken();
+      this.userId = this.authHelperService.getUserIdFromToken();
       this.fullName = `${decToken.firstName} ${decToken.lastName}`;
-      this.profilePicUrl = this.picturesService.getProfilePicUrl(this.username);
+      this.profilePicUrl = this.picturesService.getProfilePicUrl(this.userId);
     });
   }
 

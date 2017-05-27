@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DatesService {
-  private monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+  private monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
   constructor() {
@@ -16,7 +16,7 @@ export class DatesService {
     } else {
       time = new Date(inDate)
     }
-    return `${time.getDate()} ${this.monthNames[time.getMonth()]} ${time.getFullYear()}` //24 March, 2017 <- format
+    return `${time.getDate()} ${this.monthNames[time.getMonth()]} ${time.getFullYear()}` // 24 March, 2017 <- format
   }
 
 }

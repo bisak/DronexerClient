@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { ApiService } from "./api.service";
+
+import { ApiService } from './api.service';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PicturesService {
@@ -15,19 +15,19 @@ export class PicturesService {
   }
 
   getWallPosts(username: string, time: number): Observable<any> {
-    return this.apiService.get(`pictures/${username}?before=${time}`);
+    return this.apiService.get(`posts/${username}?before=${time}`);
   }
 
   getExplorePosts(time: number): Observable<any> {
-    return this.apiService.get(`pictures/explore?before=${time}`);
+    return this.apiService.get(`posts/explore?before=${time}`);
   }
 
   getTagPosts(tag: string, time: number): Observable<any> {
-    return this.apiService.get(`pictures/tag/${tag}?before=${time}`);
+    return this.apiService.get(`posts/tag/${tag}?before=${time}`);
   }
 
   getProfilePicUrl(username: string): string {
-    return `${this.apiService.apiUrl}users/profile-picture/${username}?${Math.floor(Math.random() * (1000000 - 1)) + 1}`;
+    return `${this.apiService.apiUrl}users/profile-picture/${username}`;
   }
 
 }
