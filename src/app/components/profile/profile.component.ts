@@ -89,6 +89,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }));
   }
 
+  followUser () {
+    this.subscriptions.push(this.profileService.followUser(this.profileInfo._id).subscribe((response) => {
+      console.log(response)
+    }, (error) => {
+      console.log(error)
+    }))
+  }
+
+  unFollowUser () {
+    this.subscriptions.push(this.profileService.unFollowUser(this.profileInfo._id).subscribe((response) => {
+      console.log(response)
+    }, (error) => {
+      console.log(error)
+    }))
+  }
+
   checkIdentity (): boolean {
     const extractedUsername = this.authHelperService.getUsernameFromToken();
     return (extractedUsername && this.urlUsername === extractedUsername);

@@ -22,12 +22,20 @@ export class ProfileService {
     return this.apiService.get(`users/profile-info/${username}`);
   }
 
-  editProfileInfo (data): Observable<any> {
+  editProfileInfo (data: any): Observable<any> {
     return this.apiService.post(`users/edit-profile`, data);
   }
 
-  deleteProfile (data): Observable<any> {
+  deleteProfile (data: any): Observable<any> {
     return this.apiService.post(`users/delete-profile`, data);
+  }
+
+  followUser (userId: string): Observable<any> {
+    return this.apiService.post(`users/follow/${userId}`, {})
+  }
+
+  unFollowUser (userId: string): Observable<any> {
+    return this.apiService.post(`users/unfollow/${userId}`, {})
   }
 
 }

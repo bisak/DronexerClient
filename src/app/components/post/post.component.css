@@ -26,7 +26,9 @@
   margin: 5px 0 5px 0;
 }
 
+
 /*Change input field with more appropriate class*/
+
 .input-field label {
   top: 0.2rem !important;
 }
@@ -76,10 +78,14 @@
 }
 
 .post-image {
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
   min-height: 150px;
 }
+
+.card-image {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
 
 /*.card-image .after {
   position: absolute;
@@ -109,6 +115,7 @@
   padding: 5px 0 0 20px
 }
 
+
 /*
 .post-image {
   z-index: 800;
@@ -116,7 +123,7 @@
 
 .comments-container {
   margin: 0 0 0 10px;
-  overflow: scroll;
+  overflow-y: scroll;
   overflow-wrap: break-word;
 }
 

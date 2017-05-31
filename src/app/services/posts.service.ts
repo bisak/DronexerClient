@@ -1,6 +1,6 @@
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PostsService {
@@ -31,9 +31,13 @@ export class PostsService {
   deletePost (id: string): Observable<any> {
     return this.apiService.delete(`posts/delete/${id}`);
   }
-  // pictures/2017/5/26/l/Hyb_-kLWZ
+
   getPictureUrlForPost (post: any): string {
     const fileLocation = post.fileLocation.join('/')
     return `${this.apiService.apiUrl}pictures/${fileLocation}/l/${post.fileName}`;
+  }
+
+  getPost (id: string): Observable<any> {
+    return this.apiService.get(`posts/post/${id}`)
   }
 }

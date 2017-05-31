@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 
 import { AuthHelperService } from '../../utilities/auth-helper.service';
 import { MaterializeAction } from 'angular2-materialize';
+import { MetadataService } from './../../services/metadata.service';
 import { OnDestroy } from '@angular/core';
 import { PicturesService } from '../../services/pictures.service';
 import { PostsService } from '../../services/posts.service';
@@ -18,27 +19,40 @@ import { ValidateService } from '../../services/validate.service';
 export class PostComponent implements OnInit, OnDestroy {
 
   @Input() post;
+  @Input() isSingle = false;
   @ViewChild('postElement') postElement: ElementRef;
   deleteModal = new EventEmitter<string | MaterializeAction>();
   editModal = new EventEmitter<string | MaterializeAction>();
   newComment: string;
   subscriptions: Subscription[] = [];
-
+  shareUrl = ``;
+  shareDescription = ``;
+  shareImgUrl = ``;
 
   constructor(private toastService: ToastService,
     private picturesService: PicturesService,
     private authHelperService: AuthHelperService,
     private postsService: PostsService,
     private staticDataService: StaticDataService,
-    private validateService: ValidateService) {
+    private validateService: ValidateService,
+    private metadataService: MetadataService) {
   }
 
   ngOnInit () {
     this.post.pictureUrl = this.postsService.getPictureUrlForPost(this.post);
     this.post.profilePicUrl = this.picturesService.getProfilePicUrl(this.post.userId);
     this.post.canEdit = (this.post.userId === this.authHelperService.getUserIdFromToken());
-    this.post.hasMetadata = (this.post.metadata && Object.keys(this.post.metadata).length)
+    this.post.hasMetadata = this.metadataService.hasMetadata(this.post.metadata)
     this.newComment = '';
+    this.shareUrl = `https://beta.dronexer.com/post/${this.post._id}`;
+    this.shareImgUrl = `https://beta.dronexer.com${this.post.pictureUrl}`;
+    this.shareDescription = `Drone shot by ${this.post.username}. Join dronexer.com for more!`;
+    if (this.isSingle) {
+      if (this.post.commentsCount) {
+        this.loadComments();
+      }
+      this.post.showShareButtons = true;
+    }
   }
 
   ngOnDestroy () {
@@ -90,7 +104,7 @@ export class PostComponent implements OnInit, OnDestroy {
         this.post.showComments = true;
       }, (error) => {
         if (error.status === 401) {
-          this.toastService.warningToast('Log in to comment.');
+          this.toastService.toast('Log in to comment.');
         }
       }));
       this.newComment = '';
@@ -104,7 +118,7 @@ export class PostComponent implements OnInit, OnDestroy {
       this.post.likesCount += 1;
     }, (error) => {
       if (error.status === 401) {
-        this.toastService.warningToast('Log in to like.');
+        this.toastService.toast('Log in to like posts.');
       }
       console.log(error);
     }));
@@ -147,7 +161,7 @@ export class PostComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       if (error.status === 401) {
-        this.toastService.warningToast('Log in to edit.');
+        this.toastService.toast('Log in to edit posts.');
       }
       console.log(error);
     }));

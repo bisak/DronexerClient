@@ -1,0 +1,9 @@
+.right-col, .left-col {
+  height: 313px !important;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.container-resp {
+  margin-bottom: 15px;
+}

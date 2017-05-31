@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-
+import { Subscription } from 'rxjs/Subscription'
 import { PicturesService } from '../../services/pictures.service';
-import { Subscription } from 'rxjs/Subscription';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -10,7 +9,7 @@ import { ToastService } from '../../services/toast.service';
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit, OnDestroy {
-  explorePosts: Array<Object> = [];
+  explorePosts: Array<object> = [];
   lastPostTime: number;
   isListening = true;
   subscriptions: Subscription[] = [];
@@ -19,17 +18,17 @@ export class ExploreComponent implements OnInit, OnDestroy {
     private toastService: ToastService) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.getExplorePosts();
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
     })
   }
 
-  getExplorePosts () {
+  getExplorePosts() {
     this.isListening = false;
     let time = new Date().getTime();
     if (this.lastPostTime) {
@@ -54,7 +53,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
     }));
   }
 
-  onExploreScrolled () {
+  onExploreScrolled() {
     if (this.isListening) {
       this.getExplorePosts();
     }
