@@ -91,17 +91,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   followUser () {
     this.subscriptions.push(this.profileService.followUser(this.profileInfo._id).subscribe((response) => {
-      console.log(response)
+      this.profileInfo.followersCount += 1;
+      this.profileInfo.isFollowed = true;
     }, (error) => {
-      console.log(error)
+      console.log(error);
+      this.toastService.errorToast('An error occurred.');
     }))
   }
 
   unFollowUser () {
     this.subscriptions.push(this.profileService.unFollowUser(this.profileInfo._id).subscribe((response) => {
-      console.log(response)
+      this.profileInfo.followersCount -= 1;
+      this.profileInfo.isFollowed = false;
     }, (error) => {
-      console.log(error)
+      console.log(error);
+      this.toastService.errorToast('An error occurred.');
     }))
   }
 

@@ -11,8 +11,8 @@
               <h4 class="card-title grey-text text-darken-4">{{profileInfo.username}}</h4>
               <p class="grey-text">{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
               <div *ngIf="!isProfileMine">
-                <a *ngIf="true" (click)="followUser()" class="follow-btn btn-flat waves-effect waves-light btn light-blue white-text accent-4">Follow</a>
-                <a *ngIf="false" (click)="unFollowUser()" class="follow-btn btn-flat waves-effect waves-light btn light-blue white-text accent-2">UnFollow</a>
+                <a *ngIf="!profileInfo.isFollowed" (click)="followUser()" class="follow-btn btn-flat waves-effect waves-light btn light-blue white-text accent-4">Follow</a>
+                <a *ngIf="profileInfo.isFollowed" (click)="unFollowUser()" class="follow-btn btn-flat waves-effect waves-light btn light-blue white-text accent-3">UnFollow</a>
               </div>
             </div>
             <div class="col s4 m2 thin">
@@ -84,7 +84,7 @@
         <div class="row">
           <div *ngIf="isProfileMine">
             <p class="big-text">You have no posts.</p>
-            <a [routerLink]="['/upload']" class="btn btn-large waves-effect light-blue darken-1">
+            <a [routerLink]="['/upload']" class="btn btn-large waves-effect blue">
               <span>Post now!</span>
             </a>
           </div>
