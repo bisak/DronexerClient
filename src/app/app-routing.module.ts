@@ -17,6 +17,7 @@ import { SinglePostViewComponent } from './components/single-post-view/single-po
 import { TagsComponent } from 'app/components/tags/tags.component';
 import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { FeedComponent } from './components/feed/feed.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'profile/:username', component: ProfileComponent },
   { path: 'post/:id', component: SinglePostViewComponent },
   { path: 'tag/:tag', component: TagsComponent },
+  { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
   { path: 'about', component: AboutUsComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'disclaimer', component: DisclaimerComponent },

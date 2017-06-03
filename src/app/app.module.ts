@@ -34,7 +34,7 @@ import { ProfileService } from './services/profile.service';
 import { RegisterComponent } from './components/register/register.component';
 import { ReverseAuthGuard } from './guards/reverse-auth.guard';
 import { SettingsComponent } from './components/settings/settings.component';
-import { ShareButtonsModule } from 'ng2-sharebuttons';
+import { ShareButtonsModule } from 'ngx-sharebuttons';
 import { SinglePostViewComponent } from './components/single-post-view/single-post-view.component';
 import { StaticDataService } from './services/static-data.service';
 import { TagsComponent } from './components/tags/tags.component';
@@ -43,6 +43,7 @@ import { ToastService } from './services/toast.service';
 import { UploadComponent } from './components/upload/upload.component';
 import { UploadPictureFormComponent } from './components/upload-picture-form/upload-picture-form.component';
 import { ValidateService } from './services/validate.service';
+import { FeedComponent } from './components/feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { ValidateService } from './services/validate.service';
     ModalConfirmPasswordComponent,
     UploadPictureFormComponent,
     TagsComponent,
-    SinglePostViewComponent
+    SinglePostViewComponent,
+    FeedComponent
   ],
   imports: [
     BrowserModule,

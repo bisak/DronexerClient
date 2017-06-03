@@ -17,10 +17,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   password: String;
   subscriptions: Subscription[] = [];
 
-  constructor(private authHelperService: AuthHelperService,
-    private authService: AuthService,
-    private router: Router,
-    private toastService: ToastService) {
+  constructor (private authHelperService: AuthHelperService,
+               private authService: AuthService,
+               private router: Router,
+               private toastService: ToastService) {
   }
 
   ngOnInit () {
