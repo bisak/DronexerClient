@@ -1,0 +1,28 @@
+<table class="bordered">
+  <tbody>
+  <tr *ngIf="metadata.dateTaken">
+    <td>Date taken</td>
+    <td>{{metadata.dateTaken| unixToDate}}</td>
+  </tr>
+  <tr *ngIf="metadata.make">
+    <td>Manufacturer</td>
+    <td>{{metadata.make}}</td>
+  </tr>
+  <tr *ngIf="metadata.model">
+    <td>Camera model</td>
+    <td>{{metadata.model}}</td>
+  </tr>
+  <tr *ngIf="metadata.lat">
+    <td>Latitude</td>
+    <td>{{metadata.lat}}</td>
+  </tr>
+  <tr *ngIf="metadata.lng">
+    <td>Longitude</td>
+    <td>{{metadata.lng}}</td>
+  </tr>
+  <tr *ngIf="metadata.alt">
+    <td>Altitude (ASL)</td>
+    <td>{{metadata.alt}}m.</td>
+  </tr>
+  </tbody>
+</table>

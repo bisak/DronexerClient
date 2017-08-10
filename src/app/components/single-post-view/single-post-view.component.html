@@ -1,40 +1,17 @@
 <div class="container container-resp">
   <div *ngIf="post">
+
     <app-post [isSingle]="true" [post]="post"></app-post>
-    <div class="row no-margin">
-      <div *ngIf="hasLocationMetadata" class="left-col right col s12 m12 l6 grey-border no-padding" leaflet [leafletLayers]="layers" [leafletOptions]="options">
+
+    <div class="row no-margin no-padding">
+      <div *ngIf="hasLocationMetadata" class="z-depth-1 left-col right col s12 m12 l6 no-padding" leaflet [leafletLayers]="layers" [leafletOptions]="options">
 
       </div>
-      <div *ngIf="hasMetadata" class="right-col col s12 m12 l6 grey-border">
-        <table class="bordered">
-          <tbody>
-            <tr *ngIf="post.metadata.dateTaken">
-              <td>Date taken</td>
-              <td>{{post.metadata.dateTaken| unixToDate}}</td>
-            </tr>
-            <tr *ngIf="post.metadata.make">
-              <td>Manufacturer</td>
-              <td>{{post.metadata.make}}</td>
-            </tr>
-            <tr *ngIf="post.metadata.model">
-              <td>Camera model</td>
-              <td>{{post.metadata.model}}</td>
-            </tr>
-            <tr *ngIf="post.metadata.lat">
-              <td>Latitude</td>
-              <td>{{post.metadata.lat}}</td>
-            </tr>
-            <tr *ngIf="post.metadata.lng">
-              <td>Longitude</td>
-              <td>{{post.metadata.lng}}</td>
-            </tr>
-            <tr *ngIf="post.metadata.alt">
-              <td>Altitude (ASL)</td>
-              <td>{{post.metadata.alt}}m.</td>
-            </tr>
-          </tbody>
-        </table>
+
+      <div *ngIf="hasMetadata" class="z-depth-1 right-col col s12 m12 l6">
+        <app-metadata-table [metadata]="post.metadata"></app-metadata-table>
       </div>
+
     </div>
   </div>
 </div>

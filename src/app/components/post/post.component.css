@@ -6,84 +6,19 @@
   margin: 0 5px 0 0;
 }
 
-.small-chip {
-  height: 20px;
-  line-height: 20px;
-  padding: 0;
-  background-color: inherit;
-}
-
-.comment-input {
-  height: 1.8rem;
-  font-size: 1.1rem;
-}
-
-.comments-wrapper {
-  padding: 0 10px 0 10px;
-}
-
 .comment {
-  margin: 5px 0 5px 0;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
 }
-
 
 /*Change input field with more appropriate class*/
 
-.input-field label {
-  top: 0.2rem !important;
-}
-
-.input-field label:not(.label-icon).active {
-  top: 0.8rem !important;
-}
-
-.comment-username {
-  background-color: rgba(228, 228, 228, 0.5);
-  height: 26px;
-  line-height: 26px;
-  margin: 3px 0;
-}
-
 .profile-info {
-  padding-top: 13px;
-}
-
-.post-action {
-  margin: 10px 0;
-}
-
-.action-element {
-  height: 24px;
-  width: 24px;
-}
-
-.tags-container, .caption-container, .card-post-top {
-  padding: 0 20px 5px 20px;
-  word-break: normal;
-}
-
-.card {
-  overflow: unset !important;
+  margin-top: 10px;
 }
 
 .tags-container a {
   display: inline-block;
-}
-
-.tags-container{
-  padding: 5px 20px 5px 20px;
-}
-
-.taken-with {
-  display: block;
-}
-
-.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
-  margin-right: 8px;
-}
-
-.post-image {
-  min-height: 150px;
 }
 
 .card-image {
@@ -91,44 +26,55 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-
-/*.card-image .after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  display: none;
-  color: #FFF;
+.top-content {
+  padding-bottom: 10px;
+  padding-top: 15px;
 }
 
-.card-image .after {
-  display: block;
-}*/
+.bottom-content {
+  padding-bottom: 10px;
+}
+
+.action-icons {
+  font-size: 2.2rem !important;
+}
+
+.post-image-container {
+  max-height: 546px; /* THIS VALUE IS DEPENDANT ON THE FIT-IMG DIRECTIVE */
+  overflow: hidden;
+}
+
+.materialboxed.active {
+  margin-top: unset !important;
+  transform: none !important;
+  transition: inherit;
+}
+
+.post-image-tall {
+  margin-top: 100%;
+  transform: translateY(-100%) !important;
+}
 
 .profile-picture {
-  margin: 8px 8px 0 8px;
-  width: 50px;
-  height: 50px;
-}
-
-.post-edit-actions {
-  margin-top: 5px;
+  width: 60px;
+  height: 60px;
 }
 
 .post-actions {
   padding: 5px 0 0 20px
 }
 
+.sharebuttons {
+  margin-top: 10px;
+}
 
-/*
-.post-image {
-  z-index: 800;
-}*/
+.hide-show-comments {
+  margin-top: 10px;
+}
 
 .comments-container {
-  margin: 0 0 0 10px;
   overflow-y: scroll;
+  padding: 0 24px 0 24px;
   overflow-wrap: break-word;
 }
 

@@ -47,6 +47,8 @@ import { FeedComponent } from './components/feed/feed.component';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { UnixToDatePipe } from './pipes/unix-to-date.pipe';
 import { InsertHashtagPipe } from './pipes/insert-hashtag.pipe';
+import { MetadataTableComponent } from './components/metadata-table/metadata-table.component';
+import { FitImgIntoContainerDirective } from './directives/fit-img-into-container.directive';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import { InsertHashtagPipe } from './pipes/insert-hashtag.pipe';
     FeedComponent,
     TimeAgoPipe,
     UnixToDatePipe,
-    InsertHashtagPipe
+    InsertHashtagPipe,
+    MetadataTableComponent,
+    FitImgIntoContainerDirective
   ],
   imports: [
     BrowserModule,

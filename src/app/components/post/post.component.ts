@@ -164,14 +164,6 @@ export class PostComponent implements OnInit, OnDestroy {
     }));
   }
 
-  postRateAction() {
-    if (this.post.isLikedByCurrentUser) {
-      this.unLikePost();
-    } else {
-      this.likePost();
-    }
-  }
-
   loadComments() {
     const postId = this.post._id;
     this.subscriptions.push(this.postsService.getComments(postId).subscribe((comments) => {
