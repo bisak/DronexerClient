@@ -5,20 +5,22 @@
         <div class="row no-margin">
 
           <div class="col no-margin no-padding">
-            <img [routerLink]="['/profile', post.username]" [src]="post.profilePicUrl" alt="Post profile picture" class="circle profile-picture grey-border pointer">
+            <img [routerLink]="['/profile', post.user.username]" [src]="post.profilePicUrl" alt="Post profile picture"
+                 class="circle profile-picture grey-border pointer">
           </div>
 
           <div class="col">
-            <div class="post-profile-info">
-              <a [routerLink]="['/profile', post.username]" class="grey-text text-darken-4 no-margin valign">{{post.username}}
+            <div class="profile-info">
+              <a [routerLink]="['/profile', post.user.username]" class="grey-text text-darken-4 no-margin valign">{{post.user.username}}
               </a>
-              <p class="grey-text text-darken-1 ultra-small-text no-margin thin">
-                {{post.timeAgo}}</p>
+              <p class="grey-text text-darken-1 ultra-small-text no-margin">
+                {{post.createdAt | timeAgo}}</p>
             </div>
           </div>
 
           <div class="col right post-edit-actions no-padding unselectable">
-            <a materialize="dropdown" class="pointer" attr.data-activates='dropdown_{{post._id}}'><i class="material-icons black-text small zoom-in">arrow_drop_down</i></a>
+            <a materialize="dropdown" class="pointer" attr.data-activates='dropdown_{{post._id}}'><i
+              class="material-icons black-text small zoom-in">arrow_drop_down</i></a>
             <ul id='dropdown_{{post._id}}' class='dropdown-content'>
               <li *ngIf="post.hasMetadata && !isSingle">
                 <a class="activator"><i class="dropdown-icon material-icons blue-text">info_outline</i>Info</a>
@@ -40,35 +42,36 @@
       </div>
 
       <div *ngIf="(post.caption || post.droneTaken)" class="caption-container medium-text">
-        <p class="no-margin no-padding">
-          <span *ngIf="post.caption">{{post.caption}}</span>
-          <span *ngIf="post.droneTaken" class="taken-with grey-text text-darken-1">{{post.droneTaken}}</span>
-        </p>
+        <p *ngIf="post.caption" class="no-margin">{{post.caption}}</p>
+        <p *ngIf="post.droneTaken" class="no-margin taken-with grey-text text-darken-1">{{post.droneTaken}}</p>
       </div>
 
       <div *ngIf="post.tags.length" class="card-action tags-container">
-        <a *ngFor="let tag of post.tags" [routerLink]="['/tag', tag]">#{{tag}}</a>
+        <a *ngFor="let tag of post.tags" [routerLink]="['/tag', tag]">{{tag | insertHashtag}}</a>
       </div>
 
       <div class="card-image">
         <a *ngIf="!isSingle" [routerLink]="['/post', post._id]">
-          <img (dblclick)="postRateAction()" [src]="post.pictureUrl" alt="Post picture by user {{post.username}}" class="post-image">
+          <img (dblclick)="postRateAction()" [src]="post.pictureUrl" alt="Post picture by user {{post.username}}"
+               class="post-image">
         </a>
-        <img *ngIf="isSingle" materialize="materialbox" [src]="post.pictureUrl" alt="Post picture by user {{post.username}}" class="post-image materialboxed">
+        <img *ngIf="isSingle" materialize="materialbox" [src]="post.pictureUrl"
+             alt="Post picture by user {{post.username}}" class="post-image materialboxed">
         <!-- <div class="after">
            <img src="assets/a.png">
          </div>-->
       </div>
 
       <div class="comments-wrapper">
-        <div #commentsContainer [scrollTop]="commentsContainer.scrollHeight" *ngIf="post.showComments" class="comments-container">
+        <div #commentsContainer [scrollTop]="commentsContainer.scrollHeight" *ngIf="post.showComments"
+             class="comments-container">
           <div *ngFor="let comment of post.comments" class="comment">
             <span>
             <a class="black-text"
-               [routerLink]="['/profile', comment.username]"><strong>{{comment.username}} </strong></a>
+               [routerLink]="['/profile', comment.user.username]"><strong>{{comment.user.username}} </strong></a>
             {{comment.comment}}
           </span>
-            <div class="divider grey lighten-4"></div>
+            <div class="divider"></div>
           </div>
         </div>
       </div>
@@ -92,30 +95,34 @@
         </div>
 
         <form (keyup.enter)="commentPost()">
-          <div class="input-field col s8 comment-input-container">
-            <input [(ngModel)]="newComment" name="newComment" id="post-comment" type="text" class="comment-input no-margin" autocomplete="off">
+          <div class="input-field col s8 no-margin">
+            <input [(ngModel)]="newComment" name="newComment" id="post-comment" type="text"
+                   class="comment-input no-margin" autocomplete="off">
             <label for="post-comment">Comment...</label>
           </div>
         </form>
 
         <div class="no-margin">
-          <div *ngIf="!post.showComments" class="col right post-edit-actions valign-wrapper pointer" (click)="post.commentsCount && loadComments()">
+          <div *ngIf="!post.showComments" class="col right post-edit-actions valign-wrapper pointer"
+               (click)="post.commentsCount && loadComments()">
             <span *ngIf="post.commentsCount === 1" class="ultra-small-text valign">{{post.commentsCount}} comment</span>
 
-            <span *ngIf="post.commentsCount !== 1" class="ultra-small-text valign">{{post.commentsCount}} comments</span>
+            <span *ngIf="post.commentsCount !== 1"
+                  class="ultra-small-text valign">{{post.commentsCount}} comments</span>
 
             <i *ngIf="post.commentsCount" class="material-icons zoom-in">expand_more</i>
           </div>
 
-          <div *ngIf="post.showComments" class="col right post-edit-actions valign-wrapper pointer" (click)="post.showComments = false">
+          <div *ngIf="post.showComments" class="col right post-edit-actions valign-wrapper pointer"
+               (click)="post.showComments = false">
             <i class="material-icons zoom-in">expand_less</i>
           </div>
         </div>
       </div>
       <div *ngIf="post.showShareButtons" class="center">
         <share-buttons class="withCount" [url]="shareUrl" [title]="Dronexer" [image]="shareImgUrl"
-          [description]="shareDescription" [showCount]="true" [stumbleUpOn]="false"
-          [pinterest]="false" [whatsApp]="false" [linkedIn]="false">
+                       [description]="shareDescription" [showCount]="true" [stumbleUpOn]="false"
+                       [pinterest]="false" [whatsApp]="false" [linkedIn]="false">
         </share-buttons>
       </div>
     </div>
@@ -125,42 +132,44 @@
       </div>
       <table class="bordered">
         <tbody>
-          <tr *ngIf="post.metadata.dateTaken">
-            <td>Date taken</td>
-            <td>{{post.metadata.dateTaken}}</td>
-          </tr>
-          <tr *ngIf="post.metadata.make">
-            <td>Manufacturer</td>
-            <td>{{post.metadata.make}}</td>
-          </tr>
-          <tr *ngIf="post.metadata.model">
-            <td>Camera model</td>
-            <td>{{post.metadata.model}}</td>
-          </tr>
-          <tr *ngIf="post.metadata.lat">
-            <td>Latitude</td>
-            <td>{{post.metadata.lat}}</td>
-          </tr>
-          <tr *ngIf="post.metadata.lng">
-            <td>Longitude</td>
-            <td>{{post.metadata.lng}}</td>
-          </tr>
-          <tr *ngIf="post.metadata.alt">
-            <td>Altitude (ASL)</td>
-            <td>{{post.metadata.alt}}m.</td>
-          </tr>
+        <tr *ngIf="post.metadata.dateTaken">
+          <td>Date taken</td>
+          <td>{{post.metadata.dateTaken | unixToDate}}</td>
+        </tr>
+        <tr *ngIf="post.metadata.make">
+          <td>Manufacturer</td>
+          <td>{{post.metadata.make}}</td>
+        </tr>
+        <tr *ngIf="post.metadata.model">
+          <td>Camera model</td>
+          <td>{{post.metadata.model}}</td>
+        </tr>
+        <tr *ngIf="post.metadata.lat">
+          <td>Latitude</td>
+          <td>{{post.metadata.lat}}</td>
+        </tr>
+        <tr *ngIf="post.metadata.lng">
+          <td>Longitude</td>
+          <td>{{post.metadata.lng}}</td>
+        </tr>
+        <tr *ngIf="post.metadata.alt">
+          <td>Altitude (ASL)</td>
+          <td>{{post.metadata.alt}}m.</td>
+        </tr>
         </tbody>
       </table>
     </div>
   </div>
 
   <div *ngIf="post.showDeleteModal">
-    <app-modal-delete [showPasswordField]="false" [titleText]="'Delete permanently?'" [deleteModal]="deleteModal" (deleteCancelled)="closeDeleteModal()"
-      (deleteConfirmed)="deletePost()"></app-modal-delete>
+    <app-modal-delete [showPasswordField]="false" [titleText]="'Delete permanently?'" [deleteModal]="deleteModal"
+                      (deleteCancelled)="closeDeleteModal()"
+                      (deleteConfirmed)="deletePost()"></app-modal-delete>
   </div>
 
   <div *ngIf="post.showEditModal">
-    <app-modal-edit [editModal]="editModal" [post]="post" (editCancelled)="closeEditModal()" (editConfirmed)="editPost($event)"></app-modal-edit>
+    <app-modal-edit [editModal]="editModal" [post]="post" (editCancelled)="closeEditModal()"
+                    (editConfirmed)="editPost($event)"></app-modal-edit>
   </div>
 
 </div>

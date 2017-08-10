@@ -10,7 +10,7 @@
           <tbody>
             <tr *ngIf="post.metadata.dateTaken">
               <td>Date taken</td>
-              <td>{{post.metadata.dateTaken}}</td>
+              <td>{{post.metadata.dateTaken| unixToDate}}</td>
             </tr>
             <tr *ngIf="post.metadata.make">
               <td>Manufacturer</td>

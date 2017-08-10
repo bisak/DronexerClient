@@ -44,6 +44,9 @@ import { UploadComponent } from './components/upload/upload.component';
 import { UploadPictureFormComponent } from './components/upload-picture-form/upload-picture-form.component';
 import { ValidateService } from './services/validate.service';
 import { FeedComponent } from './components/feed/feed.component';
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
+import { UnixToDatePipe } from './pipes/unix-to-date.pipe';
+import { InsertHashtagPipe } from './pipes/insert-hashtag.pipe';
 
 @NgModule({
   declarations: [
@@ -70,7 +73,10 @@ import { FeedComponent } from './components/feed/feed.component';
     UploadPictureFormComponent,
     TagsComponent,
     SinglePostViewComponent,
-    FeedComponent
+    FeedComponent,
+    TimeAgoPipe,
+    UnixToDatePipe,
+    InsertHashtagPipe
   ],
   imports: [
     BrowserModule,

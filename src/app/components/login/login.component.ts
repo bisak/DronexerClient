@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { AuthHelperService } from '../../utilities/auth-helper.service';
-import { AuthService } from '../../services/auth.service'
-import { Router } from '@angular/router'
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { ToastService } from '../../services/toast.service'
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -17,22 +17,23 @@ export class LoginComponent implements OnInit, OnDestroy {
   password: String;
   subscriptions: Subscription[] = [];
 
-  constructor (private authHelperService: AuthHelperService,
-               private authService: AuthService,
-               private router: Router,
-               private toastService: ToastService) {
+  constructor(private authHelperService: AuthHelperService,
+              private authService: AuthService,
+              private router: Router,
+              private toastService: ToastService) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
+    window.scrollTo(0, 0);
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
-    })
+    });
   }
 
-  onLoginSubmit () {
+  onLoginSubmit() {
     const user = {
       username: this.username,
       password: this.password

@@ -26,7 +26,6 @@ export class ModalEditComponent implements OnInit {
   }
 
   confirmEdit() {
-    this.editedData.newSelectedDroneName = this.dronesArray[this.editedData.newDroneSelector];
     this.editConfirmed.emit(this.editedData);
   }
 
@@ -34,7 +33,7 @@ export class ModalEditComponent implements OnInit {
     this.editedData = {};
     this.editedData.newTags = this.post.tags.map((tag) => '#' + tag).join(' ') || '';
     this.editedData.newCaption = this.post.caption;
-    this.editedData.newDroneSelector = this.dronesArray.indexOf(this.post.droneTaken);
+    this.editedData.newDroneTaken = this.staticData.getDronesArray().indexOf(this.post.droneTaken);
   }
 
 }

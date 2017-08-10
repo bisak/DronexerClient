@@ -1,111 +1,104 @@
 <div class="section">
   <div class="container">
     <div class="row">
-      <div class="col s12 m8 l6 offset-m2 offset-l3">
+      <div class="col s12">
         <form (submit)="onRegisterSubmit()">
-          <h3 class="center blue-grey-text text-darken-2">Register</h3>
-          <div class="row">
-            <div class="input-field col s10 offset-s1">
-              <i class="material-icons prefix">account_circle</i>
-              <input [(ngModel)]="firstName" id="register-firstName" type="text" class="validate" name="firstName"
-                     required>
-              <label for="register-firstName">First Name<span class="blue-text"> *</span></label>
-            </div>
+
+          <h3 class="center">Register</h3>
+
+          <div class="input-field col s10 m5 offset-s1 offset-m1">
+            <i class="material-icons prefix">account_circle</i>
+            <input [(ngModel)]="registerData.firstName" id="register-firstName" type="text" class="validate"
+                   name="firstName"
+                   required>
+            <label for="register-firstName">First Name<span class="light-blue-text accent-4"> *</span></label>
           </div>
-          <div class="row">
-            <div class="input-field col s10 offset-s1">
-              <i class="material-icons prefix">account_circle</i>
-              <input [(ngModel)]="lastName" id="register-lastName" type="text" class="validate" name="lastName"
-                     required>
-              <label for="register-lastName">Last Name<span class="blue-text"> *</span></label>
-            </div>
+
+          <div class="input-field col s10 m5 offset-s1">
+            <i class="material-icons prefix">account_circle</i>
+            <input [(ngModel)]="registerData.lastName" id="register-lastName" type="text" class="validate"
+                   name="lastName"
+                   required>
+            <label for="register-lastName">Last Name<span class="light-blue-text accent-4"> *</span></label>
           </div>
-          <div class="row">
-            <div class="input-field col s10 offset-s1">
-              <i class="material-icons prefix">account_box</i>
-              <input [(ngModel)]="username" id="register-username" type="text" class="validate" name="username"
-                     required>
-              <label for="register-username">Username<span class="blue-text"> *</span></label>
-            </div>
+
+          <div class="input-field col s10 m5 offset-s1 offset-m1">
+            <i class="material-icons prefix">account_box</i>
+            <input [(ngModel)]="registerData.username" id="register-username" type="text" class="validate"
+                   name="username"
+                   required>
+            <label for="register-username">Username<span class="light-blue-text accent-4"> *</span></label>
           </div>
-          <div class="row">
-            <div class="input-field col s10 offset-s1">
-              <i class="material-icons prefix">email</i>
-              <input [(ngModel)]="email" id="register-email" type="email" class="validate" name="email" required>
-              <label for="register-email">Email<span class="blue-text"> *</span></label>
-            </div>
+
+          <div class="input-field col s10 m5 offset-s1">
+            <i class="material-icons prefix">email</i>
+            <input [(ngModel)]="registerData.email" id="register-email" type="email" class="validate" name="email"
+                   required>
+            <label for="register-email">Email<span class="light-blue-text accent-4"> *</span></label>
           </div>
-          <div class="row">
-            <div class="input-field col s10 offset-s1">
-              <i class="material-icons prefix">lock</i>
-              <input [(ngModel)]="password" id="register-password" type="password" class="validate" name="password"
-                     required>
-              <label for="register-password">Password<span class="blue-text"> *</span></label>
-            </div>
+
+          <div class="input-field col s10 m5 offset-s1 offset-m1">
+            <i class="material-icons prefix">lock</i>
+            <input [(ngModel)]="registerData.password" id="register-password" type="password" class="validate"
+                   name="password"
+                   required>
+            <label for="register-password">Password<span class="light-blue-text accent-4"> *</span></label>
           </div>
-          <div class="row">
-            <div class="input-field col s10 offset-s1">
-              <i class="material-icons prefix">lock_outline</i>
-              <input [(ngModel)]="passwordConfirm" id="register-password-confirm" type="password" class="validate"
-                     name="password-confirm" required>
-              <label for="register-password-confirm">Confirm Password<span class="blue-text"> *</span></label>
-            </div>
+
+          <div class="input-field col s10 m5 offset-s1">
+            <i class="material-icons prefix">lock_outline</i>
+            <input [(ngModel)]="passwordConfirm" id="register-password-confirm" type="password"
+                   class="validate"
+                   name="password-confirm" required>
+            <label for="register-password-confirm">Confirm Password<span
+              class="light-blue-text accent-4"> *</span></label>
           </div>
-          <div class="row">
-            <div class="input-field col s10 offset-s1">
-              <i class="material-icons prefix">cake</i>
-              <input [(ngModel)]="birthday"
-                     id="birthday"
-                     materialize="pickadate"
-                     [materializeParams]="[{selectMonths: true, selectYears: 200}]"
-                     name="birthday"
-                     placeholder="Birthday"/>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s10 offset-s1 grey-text">
-              <i class="material-icons prefix black-text">add_circle</i>
-              <select [(ngModel)]="dronesSelector"
-                      id="register-drone-select"
-                      materialize="material_select"
-                      name="drones-select"
-                      multiple>
-                <option value="" disabled>Choose your drone</option>
-                <option *ngFor="let drone of dronesArray; let i = index;" [value]="i">{{drone}}</option>
-              </select>
-            </div>
+
+          <div class="input-field col s10 offset-s1">
+            <i class="material-icons prefix">add_circle</i>
+
+            <select (ngModelChange)="dronesSelectChange($event)"
+                    [ngModel]
+                    name="drones-select"
+                    multiple
+                    materialize="material_select"
+                    [materializeSelectOptions]="dronesToSelect">
+              <option value="" disabled selected>Select your drones</option>
+              <option *ngFor="let option of dronesToSelect; let i = index" [value]="i">{{option}}</option>
+            </select>
+
           </div>
 
           <div class="row">
             <div class="file-field input-field col s10 offset-s1">
-              <div class="btn light-blue darken-1 btn-flat white-text">
+              <div class="btn waves-effect">
                 <span>Upload</span>
                 <input (change)="onProfilePictureSelected($event)" id="profile-picture-upload" type="file"
                        name="profile-picture-upload" accept="image/png,image/jpeg">
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Profile picture.">
+                <input class="file-path validate" type="text" placeholder="Profile picture">
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="center">
-              <img
-                [src]="profilePictureEncoded || defaultProfilePicUrl"
-                alt="Profile picture preview" class="circle avatar-big grey-border">
-            </div>
+
+          <div class="row center">
+            <img [src]="profilePictureEncoded || defaultProfilePic"
+                 alt="Profile picture preview"
+                 class="circle avatar-big grey-border">
           </div>
+
           <div class="row center">
             <input type="checkbox" name="agree" [(ngModel)]="agree" class="filled-in" id="filled-in-box"/>
             <label for="filled-in-box">I agree to the <a routerLink="/terms">terms of use</a></label>
           </div>
-          <div class='row'>
-            <div class="col s6 offset-s3 l4 offset-l4">
-              <button [disabled]='isRegisterButtonDisabled' type="submit"
-                      class='col s12 btn btn-large waves-effect light-blue white-text accent-4'>Register
-              </button>
-            </div>
+
+          <div class='row center'>
+            <button [disabled]='isRegisterButtonDisabled' type="submit"
+                    class='btn waves-effect'>Register
+            </button>
           </div>
+
         </form>
       </div>
     </div>

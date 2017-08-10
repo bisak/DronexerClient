@@ -25,36 +25,37 @@ export class SinglePostViewComponent implements OnInit, OnDestroy {
   };
   pictureLocaton;
   layers;
-  hasMetadata = false
-  hasLocationMetadata = true
+  hasMetadata = false;
+  hasLocationMetadata = true;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private postsService: PostsService,
-    private metadataService: MetadataService) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private postsService: PostsService,
+              private metadataService: MetadataService) {
+  }
 
-  ngOnInit () {
+  ngOnInit() {
     this.listenForUrlChanges();
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
-    })
+    });
   }
 
-  listenForUrlChanges () {
+  listenForUrlChanges() {
     this.subscriptions.push(this.route.params.subscribe((params: Params) => {
       this.postId = params['id'];
       this.getSinglePost();
-    }))
+    }));
   }
 
-  getSinglePost () {
+  getSinglePost() {
     this.subscriptions.push(this.postsService.getPost(this.postId).subscribe((response) => {
-      this.post = response.data[0];
-      const metadata = this.post['metadata']
+      this.post = response.data;
+      console.log(this.post);
+      const metadata = this.post['metadata'];
 
       this.hasMetadata = this.metadataService.hasMetadata(metadata);
       this.hasLocationMetadata = this.metadataService.hasLocationMetadata(metadata);
@@ -67,14 +68,14 @@ export class SinglePostViewComponent implements OnInit, OnDestroy {
           iconAnchor: [13, 41],
           iconUrl: '/assets/marker-icon.png',
           shadowUrl: '/assets/marker-shadow.png'
-        })
+        });
         const marker = L.marker(this.pictureLocaton, { icon: icon });
 
         this.layers = [marker];
       }
     }, (error) => {
       console.log(error);
-    }))
+    }));
   }
 
 }

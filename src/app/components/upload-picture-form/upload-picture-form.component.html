@@ -25,10 +25,11 @@
         <div class="row">
           <div class="input-field col s12 grey-text">
             <i class="material-icons prefix black-text">add_circle</i>
-            <select [(ngModel)]="dronesSelector"
-                    id="register-drone-select"
-                    materialize="material_select"
-                    name="drones-select">
+            <select
+              [(ngModel)]="droneSelected"
+              id="register-drone-select"
+              materialize="material_select"
+              name="drones-select">
               <option value="" disabled>Taken with</option>
               <option *ngFor="let drone of dronesArray; let i = index;" [value]="i">{{drone}}</option>
             </select>

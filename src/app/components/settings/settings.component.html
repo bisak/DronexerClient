@@ -99,8 +99,10 @@
     </div>
   </div>
 </div>
+
 <app-modal-confirm-password [confirmModal]="confirmModal" (cancel)="closeConfirmModal()"
                             (confirm)="editProfileInfo($event)"></app-modal-confirm-password>
+
 <app-modal-delete [showPasswordField]="true" [titleText]="'Delete profile permanently?'" [deleteModal]="deleteModal"
                   (deleteCancelled)="closeDeleteModal()" (deleteConfirmed)="deleteProfile($event)"></app-modal-delete>
 

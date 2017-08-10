@@ -16,35 +16,36 @@ export class UploadPictureFormComponent implements OnInit, OnDestroy {
 
   @Input() picture;
 
-  dronesArray: Array<any> = this.staticData.dronesArray;
-  dronesSelector: number;
+  dronesArray: Array<any> = this.staticData.getDronesArray();
+  droneSelected: number;
   caption: string;
   tags: string;
   isUploadButtonDisabled: boolean;
   subscriptions: Subscription[] = [];
 
   constructor(private staticData: StaticDataService,
-    private picturesService: PicturesService,
-    private toastService: ToastService,
-    private validateService: ValidateService) {
+              private picturesService: PicturesService,
+              private toastService: ToastService,
+              private validateService: ValidateService) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
-    })
+    });
   }
 
-  onUploadBtnClick (pictureForm) {
+  onUploadBtnClick(pictureForm) {
     this.isUploadButtonDisabled = true;
     const uploadFormData: FormData = new FormData();
     const dataToSend: Object = {};
     /*TODO validate caption and tags length.*/
-    if (this.dronesSelector) {
-      dataToSend['droneTaken'] = this.dronesArray[this.dronesSelector];
+    if (this.droneSelected) {
+      dataToSend['droneTaken'] = this.droneSelected;
+      console.log(dataToSend);
     }
 
     if (this.caption) {
@@ -52,10 +53,7 @@ export class UploadPictureFormComponent implements OnInit, OnDestroy {
     }
 
     if (this.tags) {
-      const tagsArray = this.validateService.getTagsArray(this.tags);
-      if (tagsArray) {
-        dataToSend['tags'] = tagsArray;
-      }
+      dataToSend['tags'] = this.validateService.getTagsArray(this.tags);
     }
 
     uploadFormData.append('pictureFile', this.picture.file);

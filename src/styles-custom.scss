@@ -1,0 +1,114 @@
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.zoom-in {
+  -webkit-transition: -webkit-transform .2s ease-out;
+  -moz-transition: -moz-transform .2s ease-out;
+  -o-transition: -o-transform .2s ease-out;
+  -ms-transition: -ms-transform .2s ease-out;
+  transition: transform .2s ease-out;
+}
+
+.zoom-in:hover {
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  transform: scale(1.25);
+}
+
+.small-zoom-in {
+  -webkit-transition: -webkit-transform .2s ease-out;
+  -moz-transition: -moz-transform .2s ease-out;
+  -o-transition: -o-transform .2s ease-out;
+  -ms-transition: -ms-transform .2s ease-out;
+  transition: transform .2s ease-out;
+}
+
+.small-zoom-in:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.no-padding-bottom {
+  padding-bottom: 0 !important;
+}
+
+.no-padding-top {
+  padding-top: 0 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ultra-small-text {
+  font-size: 0.8rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.small-text {
+  font-size: 0.88rem !important;
+}
+
+.big-text {
+  font-size: 2rem !important;
+}
+
+.medium-text {
+  font-size: 1.1rem !important;
+}
+
+.sb-style {
+  margin: 0 0 10px 0 !important;
+}
+
+.grey-border {
+  border: 1px solid #e0e0e0;
+}
+
+.no-shadow {
+  box-shadow: unset !important;
+}
+
+.container-resp {
+  margin: 0.5rem auto;
+  width: 99%;
+  max-width: 99% !important;
+}
+
+@media only screen and (min-width: 993px) {
+  .container-resp {
+    width: 970px;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .container-resp {
+    width: 728px;
+  }
+}
+
+.input-field.col .dropdown-content [type="checkbox"] + label {
+  top: -3px !important;
+  display: inline;
+}
+

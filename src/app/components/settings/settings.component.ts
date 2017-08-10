@@ -30,45 +30,45 @@ export class SettingsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(private profileService: ProfileService,
-    private authService: AuthService,
-    private authHelperService: AuthHelperService,
-    private router: Router,
-    private toastService: ToastService,
-    private validateService: ValidateService,
-    private staticData: StaticDataService,
-    public picturesService: PicturesService) {
+              private authService: AuthService,
+              private authHelperService: AuthHelperService,
+              private router: Router,
+              private toastService: ToastService,
+              private validateService: ValidateService,
+              private staticData: StaticDataService,
+              public picturesService: PicturesService) {
   }
 
 
-  ngOnInit () {
+  ngOnInit() {
     this.username = this.authHelperService.getUsernameFromToken();
     this.getSettingsData();
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
-    })
+    });
   }
 
-  closeDeleteModal () {
+  closeDeleteModal() {
     this.deleteModal.emit({ action: 'modal', params: ['close'] });
   }
 
-  openDeleteModal () {
+  openDeleteModal() {
     this.deleteModal.emit({ action: 'modal', params: ['open'] });
   }
 
-  closeConfirmModal () {
+  closeConfirmModal() {
     this.confirmModal.emit({ action: 'modal', params: ['close'] });
   }
 
-  openConfirmModal () {
+  openConfirmModal() {
     this.confirmModal.emit({ action: 'modal', params: ['open'] });
   }
 
 
-  onProfilePictureSelected (ev) {
+  onProfilePictureSelected(ev) {
     const candidateFile = ev.target.files[0];
     if (candidateFile) {
       const profilePictureValidator = this.validateService.validateProfilePicture(candidateFile);
@@ -81,14 +81,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
         fileReader.readAsDataURL(this.profilePictureFile);
         fileReader.onload = (e) => {
           this.profilePictureEncoded = fileReader.result;
-        }
-        this.isRegisterButtonDisabled = false
+        };
+        this.isRegisterButtonDisabled = false;
       }
     }
     this.profilePictureEncoded = '';
   }
 
-  getSettingsData () {
+  getSettingsData() {
     this.subscriptions.push(this.profileService.getProfile(this.username).subscribe((response) => {
       this.settingsData = response.data;
       const oldDronesIndexes = [];
@@ -96,7 +96,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         oldDronesIndexes.push(this.dronesArray.indexOf(drone));
       }
       this.settingsData.dronesSelector = oldDronesIndexes;
-      console.log(response.data)
+      console.log(response.data);
       this.settingsData.profilePicUrl = this.picturesService.getProfilePicUrl(response.data._id);
     }, (error) => {
       console.log(error);
@@ -104,7 +104,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }));
   }
 
-  editProfileInfo (oldPassword) {
+  editProfileInfo(oldPassword) {
     const editFormData: FormData = new FormData();
 
     const registerInputValidator = this.validateService.validateRegisterInput(this.settingsData, true);
@@ -151,7 +151,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }));
   }
 
-  deleteProfile (oldPassword) {
+  deleteProfile(oldPassword) {
     if (oldPassword) {
       this.subscriptions.push(this.profileService.deleteProfile({ oldPassword }).subscribe((response) => {
         if (response.success) {

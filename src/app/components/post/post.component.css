@@ -44,8 +44,8 @@
   margin: 3px 0;
 }
 
-.post-profile-info {
-  padding-top: 15px;
+.profile-info {
+  padding-top: 13px;
 }
 
 .post-action {
@@ -58,7 +58,8 @@
 }
 
 .tags-container, .caption-container, .card-post-top {
-  padding: 5px 20px 5px 20px;
+  padding: 0 20px 5px 20px;
+  word-break: normal;
 }
 
 .card {
@@ -67,6 +68,10 @@
 
 .tags-container a {
   display: inline-block;
+}
+
+.tags-container{
+  padding: 5px 20px 5px 20px;
 }
 
 .taken-with {
