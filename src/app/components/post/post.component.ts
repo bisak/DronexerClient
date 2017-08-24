@@ -1,9 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, OnDestroy } from '@angular/core';
 
 import { AuthHelperService } from '../../utilities/auth-helper.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { MetadataService } from '../../services/metadata.service';
-import { OnDestroy } from '@angular/core';
 import { PicturesService } from '../../services/pictures.service';
 import { PostsService } from '../../services/posts.service';
 import { StaticDataService } from '../../services/static-data.service';

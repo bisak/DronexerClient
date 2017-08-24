@@ -1,42 +1,21 @@
-
 .unselectable {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
 
 .zoom-in {
-  -webkit-transition: -webkit-transform .2s ease-out;
-  -moz-transition: -moz-transform .2s ease-out;
-  -o-transition: -o-transform .2s ease-out;
-  -ms-transition: -ms-transform .2s ease-out;
   transition: transform .2s ease-out;
 }
 
 .zoom-in:hover {
-  -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2);
-  -o-transform: scale(1.2);
   transform: scale(1.25);
 }
 
 .small-zoom-in {
-  -webkit-transition: -webkit-transform .2s ease-out;
-  -moz-transition: -moz-transform .2s ease-out;
-  -o-transition: -o-transform .2s ease-out;
-  -ms-transition: -ms-transform .2s ease-out;
   transition: transform .2s ease-out;
 }
 
 .small-zoom-in:hover {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  transform: scale(1.1);
+  transform: scale(1.033);
 }
 
 .no-padding-bottom {
@@ -61,8 +40,6 @@
 
 .ultra-small-text {
   font-size: 0.8rem !important;
-  margin: 0 !important;
-  padding: 0 !important;
 }
 
 .small-text {
@@ -95,13 +72,7 @@
   max-width: 99% !important;
 }
 
-@media only screen and (min-width: 993px) {
-  .container-resp {
-    width: 728px;
-  }
-}
-
-@media only screen and (min-width: 600px) and (max-width: 992px) {
+@media only screen and (min-width: 600px) {
   .container-resp {
     width: 728px;
   }
@@ -112,3 +83,11 @@
   display: inline;
 }
 
+.input-field .dropdown-content [type="checkbox"] + label {
+  top: 0;
+  display: inline;
+}
+
+body {
+  word-wrap: break-word;
+}

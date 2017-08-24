@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <div *ngIf="post.tags.length" class="card-action">
+      <div *ngIf="post.tags.length" class="card-action tags-container">
         <a *ngFor="let tag of post.tags" [routerLink]="['/tag', tag]">{{tag | insertHashtag}}</a>
       </div>
     </header>
@@ -48,9 +48,10 @@
     <section>
       <div class="card-image post-image-container">
         <a *ngIf="!isSingle" [routerLink]="['/post', post._id]">
-          <img appFitImgIntoContainer [src]="post.pictureUrl" class="" alt="Post picture by user {{post.username}}">
+          <img [src]="post.pictureUrl" class="post-image-tall" alt="Post picture by user {{post.username}}">
         </a>
-        <img #imge appFitImgIntoContainer *ngIf="isSingle" materialize="materialbox" class="materialboxed" [src]="post.pictureUrl" alt="Post picture by user {{post.username}}">
+
+        <img *ngIf="isSingle" materialize="materialbox" class="post-image-tall materialboxed" [src]="post.pictureUrl" alt="Post picture by user {{post.username}}">
       </div>
     </section>
 
@@ -96,7 +97,7 @@
           </form>
 
           <div class="right pointer hide-show-comments">
-            <div *ngIf="!post.showComments" class="valign-wrapper" (click)="post.commentsCount && loadComments()">
+            <div *ngIf="!post.showComments && post.commentsCount" class="valign-wrapper" (click)="post.commentsCount && loadComments()">
               <span *ngIf="post.commentsCount === 1" class="ultra-small-text">Show {{post.commentsCount}} comment</span>
 
               <span *ngIf="post.commentsCount !== 1" class="ultra-small-text">Show {{post.commentsCount}} comments</span>

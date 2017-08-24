@@ -55,7 +55,7 @@ export class UploadPictureFormComponent implements OnInit, OnDestroy {
     if (this.tags) {
       dataToSend['tags'] = this.validateService.getTagsArray(this.tags);
     }
-
+    console.log(this.picture.file);
     uploadFormData.append('pictureFile', this.picture.file);
     uploadFormData.append('data', JSON.stringify(dataToSend));
 

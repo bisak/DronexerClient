@@ -1,67 +1,8 @@
-.container {
-  margin: 0.5rem auto;
-  width: 99%;
-  max-width: 100% !important;
-}
-
-.cover-photo {
-  max-height: 250px;
-  overflow: hidden;
-}
-
-.profile-head .profile-picture {
+.profile-picture {
   width: 110px;
   height: 110px;
 }
 
-.card-title {
-  overflow-wrap: break-word;
-}
-
-.card .card-content {
-  margin: 24px 15px 15px 15px;
-}
-
-.card-reveal-title{
-  margin: 10px 10px 0 10px;
-}
-
-.content-row {
-  margin-bottom: 0;
-}
-
-.follow-btn{
-  margin-top: 15px;
-}
-
-.profile-head .card-reveal .collapsible-padding {
-  padding: 0 25px 0 25px;
-}
-
-.card .card-reveal {
-  padding: 5px 24px 0 24px;
-}
-
-.open-profile-info {
-  margin-top: 10px;
-}
-
-.container .row {
-  margin-bottom: 0;
-}
-
-@media only screen and (min-width: 993px) {
-  .container {
-    width: 970px;
-  }
-
-  /*.profile-page-wall {
-    width: 728px !important;
-  }*/
-}
-
-@media only screen and (max-width: 992px) {
-  /*.profile-page-wall {
-    width: 100%;
-  }*/
+.follow-btn-container {
+  margin: 0.5rem 0 1rem 0 !important;
 }

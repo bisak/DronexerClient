@@ -11,14 +11,12 @@
   margin-bottom: 5px !important;
 }
 
-/*Change input field with more appropriate class*/
-
 .profile-info {
   margin-top: 10px;
 }
 
-.tags-container a {
-  display: inline-block;
+.tags-container {
+  overflow: auto;
 }
 
 .card-image {
@@ -39,20 +37,16 @@
   font-size: 2.2rem !important;
 }
 
-.post-image-container {
-  max-height: 546px; /* THIS VALUE IS DEPENDANT ON THE FIT-IMG DIRECTIVE */
-  overflow: hidden;
-}
-
-.materialboxed.active {
-  margin-top: unset !important;
-  transform: none !important;
-  transition: inherit;
-}
-
 .post-image-tall {
-  margin-top: 100%;
-  transform: translateY(-100%) !important;
+  object-fit: cover;
+  object-position: center;
+  max-height: 564px;
+}
+
+.materialboxed.active.post-image-tall {
+  object-fit: contain !important;
+  object-position: unset !important;
+  max-height: unset !important;
 }
 
 .profile-picture {
@@ -76,6 +70,7 @@
   overflow-y: scroll;
   padding: 0 24px 0 24px;
   overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 @media only screen and (min-width: 993px) {

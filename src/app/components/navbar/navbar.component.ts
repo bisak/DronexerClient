@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    const decodedToken = this.authHelperService.getDecodedAuthToken()
+    const decodedToken = this.authHelperService.getDecodedAuthToken();
     if (decodedToken) {
       this.fullName = `${decodedToken.firstName} ${decodedToken.lastName}`;
     }

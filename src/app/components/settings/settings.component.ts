@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { ToastService } from '../../services/toast.service';
 import { ValidateService } from '../../services/validate.service';
 
+declare var Materialize;
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -19,14 +21,14 @@ import { ValidateService } from '../../services/validate.service';
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 
-  settingsData: any;
+  editData: any;
   username: string;
   isRegisterButtonDisabled: boolean;
   profilePictureFile: File;
   profilePictureEncoded: String;
   confirmModal = new EventEmitter<string | MaterializeAction>();
   deleteModal = new EventEmitter<string | MaterializeAction>();
-  dronesArray = this.staticData.dronesArray;
+  dronesArray;
   subscriptions: Subscription[] = [];
 
   constructor(private profileService: ProfileService,
@@ -41,8 +43,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.username = this.authHelperService.getUsernameFromToken();
+    this.dronesArray = this.staticData.getDronesArray();
     this.getSettingsData();
+    window.scrollTo(0, 0);
   }
 
   ngOnDestroy() {
@@ -67,68 +70,72 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.confirmModal.emit({ action: 'modal', params: ['open'] });
   }
 
-
   onProfilePictureSelected(ev) {
     const candidateFile = ev.target.files[0];
     if (candidateFile) {
       const profilePictureValidator = this.validateService.validateProfilePicture(candidateFile);
-      if (profilePictureValidator.isValid === false) {
+      if (!profilePictureValidator.isValid) {
         this.isRegisterButtonDisabled = true;
-        return this.toastService.warningToast(profilePictureValidator.msg);
-      } else {
-        this.profilePictureFile = candidateFile;
-        const fileReader: FileReader = new FileReader();
-        fileReader.readAsDataURL(this.profilePictureFile);
-        fileReader.onload = (e) => {
-          this.profilePictureEncoded = fileReader.result;
-        };
-        this.isRegisterButtonDisabled = false;
+        return this.toastService.toast(profilePictureValidator.msg);
       }
+      this.profilePictureFile = candidateFile;
+      const fileReader: FileReader = new FileReader();
+      fileReader.readAsDataURL(this.profilePictureFile);
+      fileReader.onload = (e) => {
+        this.profilePictureEncoded = fileReader.result;
+      };
+      this.isRegisterButtonDisabled = false;
+    } else {
+      this.profilePictureEncoded = '';
     }
-    this.profilePictureEncoded = '';
   }
 
   getSettingsData() {
-    this.subscriptions.push(this.profileService.getProfile(this.username).subscribe((response) => {
-      this.settingsData = response.data;
-      const oldDronesIndexes = [];
-      for (const drone of this.settingsData.drones) {
-        oldDronesIndexes.push(this.dronesArray.indexOf(drone));
+    this.subscriptions.push(this.profileService.getProfile(this.authHelperService.getUsernameFromToken()).subscribe((response) => {
+      if (response.success) {
+        this.editData = response.data;
+        let oldDronesArray = [];
+        this.editData.drones.forEach((drone, index) => {
+          oldDronesArray.push(this.dronesArray.indexOf(drone));
+        });
+        this.editData.dronesSelector = oldDronesArray;
+        this.editData.profilePicUrl = this.picturesService.getProfilePicUrl(this.editData._id);
+        setTimeout(() => {
+          Materialize.updateTextFields();
+        }, 250);
+      } else {
+        console.log(response);
+        this.toastService.toast('An error occured.');
       }
-      this.settingsData.dronesSelector = oldDronesIndexes;
-      console.log(response.data);
-      this.settingsData.profilePicUrl = this.picturesService.getProfilePicUrl(response.data._id);
     }, (error) => {
       console.log(error);
       this.toastService.errorToast('An error occurred.');
     }));
   }
 
+  dronesSelectChange(event) {
+    console.log(event);
+    this.editData.newDronesSelected = event;
+  }
+
   editProfileInfo(oldPassword) {
+    const editInputValidator = this.validateService.validateRegisterInput(this.editData, true);
+    if (!editInputValidator.isValid) {
+      return this.toastService.toast(editInputValidator.msg);
+    }
     const editFormData: FormData = new FormData();
-
-    const registerInputValidator = this.validateService.validateRegisterInput(this.settingsData, true);
-
-    if (!registerInputValidator.isValid) {
-      return this.toastService.warningToast(registerInputValidator.msg);
-    }
-
-    const dronesToSendArray = [];
-    for (const index of this.settingsData.dronesSelector) {
-      dronesToSendArray.push(this.dronesArray[index]);
-    }
-
     const objToSend = {
-      firstName: this.settingsData.firstName,
-      lastName: this.settingsData.lastName,
-      email: this.settingsData.email,
-      username: this.settingsData.username,
-      password: this.settingsData.password,
-      passwordConfirm: this.settingsData.passwordConfirm,
-      birthday: this.settingsData.birthday,
-      drones: dronesToSendArray,
-      oldPassword: oldPassword
+      firstName: this.editData.firstName,
+      lastName: this.editData.lastName,
+      email: this.editData.email,
+      username: this.editData.username,
+      password: this.editData.password,
+      drones: this.editData.newDronesSelected,
+      oldPassword: oldPassword,
+      about: this.editData.about
     };
+    console.log(objToSend);
+    console.log(this.profilePictureFile);
 
     editFormData.append('data', JSON.stringify(objToSend));
 

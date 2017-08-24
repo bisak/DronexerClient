@@ -69,23 +69,21 @@
 
           </div>
 
-          <div class="row">
-            <div class="file-field input-field col s10 offset-s1">
-              <div class="btn waves-effect">
-                <span>Upload</span>
-                <input (change)="onProfilePictureSelected($event)" id="profile-picture-upload" type="file"
-                       name="profile-picture-upload" accept="image/png,image/jpeg">
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Profile picture">
-              </div>
+          <div class="file-field input-field col s10 offset-s1">
+            <div class="btn waves-effect">
+              <span>Upload</span>
+              <input (change)="onProfilePictureSelected($event)" id="profile-picture-upload" type="file"
+                     name="profile-picture-upload" accept="image/png,image/jpeg">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="Profile picture">
             </div>
           </div>
 
           <div class="row center">
             <img [src]="profilePictureEncoded || defaultProfilePic"
                  alt="Profile picture preview"
-                 class="circle avatar-big grey-border">
+                 class="circle avatar-big z-depth-1">
           </div>
 
           <div class="row center">

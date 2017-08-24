@@ -1,11 +1,18 @@
-.logo{
-  margin: 5px;
+.logo {
+  margin-left: 5px;
   height: 55px;
+  vertical-align: middle;
 }
 
 @media (max-width: 600px) {
   .logo {
     height: 50px;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo {
+    display: none;
   }
 }
 
@@ -22,6 +29,6 @@
   min-height: 64px;
 }
 
-.dropdown-arrow-navbar{
+.dropdown-arrow-navbar {
   margin-left: 5px;
 }

@@ -1,13 +1,12 @@
 <nav>
   <div class="nav-wrapper">
     <div class="container">
-      <!--<a [routerLink]="['/']" class="brand-logo center"><img class="logo" src="assets/drone1.png" alt=""></a>-->
-      <a [routerLink]="['/']" class="brand-logo center">Dronexer</a>
+      <a [routerLink]="['/']" class="brand-logo">Dronexer<img src="/assets/dronexer-logo.svg" class="logo" alt="Dronexer Brand Logo"></a>
       <a materialize="sideNav" [materializeParams]="[{closeOnClick: true, draggable: true}]"
          data-activates="mobile-demo" class="button-collapse">
         <i class="material-icons">menu</i>
       </a>
-      <ul class="left hide-on-med-and-down">
+      <ul class="right hide-on-med-and-down">
         <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/']">Home</a>
         </li>
@@ -19,8 +18,6 @@
         <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/upload']">Upload</a>
         </li>
-      </ul>
-      <ul class="right hide-on-med-and-down">
         <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="routerLinkOpts"><a
           [routerLink]="['login']">Login</a></li>

@@ -4,13 +4,12 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 
 import { AuthHelperService } from '../../utilities/auth-helper.service';
-import { DatesService } from '../../utilities/dates.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { Observable } from 'rxjs/Observable';
 import { PicturesService } from '../../services/pictures.service';
 import { ProfileService } from '../../services/profile.service';
 import { StaticDataService } from '../../services/static-data.service';
-import { Subscription } from 'rxjs/Subscription'
+import { Subscription } from 'rxjs/Subscription';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -30,41 +29,39 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(private profileService: ProfileService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private authHelperService: AuthHelperService,
-    private toastService: ToastService,
-    private picturesService: PicturesService,
-    private datesService: DatesService,
-    private staticDataService: StaticDataService) {
+              private route: ActivatedRoute,
+              private router: Router,
+              private authHelperService: AuthHelperService,
+              private toastService: ToastService,
+              private picturesService: PicturesService,
+              private staticDataService: StaticDataService) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.listenForUrlChanges();
-    this.isProfileMine = this.checkIdentity();
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
-    })
+    });
   }
 
-  getProfileInfo (username) {
+  getProfileInfo(username) {
     this.subscriptions.push(this.profileService.getProfile(username).subscribe((retrievedData) => {
       this.profileInfo = retrievedData.data;
       this.profileInfo.profilePicUrl = this.picturesService.getProfilePicUrl(retrievedData.data._id);
     }, (error) => {
       console.log(error);
       if (error.status === 404) {
-        this.router.navigate(['/page-not-found'], { replaceUrl: true });
+        this.router.navigate(['/page-not-found'], { replaceUrl: true }); //TODO this should not redirect but display not found msg.
         return false;
       }
       this.toastService.errorToast('An error occurred.');
     }));
   }
 
-  getWallPosts (username) {
+  getWallPosts(username) {
     this.isListening = false;
     let time = new Date().getTime();
     if (this.lastPostTime) {
@@ -74,6 +71,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.picturesService.getWallPosts(username, time).subscribe((retrievedPictures) => {
       if (retrievedPictures.success) {
         const postData = retrievedPictures.data;
+        console.log(retrievedPictures);
         this.wallPosts.push(...postData);
         this.lastPostTime = new Date(postData[postData.length - 1].createdAt).getTime();
         this.isListening = true;
@@ -89,32 +87,32 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }));
   }
 
-  followUser () {
+  followUser() {
     this.subscriptions.push(this.profileService.followUser(this.profileInfo._id).subscribe((response) => {
       this.profileInfo.followersCount += 1;
       this.profileInfo.isFollowed = true;
     }, (error) => {
       console.log(error);
       this.toastService.errorToast('An error occurred.');
-    }))
+    }));
   }
 
-  unFollowUser () {
+  unFollowUser() {
     this.subscriptions.push(this.profileService.unFollowUser(this.profileInfo._id).subscribe((response) => {
       this.profileInfo.followersCount -= 1;
       this.profileInfo.isFollowed = false;
     }, (error) => {
       console.log(error);
       this.toastService.errorToast('An error occurred.');
-    }))
+    }));
   }
 
-  checkIdentity (): boolean {
+  checkIdentity(): boolean {
     const extractedUsername = this.authHelperService.getUsernameFromToken();
     return (extractedUsername && this.urlUsername === extractedUsername);
   }
 
-  listenForUrlChanges () {
+  listenForUrlChanges() {
     this.subscriptions.push(this.route.params.subscribe((params: Params) => {
       this.urlUsername = params['username'];
 
@@ -127,10 +125,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       this.getProfileInfo(this.urlUsername);
       this.getWallPosts(this.urlUsername);
-    }))
+    }));
   }
 
-  onProfileScrolled () {
+  onProfileScrolled() {
     if (this.isListening) {
       this.getWallPosts(this.urlUsername);
     }

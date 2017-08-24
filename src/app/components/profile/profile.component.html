@@ -1,31 +1,27 @@
-<div class="container">
-  <div *ngIf="profileInfo" class="profile-head">
-    <div class="card no-shadow grey-border">
-      <div class="card-content no-padding">
-        <div class="row content-row">
+<div class="container section">
+  <div *ngIf="profileInfo">
+    <div class="card">
+      <div class="card-content">
+        <div class="row no-margin">
           <div class="col s12 center-align m3">
             <img id="profile-picture-view" [src]="profileInfo.profilePicUrl" class="circle profile-picture grey-border">
           </div>
-          <div class="profile-info-wrap center">
-            <div class="col s12 m3 thin">
-              <h4 class="card-title grey-text text-darken-4">{{profileInfo.username}}</h4>
-              <p class="grey-text">{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
-              <div *ngIf="!isProfileMine">
-                <a *ngIf="!profileInfo.isFollowed" (click)="followUser()" class="follow-btn btn-flat waves-effect waves-light btn light-blue white-text accent-4">Follow</a>
-                <a *ngIf="profileInfo.isFollowed" (click)="unFollowUser()" class="follow-btn btn-flat waves-effect waves-light btn light-blue white-text accent-3">UnFollow</a>
-              </div>
+          <div class="center">
+            <div class="col s12 m3">
+              <h4 class="card-title">{{profileInfo.username}}</h4>
+              <p>{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
             </div>
-            <div class="col s4 m2 thin">
-              <h4 class="card-title grey-text text-darken-4">{{profileInfo.postsCount}}</h4>
-              <p class="grey-text">Posts</p>
+            <div class="col s4 m2">
+              <h4 class="card-title">{{profileInfo.postsCount}}</h4>
+              <p>Posts</p>
             </div>
-            <div class="col s4 m2 thin">
-              <h4 class="card-title grey-text text-darken-4">{{profileInfo.followersCount}}</h4>
-              <p class="grey-text">Followers</p>
+            <div class="col s4 m2">
+              <h4 class="card-title">{{profileInfo.followersCount}}</h4>
+              <p>Followers</p>
             </div>
-            <div class="col s4 m2 thin">
-              <h4 class="card-title grey-text text-darken-4">{{profileInfo.followeesCount}}</h4>
-              <p class="grey-text">Following</p>
+            <div class="col s4 m2">
+              <h4 class="card-title">{{profileInfo.followeesCount}}</h4>
+              <p>Following</p>
             </div>
           </div>
           <div class="col right open-profile-info">
@@ -36,56 +32,55 @@
         </div>
       </div>
       <div class="card-reveal">
-        <div class="row">
-          <div class="card-reveal-title">
-            <span class="card-title grey-text text-darken-4">Profile Info
-              <i class="material-icons right">close</i></span>
-          </div>
-          <div class="col s10 m6 l4">
+        <div class="row no-margin no-padding">
+          <i class="card-title material-icons right">close</i>
+          <div class="col s10 m6">
             <p><i class="material-icons blue-text left">email</i> {{profileInfo.email}}</p>
-            <p *ngIf="profileInfo.birthday"><i class="material-icons blue-text left">cake</i> Birthday: {{profileInfo.birthday}}
-            </p>
-            <p><i class="material-icons blue-text left">access_time</i> Member since: {{datesService.getFormattedDateString(profileInfo.createdAt)}}
+            <p><i class="material-icons blue-text left">access_time</i> Member since: {{profileInfo.createdAt | formatDate}}
             </p>
           </div>
-          <div *ngIf="profileInfo.drones" class="col s10 m5 l4">
-            <ul disabled materialize="collapsible" class="collapsible" data-collapsible="accordion">
-              <li>
-                <div class="collapsible-header">
-                  <i class="material-icons blue-text">view_list</i>
-                  <span> Drones ({{profileInfo.drones.length}})</span>
-                </div>
-                <div class="collapsible-body collapsible-padding">
-                  <ul>
-                    <li *ngFor="let drone of profileInfo.drones">
-                      <p>{{drone}}</p>
-                    </li>
-                  </ul>
-                </div>
-              </li>
+          <div *ngIf="profileInfo.drones" class="col s10 m5">
+            <ul class="collection">
+              <li class="collection-item">Drones: {{profileInfo.drones.length}}</li>
+              <li class="collection-item" *ngFor="let drone of profileInfo.drones">{{drone}}</li>
             </ul>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row follow-btn-container" *ngIf="!isProfileMine">
+      <div class="col s12 center">
+        <button *ngIf="!profileInfo.isFollowed" (click)="followUser()" class="btn pulse">Follow {{profileInfo.username}}</button>
+        <button *ngIf="profileInfo.isFollowed" (click)="unFollowUser()" class="btn">UnFollow</button>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="profileInfo.about">
+      <div class="col s12">
+        <div class="card-panel no-margin light-blue accent-4">
+          <span class="white-text">{{profileInfo.about}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="isProfileMine && !profileInfo.about">
+      <div class="col s12">
+        <div class="card-panel no-margin light-blue accent-4">
+          <span class="white-text" *ngIf="!profileInfo.about">You have no profile description. Edit in <a class="white-text" [routerLink]="['/user', 'settings']" ><u>Settings</u></a>.</span>
         </div>
       </div>
     </div>
   </div>
 
   <div class="profile-page-content">
-    <!--  <div id="profile-page-sidebar" class="col s12 m4">
-        <div class="card light-blue z-depth-1">
-          <div class="card-content white-text">
-            <span class="card-title">About Me!</span>
-            <p>Bullsht text to make space for ads.</p>
-          </div>
-        </div>
-      </div> -->
     <div *ngIf="!hasPosts" class="no-posts-container">
       <div class="center-align">
         <div class="row">
           <div *ngIf="isProfileMine">
             <p class="big-text">You have no posts.</p>
-            <a [routerLink]="['/upload']" class="btn btn-large waves-effect blue">
-              <span>Post now!</span>
+            <a [routerLink]="['/upload']" class="btn pulse waves-effect blue">
+              Post now!
             </a>
           </div>
           <div *ngIf="!isProfileMine">
@@ -93,7 +88,6 @@
           </div>
         </div>
       </div>
-      <div class="section"></div>
     </div>
 
     <div *ngIf="hasPosts" class="profile-page-wall" infinite-scroll [infiniteScrollDistance]="1" (scrolled)="onProfileScrolled()">

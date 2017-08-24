@@ -6,7 +6,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { AuthHelperService } from './utilities/auth-helper.service';
 import { AuthService } from './services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { DatesService } from './utilities/dates.service';
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
 import { ExploreComponent } from './components/explore/explore.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -48,7 +47,9 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { UnixToDatePipe } from './pipes/unix-to-date.pipe';
 import { InsertHashtagPipe } from './pipes/insert-hashtag.pipe';
 import { MetadataTableComponent } from './components/metadata-table/metadata-table.component';
-import { FitImgIntoContainerDirective } from './directives/fit-img-into-container.directive';
+import { SearchComponent } from './sub-components/search/search.component';
+import { SearchService } from './services/search.service';
+import { FormatDatePipe } from './pipes/format-date.pipe';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { FitImgIntoContainerDirective } from './directives/fit-img-into-containe
     UnixToDatePipe,
     InsertHashtagPipe,
     MetadataTableComponent,
-    FitImgIntoContainerDirective
+    SearchComponent,
+    FormatDatePipe
   ],
   imports: [
     BrowserModule,
@@ -102,10 +104,10 @@ import { FitImgIntoContainerDirective } from './directives/fit-img-into-containe
     ProfileService,
     PicturesService,
     StaticDataService,
-    DatesService,
     AuthHelperService,
     PostsService,
-    MetadataService
+    MetadataService,
+    SearchService
   ],
   bootstrap: [AppComponent]
 })

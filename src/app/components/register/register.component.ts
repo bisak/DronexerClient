@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       const profilePictureValidator = this.validateService.validateProfilePicture(candidateFile);
       if (!profilePictureValidator.isValid) {
         this.isRegisterButtonDisabled = true;
-        return this.toastService.toast(profilePictureValidator.msg); //toast
+        return this.toastService.toast(profilePictureValidator.msg);
       }
       this.profilePictureFile = candidateFile;
       const fileReader: FileReader = new FileReader();
@@ -105,7 +105,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (!registerInputValidator.isValid) {
       return this.toastService.toast(registerInputValidator.msg);
     }
-    console.log(this.registerData);
 
     if (this.profilePictureFile) {
       registerFormData.append('profilePicture', this.profilePictureFile);

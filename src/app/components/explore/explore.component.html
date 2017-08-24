@@ -1,6 +1,11 @@
 <div class="container container-resp">
+  <div class="row">
+    <div class="col m6 offset-m3 s10 offset-s1">
+      <app-search></app-search>
+    </div>
+  </div>
   <div class="explore-page-wall" infinite-scroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="0"
-    (scrolled)="onExploreScrolled()">
+       (scrolled)="onExploreScrolled()">
     <app-post [post]="post" *ngFor="let post of explorePosts"></app-post>
   </div>
 </div>
