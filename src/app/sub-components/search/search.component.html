@@ -1,6 +1,6 @@
 <form>
   <div class="input-field">
-    <input (focus)="onFocus($event)" (blur)="onBlur($event)" autocomplete="off" class="no-margin" id="search" name="search" type="text" (keyup)="searchTerm.next($event.target.value)">
+    <input (focus)="onFocus($event)" (blur)="onBlur($event)" autocomplete="off" class="no-margin" id="search" name="search" type="search" (keyup)="searchTerm.next($event.target.value)">
     <label for="search">Search for users or #tags</label>
   </div>
 
