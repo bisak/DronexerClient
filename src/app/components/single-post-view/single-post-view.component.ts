@@ -5,6 +5,8 @@ import { MetadataService } from './../../services/metadata.service';
 import { PostsService } from './../../services/posts.service';
 import { Subscription } from 'rxjs/Subscription';
 
+import * as L from 'leaflet';
+
 @Component({
   selector: 'app-single-post-view',
   templateUrl: './single-post-view.component.html',

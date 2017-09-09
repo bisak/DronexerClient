@@ -66,16 +66,14 @@
   box-shadow: unset !important;
 }
 
-.container-resp {
-  margin: 0.5rem auto;
-  width: 99%;
-  max-width: 99% !important;
+.container-wall {
+  max-width: 98% !important;
 }
 
-@media only screen and (min-width: 600px) {
-  .container-resp {
-    width: 728px;
-  }
+.container-wall {
+  @extend .container;
+  @extend .section;
+  width: 728px;
 }
 
 .input-field.col .dropdown-content [type="checkbox"] + label {

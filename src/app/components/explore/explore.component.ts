@@ -35,21 +35,17 @@ export class ExploreComponent implements OnInit, OnDestroy {
       time = this.lastPostTime;
     }
     this.subscriptions.push(this.picturesService.getExplorePosts(time).subscribe((retrievedPictures) => {
-      if (retrievedPictures.success) {
         const picData = retrievedPictures.data;
         this.explorePosts.push(...picData);
         this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime();
         this.isListening = true;
-      } else {
-        this.isListening = false;
-      }
     }, (error) => {
       console.log(error);
+      this.isListening = false;
       if (error.status === 404) {
         return this.toastService.toast('No more posts available');
       }
-      this.toastService.errorToast('Error getting user pictures.');
-      this.isListening = false;
+      this.toastService.errorToast('Error getting discover pictures.');
     }));
   }
 

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-wall">
   <div *ngIf="true" class="explore-page-wall" infinite-scroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="0" (scrolled)="onExploreScrolled()">
     <app-post [post]="post" *ngFor="let post of tagPosts"></app-post>
   </div>

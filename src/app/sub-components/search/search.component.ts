@@ -11,23 +11,21 @@ import { PicturesService } from '../../services/pictures.service';
 export class SearchComponent implements OnInit {
   searchTerm = new Subject<string>();
   results;
-  canShowDropDown: boolean = false;
+  canShowDropDown = false;
 
-  constructor(private searchService: SearchService, private picturesService: PicturesService) {
-
+  constructor(private searchService: SearchService,
+              private picturesService: PicturesService) {
   }
 
   ngOnInit() {
-    this.searchService.search(this.searchTerm)
-      .subscribe(results => {
-        this.results = results;
-        if (results.users) {
-          this.results.data.map((result) => {
-            return result.profilePicUrl = this.picturesService.getProfilePicUrl(result._id);
-          });
-        }
-        console.log(this.results);
-      });
+    this.searchService.search(this.searchTerm).subscribe(results => {
+      this.results = results;
+      if (results.users) {
+        this.results.data.map((result) => {
+          return result.profilePicUrl = this.picturesService.getProfilePicUrl(result._id);
+        });
+      }
+    });
   }
 
   onFocus(ev) {

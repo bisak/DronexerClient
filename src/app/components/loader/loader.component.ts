@@ -1,22 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiService} from "../../services/api.service";
+import { Component, OnInit, isDevMode } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.css']
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
 
-  isVisible: boolean
+  isVisible: boolean;
 
   constructor(private apiService: ApiService) {
-    apiService.requestAnnounced.subscribe(data => {
-      this.isVisible = data;
-    });
+    if (isDevMode()) {
+      apiService.requestAnnounced.subscribe(data => {
+        this.isVisible = data;
+      });
+    }
   }
-
-  ngOnInit() {
-  }
-
 }

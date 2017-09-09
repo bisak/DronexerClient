@@ -48,10 +48,10 @@
     <section>
       <div class="card-image post-image-container">
         <a *ngIf="!isSingle" [routerLink]="['/post', post._id]">
-          <img [src]="post.pictureUrl" class="post-image-tall" alt="Post picture by user {{post.username}}">
+          <img [src]="post.pictureUrl" class="post-image" alt="Post picture by user {{post.username}}">
         </a>
 
-        <img *ngIf="isSingle" materialize="materialbox" class="post-image-tall materialboxed" [src]="post.pictureUrl" alt="Post picture by user {{post.username}}">
+        <img *ngIf="isSingle" materialize="materialbox" class="post-image materialboxed" [src]="post.pictureUrl" alt="Post picture by user {{post.username}}">
       </div>
     </section>
 
@@ -97,11 +97,9 @@
           </form>
 
           <div class="right pointer hide-show-comments">
-            <div *ngIf="!post.showComments && post.commentsCount" class="valign-wrapper" (click)="post.commentsCount && loadComments()">
+            <div *ngIf="!post.showComments && post.commentsCount" class="valign-wrapper" (click)="loadComments()">
               <span *ngIf="post.commentsCount === 1" class="ultra-small-text">Show {{post.commentsCount}} comment</span>
-
               <span *ngIf="post.commentsCount !== 1" class="ultra-small-text">Show {{post.commentsCount}} comments</span>
-
               <i *ngIf="post.commentsCount" class="material-icons zoom-in">expand_more</i>
             </div>
 

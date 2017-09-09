@@ -14,10 +14,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { ReverseAuthGuard } from './guards/reverse-auth.guard';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SinglePostViewComponent } from './components/single-post-view/single-post-view.component';
-import { TagsComponent } from 'app/components/tags/tags.component';
 import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
 import { UploadComponent } from './components/upload/upload.component';
-import { FeedComponent } from './components/feed/feed.component'
+import { FeedComponent } from './components/feed/feed.component';
+import { TagsComponent } from './components/tags/tags.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,10 +29,10 @@ const routes: Routes = [
   { path: 'post/:id', component: SinglePostViewComponent },
   { path: 'tag/:tag', component: TagsComponent },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
-  { path: 'about', component: AboutUsComponent },
-  { path: 'privacy', component: PrivacyPolicyComponent },
+  { path: 'about-us', component: AboutUsComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'disclaimer', component: DisclaimerComponent },
-  { path: 'terms', component: TermsOfUseComponent },
+  { path: 'terms-of-use', component: TermsOfUseComponent },
   { path: 'discover', component: ExploreComponent },
   { path: 'page-not-found', component: NotFoundComponent },
   { path: '**', redirectTo: 'page-not-found' }

@@ -1,4 +1,20 @@
-<div class="container container-resp">
+<div class="container-wall">
+
+  <div *ngIf="!hasPosts" class="row center">
+    <div class="col s12">
+      <div class="card-panel">
+        <p>
+          In your feed you can find the latest activity by users you follow.
+          <br>
+          It looks like you don't follow anyone right now. 😞
+        </p>
+        <p>
+          <a routerLink="/discover">Discover</a> people you like! 😎
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="feed-page-wall" infinite-scroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="0"
        (scrolled)="onFeedScrolled()">
     <app-post [post]="post" *ngFor="let post of feedPosts"></app-post>

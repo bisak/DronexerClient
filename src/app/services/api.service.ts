@@ -6,7 +6,8 @@ import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { AuthHelperService } from '../utilities/auth-helper.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ApiService {

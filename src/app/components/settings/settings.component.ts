@@ -114,7 +114,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   dronesSelectChange(event) {
-    console.log(event);
     this.editData.newDronesSelected = event;
   }
 
@@ -134,8 +133,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       oldPassword: oldPassword,
       about: this.editData.about
     };
-    console.log(objToSend);
-    console.log(this.profilePictureFile);
 
     editFormData.append('data', JSON.stringify(objToSend));
 

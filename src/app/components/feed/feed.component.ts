@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PicturesService } from "../../services/pictures.service";
-import { ToastService } from "../../services/toast.service";
-import { Subscription } from "rxjs/Subscription";
+import { PicturesService } from '../../services/pictures.service';
+import { ToastService } from '../../services/toast.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-feed',
@@ -13,6 +13,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   lastPostTime: number;
   isListening = true;
   subscriptions: Subscription[] = [];
+  hasPosts = true;
 
   constructor(private picturesService: PicturesService,
               private toastService: ToastService) {
@@ -25,7 +26,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
-    })
+    });
   }
 
   getFeedPosts() {
@@ -35,21 +36,22 @@ export class FeedComponent implements OnInit, OnDestroy {
       time = this.lastPostTime;
     }
     this.subscriptions.push(this.picturesService.getFeedPosts(time).subscribe((retrievedPictures) => {
-      if (retrievedPictures.success) {
-        const picData = retrievedPictures.data;
-        this.feedPosts.push(...picData);
-        this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime();
-        this.isListening = true;
-      } else {
-        this.isListening = false;
-      }
+      const picData = retrievedPictures.data;
+      this.feedPosts.push(...picData);
+      this.lastPostTime = new Date(picData[picData.length - 1].createdAt).getTime();
+      this.isListening = true;
     }, (error) => {
       console.log(error);
       if (error.status === 404) {
-        return this.toastService.toast('No more posts available');
+        if (this.feedPosts.length) {
+          this.toastService.toast('No more posts available');
+          this.isListening = false;
+          return;
+        }
+        this.hasPosts = false;
+        return;
       }
-      this.toastService.errorToast('Error getting user pictures.');
-      this.isListening = false;
+      this.toastService.errorToast('Error getting posts.');
     }));
   }
 

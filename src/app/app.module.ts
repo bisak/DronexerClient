@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { HttpModule } from '@angular/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoginComponent } from './components/login/login.component';
 import { MaterializeModule } from 'angular2-materialize';
@@ -50,6 +49,7 @@ import { MetadataTableComponent } from './components/metadata-table/metadata-tab
 import { SearchComponent } from './sub-components/search/search.component';
 import { SearchService } from './services/search.service';
 import { FormatDatePipe } from './pipes/format-date.pipe';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -90,8 +90,8 @@ import { FormatDatePipe } from './pipes/format-date.pipe';
     HttpModule,
     AppRoutingModule,
     MaterializeModule,
-    LeafletModule,
     InfiniteScrollModule,
+    LeafletModule.forRoot(),
     ShareButtonsModule.forRoot()
   ],
   providers: [

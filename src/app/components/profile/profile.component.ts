@@ -4,13 +4,12 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 
 import { AuthHelperService } from '../../utilities/auth-helper.service';
-import { MaterializeAction } from 'angular2-materialize';
-import { Observable } from 'rxjs/Observable';
 import { PicturesService } from '../../services/pictures.service';
 import { ProfileService } from '../../services/profile.service';
 import { StaticDataService } from '../../services/static-data.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ToastService } from '../../services/toast.service';
+import 'rxjs/add/operator/finally';
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   urlUsername: string;
   isListening: boolean;
   lastPostTime: number;
-
+  isLoggedIn = false;
   subscriptions: Subscription[] = [];
 
   constructor(private profileService: ProfileService,
@@ -39,6 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.listenForUrlChanges();
+    this.isLoggedIn = this.authHelperService.isLoggedIn();
   }
 
   ngOnDestroy() {
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }, (error) => {
       console.log(error);
       if (error.status === 404) {
-        this.router.navigate(['/page-not-found'], { replaceUrl: true }); //TODO this should not redirect but display not found msg.
+        this.router.navigate(['/page-not-found'], { replaceUrl: true }); // TODO this should not redirect but display not found msg.
         return false;
       }
       this.toastService.errorToast('An error occurred.');
@@ -68,23 +68,28 @@ export class ProfileComponent implements OnInit, OnDestroy {
       time = this.lastPostTime;
     }
 
-    this.subscriptions.push(this.picturesService.getWallPosts(username, time).subscribe((retrievedPictures) => {
-      if (retrievedPictures.success) {
+    this.subscriptions.push(this.picturesService.getWallPosts(username, time)
+      .finally(() => {
+        this.isListening = true;
+      })
+      .subscribe((retrievedPictures) => {
         const postData = retrievedPictures.data;
         console.log(retrievedPictures);
         this.wallPosts.push(...postData);
         this.lastPostTime = new Date(postData[postData.length - 1].createdAt).getTime();
-        this.isListening = true;
-      } else {
-        this.isListening = false;
-        if (!this.wallPosts.length) {
+      }, (error) => {
+        console.log(error);
+        if (error.status === 404) {
+          if (this.wallPosts.length) {
+            this.toastService.toast('No more posts available');
+            this.isListening = false;
+            return;
+          }
           this.hasPosts = false;
+          return;
         }
-      }
-    }, (error) => {
-      console.log(error);
-      this.toastService.errorToast('Error getting pictures.');
-    }));
+        this.toastService.errorToast('Error getting posts.');
+      }));
   }
 
   followUser() {

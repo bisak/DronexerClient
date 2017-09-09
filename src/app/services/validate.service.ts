@@ -71,7 +71,7 @@ export class ValidateService {
       }
     }
     if (data.password) {
-      if (data.password != data.passwordConfirm) {
+      if (data.password !== data.passwordConfirm) {
         return {
           isValid: false,
           msg: 'Passwords didn\'t match'

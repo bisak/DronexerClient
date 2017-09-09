@@ -1,8 +1,11 @@
-@import '~materialize-css/sass/components/_color.scss';
+@import '~materialize-css/sass/components/color';
 
 $roboto-font-path: "~materialize-css/dist/fonts/roboto/";
 
 $primary-color: color("blue-grey", "darken-3");
 $secondary-color: color("light-blue", "accent-4");
 
-@import "~materialize-css/sass/materialize.scss";
+@import "~materialize-css/sass/materialize";
+@import '~materialize-css/sass/components/variables';
+
+@import './styles-custom';

@@ -1,12 +1,10 @@
 .logo {
-  margin-left: 5px;
-  height: 55px;
-  vertical-align: middle;
+  height: 64px;
 }
 
 @media (max-width: 600px) {
   .logo {
-    height: 50px;
+    height: 56px;
   }
 }
 
@@ -20,15 +18,14 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.dropdown-button {
+  min-width: 140px;
+}
+
 .dropdown-content li > a, .dropdown-content li > span {
   line-height: 35px;
-  font-size: 1rem;
 }
 
 .dropdown-content li {
   min-height: 64px;
-}
-
-.dropdown-arrow-navbar {
-  margin-left: 5px;
 }

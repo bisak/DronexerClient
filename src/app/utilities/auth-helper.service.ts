@@ -3,56 +3,56 @@ import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject'
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AuthHelperService {
-  jwtHelper: JwtHelper = new JwtHelper()
-  loginAnnouncedSource = new Subject<boolean>()
-  loginAnnounced: Observable<any> = this.loginAnnouncedSource.asObservable()
+  jwtHelper: JwtHelper = new JwtHelper();
+  loginAnnouncedSource = new Subject<boolean>();
+  loginAnnounced: Observable<any> = this.loginAnnouncedSource.asObservable();
 
   constructor(private router: Router) {
   }
 
 
-  storeUserData (token) {
-    localStorage.setItem('id_token', token)
-    this.loginAnnouncedSource.next(true)
+  storeUserData(token) {
+    localStorage.setItem('id_token', token);
+    this.loginAnnouncedSource.next(true);
   }
 
-  getAuthToken () {
-    return localStorage.getItem('id_token')
+  getAuthToken() {
+    return localStorage.getItem('id_token');
   }
 
-  getDecodedAuthToken () {
-    const token = this.getAuthToken()
+  getDecodedAuthToken() {
+    const token = this.getAuthToken();
     if (token) {
-      return this.jwtHelper.decodeToken(token)._doc
+      return this.jwtHelper.decodeToken(token);
     }
-    return null
+    return null;
   }
 
-  isLoggedIn () {
-    return tokenNotExpired('id_token')
+  isLoggedIn() {
+    return tokenNotExpired('id_token');
   }
 
-  getUsernameFromToken () {
+  getUsernameFromToken() {
     const decodedToken = this.getDecodedAuthToken();
     if (decodedToken) {
-      return decodedToken.username
+      return decodedToken.username;
     }
-    return null
+    return '';
   }
 
-  getUserIdFromToken () {
+  getUserIdFromToken() {
     const decodedToken = this.getDecodedAuthToken();
     if (decodedToken) {
-      return decodedToken._id
+      return decodedToken._id;
     }
-    return null
+    return '';
   }
 
-  logout () {
-    localStorage.clear()
+  logout() {
+    localStorage.clear();
   }
 }

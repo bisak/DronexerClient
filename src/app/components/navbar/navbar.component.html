@@ -1,41 +1,65 @@
 <nav>
   <div class="nav-wrapper">
     <div class="container">
-      <a [routerLink]="['/']" class="brand-logo">Dronexer<img src="/assets/dronexer-logo.svg" class="logo" alt="Dronexer Brand Logo"></a>
+      <a [routerLink]="['/']" class="brand-logo">Dronexer<img src="/assets/dronexer-logo.svg" class="logo right" alt="Dronexer Brand Logo"></a>
       <a materialize="sideNav" [materializeParams]="[{closeOnClick: true, draggable: true}]"
          data-activates="mobile-demo" class="button-collapse">
         <i class="material-icons">menu</i>
       </a>
       <ul class="right hide-on-med-and-down">
-        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/']">Home</a>
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a [routerLink]="['/']">Home
+            <i class="material-icons right">home</i>
+          </a>
         </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/discover']">Discover</a>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a class="inline-block" [routerLink]="['/discover']">Discover
+            <i class="material-icons right">photo_library</i>
+          </a>
         </li>
-        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/feed']">Feed</a>
+        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a class="inline-block" [routerLink]="['/feed']">Feed
+            <i class="material-icons right">photo_album</i>
+          </a>
         </li>
-        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/upload']">Upload</a>
+        <li *ngIf="authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a class="inline-block" [routerLink]="['/upload']">Upload
+            <i class="material-icons right">add_to_photos</i>
+          </a>
         </li>
-        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="routerLinkOpts"><a
-          [routerLink]="['login']">Login</a></li>
-        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['/register']">Register</a>
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a class="inline-block" [routerLink]="['login']">Login
+            <i class="material-icons right">person</i>
+          </a>
+        </li>
+        <li *ngIf="!authHelperService.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+          <a class="inline-block" [routerLink]="['/register']">Register
+            <i class="material-icons right">person_add</i>
+          </a>
         </li>
         <li *ngIf="authHelperService.isLoggedIn()">
           <a materialize="dropdown" class="dropdown-button" data-activates="profile-dropdown">
             {{username}}
-            <i class="material-icons right dropdown-arrow-navbar">arrow_drop_down</i></a></li>
+            <i class="material-icons right">arrow_drop_down</i></a></li>
         <ul *ngIf="authHelperService.isLoggedIn()" id="profile-dropdown" class="dropdown-content blue-grey darken-4">
-          <li [routerLinkActive]="['active']"
-              [routerLinkActiveOptions]="routerLinkOpts"><a class="white-text" [routerLink]="['/profile', username]">Profile</a>
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+            <a class="white-text" [routerLink]="['/profile', username]">
+              Profile
+              <i class="material-icons right">person</i>
+            </a>
           </li>
-          <li [routerLinkActive]="['active']"
-              [routerLinkActiveOptions]="routerLinkOpts"><a [routerLink]="['user','settings']" class="white-text">Settings</a>
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="routerLinkOpts">
+            <a [routerLink]="['user','settings']" class="white-text">
+              Settings
+              <i class="material-icons right">settings</i>
+            </a>
           </li>
-          <li><a class="white-text" (click)="onLogoutClick()">Logout</a></li>
+          <li>
+            <a class="white-text" (click)="onLogoutClick()">
+              Logout
+              <i class="material-icons right">exit_to_app</i>
+            </a>
+          </li>
         </ul>
       </ul>
       <ul class="side-nav" id="mobile-demo">
