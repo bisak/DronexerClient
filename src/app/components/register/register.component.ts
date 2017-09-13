@@ -3,7 +3,6 @@ import { MaterializeDirective, MaterializeModule } from 'angular2-materialize';
 
 import { AuthHelperService } from '../../utilities/auth-helper.service';
 import { AuthService } from '../../services/auth.service';
-import { Form } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
 import { PicturesService } from '../../services/pictures.service';
 import { Router } from '@angular/router';
@@ -11,8 +10,6 @@ import { StaticDataService } from '../../services/static-data.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ToastService } from '../../services/toast.service';
 import { ValidateService } from '../../services/validate.service';
-import { isUndefined } from 'util';
-import { templateVisitAll } from '@angular/compiler';
 
 @Component({
   selector: 'app-register',
@@ -37,8 +34,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     dronesSelected: []
   };
 
-  agree: boolean = false;
-  passwordConfirm: string = '';
+  agree = false;
+  passwordConfirm = '';
 
   profilePictureFile: File;
   profilePictureEncoded: string;

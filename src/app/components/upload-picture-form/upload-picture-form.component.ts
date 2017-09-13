@@ -55,7 +55,6 @@ export class UploadPictureFormComponent implements OnInit, OnDestroy {
     if (this.tags) {
       dataToSend['tags'] = this.validateService.getTagsArray(this.tags);
     }
-    console.log(this.picture.file);
     uploadFormData.append('pictureFile', this.picture.file);
     uploadFormData.append('data', JSON.stringify(dataToSend));
 
@@ -67,9 +66,10 @@ export class UploadPictureFormComponent implements OnInit, OnDestroy {
         this.toastService.errorToast('An error occured: ' + (data.msg ? data.msg : 'Unknown'));
       }
     }, (err) => {
-      /*TODO This shit didn't work. Probably something with bug when the server actually returns string.*/
-      console.log(err);
-      this.toastService.errorToast(err.statusText);
+      if (err.status === 413) {
+        return this.toastService.toast('File too large');
+      }
+      this.toastService.toast('File too large or an unknown error occured :/');
     }));
   }
 

@@ -17,7 +17,20 @@ export class ValidateService {
       isValid: true,
       msg: ''
     };
-  };
+  }
+
+  validatePostPicture(file) {
+    if (file.size > 15 * 1000000) {
+      return {
+        isValid: false,
+        msg: 'Picture should be less than 15mb'
+      };
+    }
+    return {
+      isValid: true,
+      msg: ''
+    };
+  }
 
   validateRegisterInput(data, isEditData?) {
     if (!data.firstName) {
@@ -97,7 +110,7 @@ export class ValidateService {
   }
 
   getTagsArray(tags: string): Array<string> {
-    let tagsArray = tags.split(' ')
+    const tagsArray = tags.split(' ')
       .filter((tag) => tag !== '' && tag.startsWith('#') && tag.length > 3 && tag.length <= 20)
       .map((tag) => tag.toLowerCase());
     if (tagsArray.length > 0 && tagsArray.length <= 15) {

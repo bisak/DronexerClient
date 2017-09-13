@@ -1,10 +1,14 @@
 .social-media-button {
   width: 50px;
   height: 50px;
-  margin-right: 5px;
+  margin-top: 15px;
+  margin-left: 15px;
   border-radius: 50%;
 }
 
+/*
 .social-media-buttons-row{
-  margin-left: -5px;
+  margin-left: 10px;
+  margin-top: ;
 }
+*/

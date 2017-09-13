@@ -1,12 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
-import { AuthService } from '../../services/auth.service';
-import { ProfileService } from '../../services/profile.service';
-import { PicturesService } from '../../services/pictures.service';
-import { Router } from '@angular/router';
-import { StaticDataService } from '../../services/static-data.service';
-import { AuthHelperService } from '../../utilities/auth-helper.service';
-import { MaterializeDirective } from 'angular2-materialize';
+import { ValidateService } from '../../services/validate.service';
 
 @Component({
   selector: 'app-upload',
@@ -17,8 +11,7 @@ export class UploadComponent implements OnInit {
   selectedPictures: Array<any> = [];
 
   constructor(private toastService: ToastService,
-              private authHelperService: AuthHelperService,
-              private router: Router) {
+              private validateService: ValidateService) {
   }
 
   ngOnInit() {
@@ -27,9 +20,15 @@ export class UploadComponent implements OnInit {
 
   onPictureSelectorChange(ev) {
     this.selectedPictures = [];
-    let files: Array<File> = ev.target.files;
+    const files: Array<File> = ev.target.files;
     for (let i = 0; i < files.length; i++) {
-      let file: File = files[i];
+      const file: File = files[i];
+      console.log(file);
+      const validator = this.validateService.validatePostPicture(file);
+      if (!validator.isValid) {
+        this.toastService.toast(`${file.name} is too large. 15mb max.`);
+        continue;
+      }
       let fileReader: FileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = (e) => {

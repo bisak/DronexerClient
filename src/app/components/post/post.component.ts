@@ -43,8 +43,8 @@ export class PostComponent implements OnInit, OnDestroy {
     this.post.canEdit = (this.post.user._id === this.authHelperService.getUserIdFromToken());
     this.post.hasMetadata = this.metadataService.hasMetadata(this.post.metadata);
     this.newComment = '';
-    this.shareUrl = `https://beta.dronexer.com/post/${this.post._id}`;
-    this.shareImgUrl = `https://beta.dronexer.com${this.post.pictureUrl}`;
+    this.shareUrl = `https://dronexer.com/post/${this.post._id}`;
+    this.shareImgUrl = `https://dronexer.com${this.post.pictureUrl}`;
     this.shareDescription = `Drone shot by ${this.post.username}. Join dronexer.com for more!`;
     if (this.isSingle) {
       if (this.post.commentsCount) {

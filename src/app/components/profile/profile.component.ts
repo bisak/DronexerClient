@@ -67,16 +67,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (this.lastPostTime) {
       time = this.lastPostTime;
     }
-
-    this.subscriptions.push(this.picturesService.getWallPosts(username, time)
-      .finally(() => {
-        this.isListening = true;
-      })
-      .subscribe((retrievedPictures) => {
+    this.subscriptions.push(this.picturesService.getWallPosts(username, time).subscribe((retrievedPictures) => {
         const postData = retrievedPictures.data;
-        console.log(retrievedPictures);
         this.wallPosts.push(...postData);
         this.lastPostTime = new Date(postData[postData.length - 1].createdAt).getTime();
+        this.isListening = true;
       }, (error) => {
         console.log(error);
         if (error.status === 404) {
