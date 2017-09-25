@@ -29,3 +29,7 @@
 .dropdown-content li {
   min-height: 64px;
 }
+
+.navbar-fixed {
+  z-index: 999;
+}

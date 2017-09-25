@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { AuthHelperService } from "../../utilities/auth-helper.service";
-import { Router } from "@angular/router";
+import { AuthHelperService } from '../../utilities/auth-helper.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +13,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.authHelperService.isLoggedIn()){
-      this.router.navigate(['/discover'])
+    if (this.authHelperService.isLoggedIn()) {
+      this.router.navigate(['/discover']);
     }
   }
 
